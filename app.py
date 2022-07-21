@@ -229,7 +229,6 @@ def login():
 @login_required
 def register():
     id = current_user.id
-    flash(id)
     if id == 3:
         form = RegisterForm()
         if request.method == 'POST':
