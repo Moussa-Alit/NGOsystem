@@ -19,21 +19,23 @@ from cryptography.fernet import Fernet
 #    file.close()
 
 def encrypt(data):
-    open_file = open(".key_file.key", "rb")
-    key = open_file.read()
+    #open_file = open(".key_file.key", "rb")
+    #key = open_file.read()
+    key = b'kaYShGLbw1PD58npID1sf_mwnnVO4nmehsq5RNAro_I='
     encoded_data = data.encode()
     ferneted_key = Fernet(key)
     encrypted_data = ferneted_key.encrypt(encoded_data)
-    key.close()
+    #key.close()
     return encrypted_data
 
 def decrypt(encrypted_data):
-    open_file = open(".key_file.key", "rb")
-    key = open_file.read()
+    #open_file = open(".key_file.key", "rb")
+    #key = open_file.read()
+    key = b'kaYShGLbw1PD58npID1sf_mwnnVO4nmehsq5RNAro_I='
     ferneted_key = Fernet(key)
     decrypted_data = ferneted_key.decrypt(encrypted_data)
     data = decrypted_data.decode()
-    key.close()
+    #key.close()
     return data
 
 app = Flask(__name__)
@@ -155,7 +157,7 @@ class RegisterForm(FlaskForm):
     submit = SubmitField()
 
 class loginform(FlaskForm):
-    email = StringField('البريد الالكتروني',[InputRequired()])
+    username = StringField('إسم المستخدم',[InputRequired()])
     password = PasswordField('كلمة المرور',[InputRequired()])
 
 class AdhaActivities(FlaskForm):
@@ -208,12 +210,13 @@ def load_user(id):
 def login():
     form = loginform()
     if form.validate_on_submit():
-        req_email = request.form["email"]
-        adminmail = Users.query.filter_by(email=req_email).first()
+        req_username = request.form["username"]
+        #enc_requested_email = encrypt(req_email)
+        username = Users.query.filter_by(username=req_username).first()
         password = request.form['password']
-        if adminmail:
-            if adminmail.verify_password(password):
-                login_user(adminmail)
+        if username:
+            if username.verify_password(password):
+                login_user(username)
                 flash("تم تسجيل الدخول بنجاح")
                 return redirect(url_for("welcome"))
             else:
@@ -239,7 +242,7 @@ def register():
             enc_surname = encrypt(surname)
             enc_username = encrypt(username)
             enc_email = encrypt(email)
-            record = Users(enc_name, enc_surname, enc_username, enc_email, password, staff_type="")
+            record = Users(enc_name, enc_surname, username, enc_email, password, staff_type="")
             db.session.add(record)
             db.session.commit()
             flash("The new user has been added successfully")
