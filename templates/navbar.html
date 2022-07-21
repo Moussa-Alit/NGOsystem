@@ -12,12 +12,11 @@
           <li class="nav-item">
             <a class="nav-link" href="A_A_R">تقييم نشاطات عيد الأضحى</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="test"> hojfhvتقييم نشاطات عيد الأضحى</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{url_for('register')}}">Register</a>
-          </li>
+          {% if cu_id == 3 %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{url_for('register')}}">Register</a>
+            </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
           </li>

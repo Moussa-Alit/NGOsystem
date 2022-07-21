@@ -226,31 +226,34 @@ def login():
     return render_template('login.html', form=form)
 
 @app.route('/admin/register', methods=['POST', 'GET'])
-#@login_required
+@login_required
 def register():
-    #id = current_user.id
-    #if id == 2:
-    form = RegisterForm()
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            name = request.form["name"]
-            surname = request.form["surname"]
-            username = request.form["username"]
-            email = request.form["email"]
-            password = request.form["password"]
-            enc_name = encrypt(name)
-            enc_surname = encrypt(surname)
-            enc_username = encrypt(username)
-            enc_email = encrypt(email)
-            record = Users(enc_name, enc_surname, username, enc_email, password, staff_type="")
-            db.session.add(record)
-            db.session.commit()
-            flash("The new user has been added successfully")
-            return redirect(url_for('register'))
-        #else:
-    return render_template("register.html", form=form, cu_id=id)
+    id = current_user.id
+    flash(id)
+    if id == 3:
+        form = RegisterForm()
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                name = request.form["name"]
+                surname = request.form["surname"]
+                username = request.form["username"]
+                email = request.form["email"]
+                password = request.form["password"]
+                enc_name = encrypt(name)
+                enc_surname = encrypt(surname)
+                #enc_username = encrypt(username)
+                enc_email = encrypt(email)
+                record = Users(enc_name, enc_surname, username, enc_email, password, staff_type="")
+                db.session.add(record)
+                db.session.commit()
+                flash("The new user has been added successfully")
+                return redirect(url_for('register'))
+            else:
+                return render_template("register.html", form=form, cu_id=id)
+        else:
+            return render_template("register.html", form=form, cu_id=id)
     #message = "An error occured try to logout then login again"
-    #return redirect(url_for("welcome")), message
+    return redirect(url_for("welcome"))
 
 
 @app.route('/')
