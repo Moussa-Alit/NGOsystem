@@ -245,7 +245,7 @@ def register():
             flash("The new user has been added successfully")
             return redirect(url_for('register'))
         #else:
-        return render_template("register.html", form=form, cu_id=id)
+    return render_template("register.html", form=form, cu_id=id)
     #message = "An error occured try to logout then login again"
     #return redirect(url_for("welcome")), message
 
