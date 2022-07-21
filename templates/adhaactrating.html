@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Adha Act R.{% endblock %}
+{% block content %}
+
+<div id="hall_form">
+ <!-- <div class="container">-->
+    <div class="row justify-content-center"><div class="col col-lg-9 col-md-12">
+  <div class="card">
+    <div class="card-header bg-dark text-light">
+      <h4><i class="fas fa-file-plus"></i>
+        <span>تقييم نشاطات الأضحى <i style="font-size: 15px; color: #666" class="fas fa-chevron-left"></i> </span>
+        عنصر جديد
+    </h4>
+    </div>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="main-info" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">معلومات أساسية</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="act-rate" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">تقييم النشاط</button>
+    </li>
+  </ul>
+  <form method="POST">
+  <div class="tab-content" id="myTabContent">    
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        {{ form.hidden_tag() }}<br/>
+        {{ form.starting_date.label(class_="form-label") }}<br/>
+        {{ form.starting_date(class_="form-control") }}<br/>
+        {{ form.governorate.label(class_="form-label") }}<br/>
+        {{ form.governorate(class_="form-control") }}<br/>
+        {{ form.location.label(class_="form-label") }}<br/>
+        {{ form.location(class_="form-control") }}<br/>
+        <!--<input type="hidden" name="gps" value="" id="gps_loc" />-->
+        {{ form.its_name.label(class_="form-label")}}<br/>
+        {{ form.its_name(class_="form-control") }}<br/>
+        {{ form.p_code.label(class_="form-label") }}<br/>
+        {{ form.p_code(class_="form-control") }}<br/>
+        {{ form.nb_of_families.label(class_="form-label") }}<br/>
+        {{ form.nb_of_families(class_="form-control") }}<br/>
+        {{ form.activity_type.label(class_="form-label") }}<br/>
+        {{ form.activity_type(class_="form-control") }}<br/>
+        {{ form.if_other_type.label(class_="form-label") }}<br/>
+        {{ form.if_other_type(class_="form-control") }}<br/>
+        {{ form.donor.label(class_="form-label") }}<br/>
+        {{ form.donor(class_="form-control") }}<br/>
+        {{ form.team_leader.label(class_="form-label") }}<br/>
+        {{ form.team_leader(class_="form-control") }}<br/>
+        {{ form.targeted_nb_in_camp.label(class_="form-label")}}<br/>
+        {{ form.targeted_nb_in_camp(class_="form-control") }}<br/>
+        {{ form.distributed_items.label(class_="form-label") }}<br/>
+        {{ form.distributed_items(class_="form-control") }}<br/>
+        {{ form.nb_of_itmes_to_be_distributed_in_this_act.label(class_="form-label")}}<br/>
+        {{ form.nb_of_itmes_to_be_distributed_in_this_act(class_="form-control") }}<br/>
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        {{ form.exists_of_written_scheduled.label(class_="form-label") }}<br/>
+            {{ form.exists_of_written_scheduled(class_="form-control") }}<br/>
+            {{ form.voucher_distributed.label(class_="form-label") }}<br/>
+            {{ form.voucher_distributed(class_="form-control") }}<br/>
+            {{ form.beneficiaries_list_ready_used.label(class_="form-label") }}<br/>
+            {{ form.beneficiaries_list_ready_used(class_="form-control") }}<br/>
+            <label for="protection_policies" class="form-label" >)من عشرة)قيم احترام سياسات الحماية و التقيد بالإرشادات السلامة العامة/ Rate the respectness of the protection policies and guidelines(from 10)</label><br/>
+            <input type="number" id="pprr" name="pprr" class="form-control" /><br/>
+            <label for="controlling_workplace" class="form-label" >قيم السيطرة على مكان العمل(من عشرة)/ Rate the control of workplace(from 10)</label><br/>
+            <input type="number" id="controlling_workplace" name="controlling_workplacce_rate" class="form-control" /><br/>
+            <label for="covid19_precautions" class="form-label">قيم الالتزام بمعايير الوقاية من كورونا(من عشرة)/ Rate the Commitment to the cocid19 precautions(from 10)</label><br/>
+            <input type="number" id="covid19_precautions" name="commitment_to_covid_precautions" class="form-control" /><br/>
+            {{ form.existing_of_requirements.label(class_="form-label") }}<br/>
+            {{ form.existing_of_requirements(class_="form-control") }}<br/>
+            {{ form.if_shortcoming_in_requirements.label(class_="form-label") }}<br/>
+            {{ form.if_shortcoming_in_requirements(class_="form-control") }}<br/>
+            <label for="random_item" class="form-label text-right">قيم عينة عشوائية من الحصص(من 10)/ Rate a randomly selected itme(from 10)</label><br/>
+            <input type="number" id="random_item" name="randomly_checked_item_rate" class="form-control" /><br/>
+            <label for="staff_performance" class="form-label">قيم أداء الفريق(من 10)/ Rate the staff performance(from 10)</label><br/>
+            <input type="number" id="staff_performance" name="staff_performance" class="form-control" /><br/>
+            {{ form.general_notes.label(class_="form-label")}}<br/>
+            {{ form.general_notes(class_="form-control") }}<br/>
+            <!--<input type="submit" value=" إضافة " class="btn btn-primary"/>-->
+            <!--{{ form.submit() }}</div>-->
+    </div>
+  </div>
+  <div class="card-footer">
+    <div class="alert alert-danger" role="alert">
+      تأكد من تعبئة جميع الحقول في الصفحتين قبل الإضافة
+    </div>
+    <button class="btn btn-primary" type="submit">
+      إضافة
+    </button>
+    <button style="display:inline-block" class="btn btn-dark" type="reset">تنظيف الحقول</button>
+  </div>
+</form></div></div>
+<br/>
+{% for i in get_flashed_messages() %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ i }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+</div>
+</div>
+  {% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+{% for i in get_flashed_messages() %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ i }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+<div id="hall_form">
+    <!-- <div class="container">-->
+       <div class="row justify-content-center"><div class="col col-lg-9 col-md-12">
+     <div class="card">
+       <div class="card-header bg-dark text-light">
+         <h4><i class="fas fa-file-plus"></i>
+           <span>Info. <i style="font-size: 15px; color: #666" class="fas fa-chevron-left"></i> </span>
+          
+       </h4>
+       </div>
+   <ul class="nav nav-tabs" id="myTab" role="tablist">
+       <li class="nav-item" role="presentation">
+         <button class="nav-link active" id="main-info" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">معلومات أساسية</button>
+       </li>
+       <!--<li class="nav-item" role="presentation">
+         <button class="nav-link" id="act-rate" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">تقييم النشاط</button>
+       </li>-->
+     </ul>
+     <form method="POST">
+     <div class="tab-content" id="myTabContent">    
+       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+           {{ form.hidden_tag() }}<br/>
+            {{ form.name.label(class_="form-label") }}<br/>
+            {{ form.name(class_="form-control") }}<br/>
+            {{ form.surname.label(class_="form-label")}}<br/>
+            {{ form.surname(class_="form-control") }}<br/>
+            {{ form.username.label(class_="form-label") }}<br/>
+            {{ form.username(class_="form-control") }}<br/>
+            {{ form.email.label(class_="form-label") }}<br/>
+            {{ form.email(class_="form-control") }}<br/>
+            {{ form.password.label(class_="form-label") }}<br/>
+            {{ form.password(class_="form-control")}}
+       </div>
+       <!--<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+       </div>-->
+     </div>
+     <div class="card-footer">
+       <div class="alert alert-danger" role="alert">
+         تأكد من تعبئة جميع الحقول في الصفحتين قبل الإضافة
+       </div>
+       <!--<button class="btn btn-primary" type="submit">
+         إضافة
+       </button>-->
+       {{ form.submit() }}
+       <button style="display:inline-block" class="btn btn-dark" type="reset">تنظيف الحقول</button>
+     </div>
+   </form></div></div>
+   </div>
+   </div>
+
+
+
+{% endblock %}

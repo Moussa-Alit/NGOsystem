@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>
+    <!--<link href="stylesheet.css" rel="stulesheet">-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+    <style>
+      #hall_form {
+      margin: 0 auto;
+        box-shadow: 2px 2px 1px 1px rgb(236, 230, 230);
+      };
+      #pills-tab-div {
+        margin: 10px 10px 10px 10px;
+        padding: 10px 5px 0px 5px;
+      };
+      .box_input {
+        box-shadow: 4px 4px 1px 1px rgb(236, 230, 230);
+        width: 75%
+      }
+    </style>
+    <!--<link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>--> 
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="http://urda-system.com/home">
+          <img src="http://urda-system.com/imgs/logo2.png" style="height: 60px;" alt="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/projects-table">جدول المشاريع</a>
+              </li>
+              <li class="nav-item">
+                <div class="btn-group">
+                  <a href="{{url_for('logout')}}" class="btn btn-primary">تسجيل الخروج</a>
+                </div>
+            </li>
+           
+        </ul>
+      </div>
+    </div>
+  
+    </nav>
+    <nav>{% include 'navbar.html' %}</nav>
+    <div>{% block content %}{% endblock %}</div>
+    <script>
+      //var next = document.getElementById("next");
+      var div1 = document.getElementById("div1");
+      var div2 = document.getElementById("div2");
+      function next() {
+          div1.style.display = "none";
+          div2.style.display = "block"
+          div2.style.marginTop = "100px";
+          div2.style.zIndex = "0";
+      };
+      function back() {
+          div1.style.display = "block";
+          div2.style.display = "none"
+          div2.style.marginTop = "-22px";
+          div2.style.zIndex = "-1"
+      };
+      </script>
+      <!-- <script>
+        var x = document.getElementById("gps_loc");
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else {
+            alert("Geolocation is not supported by this browser.");
+          }
+        }
+        
+        function showPosition(position) {
+          x.value = position.coords.latitude + "," + position.coords.longitude;
+        }
+        </script> -->
+        <script>
+          var input = getElementById("gps_loc")
+          const successCallback = (position) => {
+            input.value = position
+          };
+          const errorCallback = (position) => {
+            alert("You should accept to fill the form!")
+            console.error(error)
+          };
+          navigator.geuccessCallback, errtCurrentPosition(sorCallback);
+        </script>
+  </body>
+</html>

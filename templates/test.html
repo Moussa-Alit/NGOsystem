@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head><title>welcome</title></head>
+    <body>
+        <p>welcome</p>
+        {% for i in user_name %}
+            {% if i|length == 6 %}
+                {{ i }}
+            {% else %}
+                {{ user_name.0 }}
+            {% endif %}
+        {% endfor %}
+    </body>
+</html>
