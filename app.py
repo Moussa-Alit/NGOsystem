@@ -12,26 +12,28 @@ from cryptography.fernet import Fernet
 
 #data = input("Enter any data: ")
 
-def generate_key():
-    encrypting_key = Fernet.generate_key()
-    file = open("key_file.key", "wb")
-    file.write(encrypting_key)
-    file.close()
+#def generate_key():
+#    encrypting_key = Fernet.generate_key()
+#    file = open("key_file.key", "wb")
+#    file.write(encrypting_key)
+#    file.close()
 
 def encrypt(data):
-    open_file = open("key_file.key", "rb")
+    open_file = open(".key_file.key", "rb")
     key = open_file.read()
     encoded_data = data.encode()
     ferneted_key = Fernet(key)
     encrypted_data = ferneted_key.encrypt(encoded_data)
+    key.close()
     return encrypted_data
 
 def decrypt(encrypted_data):
-    open_file = open("key_file.key", "rb")
+    open_file = open(".key_file.key", "rb")
     key = open_file.read()
     ferneted_key = Fernet(key)
     decrypted_data = ferneted_key.decrypt(encrypted_data)
     data = decrypted_data.decode()
+    key.close()
     return data
 
 app = Flask(__name__)
