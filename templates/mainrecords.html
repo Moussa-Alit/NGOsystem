@@ -1,0 +1,864 @@
+{% extends "base.html" %}
+{% block title %}Main Records{% endblock %}
+{% block content %}
+<div id="hall_form">
+    <div class="row justify-content-center">
+        <div class="col col-lg-9 col-md-12">
+            <div class="card">
+                
+                    <div class="card-header bg-dark text-light">
+                        <h4><i class="fas fa-file-plus"></i>
+                        <span>التسجبلات الأساسية<i style="font-size: 15px; color: #666" class="fas fa-chevron-left"></i> </span>
+                          عنصر جديد
+                        </h4>
+                    </div>
+                    <!--<div id="card_body">-->
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="main-info" data-bs-toggle="tab" data-bs-target="#nav1" type="button" role="tab" aria-controls="home" aria-selected="true">أساسية و العائلة</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="act-rate" data-bs-toggle="tab" data-bs-target="#nav2" type="button" role="tab" aria-controls="profile" aria-selected="false">قانون و منظمات</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="act-rate" data-bs-toggle="tab" data-bs-target="#nav3" type="button" role="tab" aria-controls="profile" aria-selected="false">التعليم</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="act-rate" data-bs-toggle="tab" data-bs-target="#nav4" type="button" role="tab" aria-controls="profile" aria-selected="false">السكن</button>
+                            </li>
+                        </ul>
+                <form method="POST">
+                    <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="nav1" role="tabpanel" aria-labelledby="home-tab">
+                                        {{ form.hidden_tag() }}<br/>
+                                        <label for="field-7" style="font-size: 16px;margin-top: 5px;" class="form-label">الاسم <sup class="text-danger">*</sup></label>
+                                        <div class="input-group mb-3">
+                                            <input required="" type="text" field-id="f_7" autocomplete="false" name="name" class="form-control" id="field-7">
+                                        </div>
+                                        <label for="field-8" style="font-size: 16px;margin-top: 5px;" class="form-label">رقم الجوال <sup class="text-danger">*</sup></label>
+                                        <div class="input-group mb-3">
+                                            <input required="" type="text" field-id="f_8" autocomplete="false" name="mobile_number" class="form-control" id="field-8">
+                                        </div>
+                                        <label for="field-14" style="font-size: 16px;margin-top: 5px;" class="form-label">رقم الهاتف <sup class="text-danger">*</sup></label>
+                                        <div class="input-group mb-3">
+                                            <input required="" type="text" field-id="f_14" autocomplete="false" name="phone_number" class="form-control" id="field-14">
+                                        </div>
+                                        <label for="field-15" style="font-size: 16px;margin-top: 5px;" class="form-label">المحافظة <sup class="text-danger">*</sup></label>
+                                        <div class="input-group mb-3">
+                                            <select field-id="f_15" class="form-select" name="city" aria-label="Default select example" id="field-15">
+                                                <option value="-غير مُحدّد-">
+                                                    -غير محدد-
+                                                </option>                                                                       <option value="بيروت">بيروت</option>
+                                                <option value="جبل لبنان">جبل لبنان</option>
+                                                <option value="الشمال">الشمال</option>
+                                                <option value="الجنوب">الجنوب</option>
+                                                <option value="البقاع">البقاع</option>
+                                                <option value="النبطية">النبطية</option>
+                                                <option value="بعلبك الهرمل">بعلبك الهرمل</option>
+                                                <option value="عكار">عكار</option>
+                                            </select>
+                                            </div>
+                                            <label for="field-16" style="font-size: 16px;margin-top: 5px;" class="form-label">العنوان الكامل <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" type="text" field-id="f_16" autocomplete="false" name="address" class="form-control" id="field-16">
+                                            </div>
+                                            <label for="field-17" style="font-size: 16px;margin-top: 5px;" class="form-label">الصلة بربِّ الأسرة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" type="text" field-id="f_17" autocomplete="false" name="family_master_relation" class="form-control" id="field-17">
+                                            </div>
+                                            <label for="field-18" style="font-size: 16px;margin-top: 5px;" class="form-label">هل الأب (ربُّ الأسرة) موجود؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_18" class="form-select" name="family_father_exists" aria-label="Default select example" id="field-18">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                    <option value="موجود">موجود</option>
+                                                    <option value="متوفِّ">متوفِّ</option>
+                                                    <option value="مفقود">مفقود</option>
+                                                    <option value="مطلِّق">مطلِّق</option>
+                                                    <option value="غائب">غائب</option>
+                                                    <option value="هاجِر">هاجِر</option>
+                                                    <option value="زواج ثانٍ">زواج ثانٍ</option>
+                                                </select>
+                                            </div>
+                                            <label for="field-19" style="font-size: 16px;margin-top: 5px;" class="form-label">هل الأم موجودة؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_19" class="form-select" name="family_mother_exists" aria-label="Default select example" id="field-19">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                    <option value="موجودة">موجودة</option>
+                                                    <option value="متوفاة">متوفاة</option>
+                                                    <option value="مفقودة">مفقودة</option>
+                                                    <option value="مطلّقة">مطلّقة</option>
+                                                    <option value="زواج ثانٍ">زواج ثانٍ</option>
+                                                </select>
+                                            </div>
+                                            <label for="field-20" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد أفراد الأسرة (مع الأب والأمّ) <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_20" type="number" name="family_count" class="form-control" id="field-20">
+                                            </div>
+                                            <label for="field-21" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد فوق سنّ 18 سنة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_21" type="number" name="family_adults_count" class="form-control" id="field-21">
+                                            </div>
+                                            <label for="field-22" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد دون سنّ 18 سنة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_22" type="number" name="family_children_count" class="form-control" id="field-22">
+                                            </div>
+                                            <label for="field-23" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الفتيات تحت سنّ 18 سنة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_23" type="number" name="family_kids_girls_count" class="form-control" id="field-23">
+                                            </div>
+                                            <label for="field-24" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الفتيات المتزوِّجات تحت سنّ 18 سنة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_24" type="number" name="family_married_kids_count" class="form-control" id="field-24">
+                                            </div>
+                                            <label for="field-49" style="font-size: 16px;margin-top: 5px;" class="form-label">رتب أولويّاتك باحتياج المُساعدة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" type="hidden" field-id="f_49" name="field_1611222958" value="مساعدة في دفع الإيجار,مساعدة في الغذاء,إجراء الصيانة,تدريب مهني,مشروع تنموي,قسط مدرسي,قسط جامعي,مساعدات طبية وأدوية,مواد التنظيف والغسيل,مساعدة نقدية,المازوت وسائل التدفئة,السجاد,مستلزمات للمنزل,تأمين كلفة المياه والكهرباء الشهرية,تأمين الضرائب">
+                                                <div class="FieldContainer ui-sortable">
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">مساعدة في دفع الإيجار</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">مساعدة في الغذاء</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">إجراء الصيانة</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">تدريب مهني</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">مشروع تنموي</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">قسط مدرسي</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">قسط جامعي</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">مساعدات طبية وأدوية</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">مواد التنظيف والغسيل</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">مساعدة نقدية</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">المازوت وسائل التدفئة</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">السجاد</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">مستلزمات للمنزل</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">تأمين كلفة المياه والكهرباء الشهرية</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                            <div class="OrderingField mb-1 ui-sortable-handle">
+                                                            <div class="value float-start d-block">تأمين الضرائب</div>
+                                                            <div class="btns float-end">
+                                                                <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                                <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+                                                                                                        </div>
+                                            </div>
+                                            <label for="field-50" style="font-size: 16px;margin-top: 5px;" class="form-label">أولويّات أخرى <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" type="text" field-id="f_50" autocomplete="false" name="field_1611223354" class="form-control" id="field-50">
+                                            </div>
+                                            <label for="field-67" style="font-size: 16px;margin-top: 5px;" class="form-label">من يعيل الأسرة حالياً <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_67" class="form-select" name="field_1611230997" aria-label="Default select example" id="field-67">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="الأب">الأب</option>
+                                                                                                            <option value="الأم">الأم</option>
+                                                                                                            <option value="الابن فوق 18">الابن فوق 18</option>
+                                                                                                            <option value="الابنة قوق 18">الابنة قوق 18</option>
+                                                                                                            <option value="الابن تحت 18">الابن تحت 18</option>
+                                                                                                            <option value="الابنة تحت 18">الابنة تحت 18</option>
+                                                                                                            <option value="أحد الأقرباء">أحد الأقرباء</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-98" style="font-size: 16px;margin-top: 5px;" class="form-label">هل لديك تفاصيل أخرى؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" type="text" field-id="f_98" autocomplete="false" name="field_1611235066" class="form-control" id="field-98">
+                                            </div>
+                                            <label for="field-99" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 0 - 4 ) <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_99" type="number" name="field_1612518121" class="form-control" id="field-99">
+                                            </div>
+                                            <label for="field-100" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 5 - 8 ) <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_100" type="number" name="field_1612518141" class="form-control" id="field-100">
+                                            </div>
+                                            <label for="field-101" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 13 - 9 ) <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_101" type="number" name="field_1612518165" class="form-control" id="field-101">
+                                            </div>
+                                            <label for="field-102" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 14 - 18 ) <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_102" type="number" name="field_1612518219" class="form-control" id="field-102">
+                                            </div>
+                                            <label for="field-103" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 19 - 25 ) <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_103" type="number" name="field_1612518623" class="form-control" id="field-103">
+                                            </div>
+                                            <label for="field-104" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 26 - 50 ) <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_104" type="number" name="field_1612518638" class="form-control" id="field-104">
+                                            </div>
+                                            <label for="field-105" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 51 - 64 ) <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_105" type="number" name="field_1612518659" class="form-control" id="field-105">
+                                            </div>
+                                            <label for="field-106" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم فوق 64 <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_106" type="number" name="field_1612518673" class="form-control" id="field-106">
+                                            </div>
+                                            <label for="field-108" style="font-size: 16px;margin-top: 5px;" class="form-label">الجنسية <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_108" class="form-select" name="field_1617714362" aria-label="Default select example" id="field-108">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                    <option value="فلسطيني">فلسطيني</option>
+                                                    <option value="سوري">سوري</option>
+                                                    <option value="لبناني">لبناني</option>
+                                                </select>
+                                            </div>
+                                </div><!--for nav1-->
+                                <div class="tab-pane fade" id="nav2" role="tabpanel" aria-labelledby="profile-tab">
+                                            <div id="form-fields">
+                                                <label for="field-26" style="font-size: 16px;margin-top: 5px;" class="form-label">حالة عقد الزواج <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_26" class="form-select" name="marriage_contract_status" aria-label="Default select example" id="field-26">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="غير مسجل في الدوائر الرسمية">غير مسجل في الدوائر الرسمية</option>
+                                                                                                                <option value="مسجل في لبنان">مسجل في لبنان</option>
+                                                                                                                <option value="مسجل في سوريا">مسجل في سوريا</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-27" style="font-size: 16px;margin-top: 5px;" class="form-label">مرحلة عقد الزواج <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_27" class="form-select" name="marriage_contract_level" aria-label="Default select example" id="field-27">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="عند الشيخ">عند الشيخ</option>
+                                                                                                                <option value="في المحكمة الشرعية">في المحكمة الشرعية</option>
+                                                                                                                <option value="محكمة شرعية ونفوس">محكمة شرعية ونفوس</option>
+                                                                                                                <option value="محكمة شرعية وسجل وقوعات الأجانب">محكمة شرعية وسجل وقوعات الأجانب</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-28" style="font-size: 16px;margin-top: 5px;" class="form-label">الأسباب التي منعت التسجيل <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_28" class="form-select" name="contruct_unregistered_causes" aria-label="Default select example" id="field-28">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="نقص بالأوراق الثبوتية">نقص بالأوراق الثبوتية</option>
+                                                                                                                <option value="صعوبات مالية">صعوبات مالية</option>
+                                                                                                                <option value="صعوبة التنقل">صعوبة التنقل</option>
+                                                                                                                <option value="عدم معرفة الاجراءات">عدم معرفة الاجراءات</option>
+                                                                                                                <option value="بسبب شروط القوانين اللبنانية">بسبب شروط القوانين اللبنانية</option>
+                                                                                                                <option value="إهمال أو عدم وعي">إهمال أو عدم وعي</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-29" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تم تسجيل الأطفال؟ <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_29" class="form-select" name="children_registered" aria-label="Default select example" id="field-29">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="نعم جميع الأطفال مسجلين">نعم جميع الأطفال مسجلين</option>
+                                                                                                                <option value="يوجد أطفال مسجلين وأطفال غير مسجلين">يوجد أطفال مسجلين وأطفال غير مسجلين</option>
+                                                                                                                <option value="جميع الأطفال غير مسجلين">جميع الأطفال غير مسجلين</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-30" style="font-size: 16px;margin-top: 5px;" class="form-label">مكان تسجيل الأطفال <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_30" class="form-select" name="child_reg_place" aria-label="Default select example" id="field-30">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="المختار">المختار</option>
+                                                                                                                <option value="وقوعات الأجانب">وقوعات الأجانب</option>
+                                                                                                                <option value="وزارة الخارجية اللبنانية في بيروت">وزارة الخارجية اللبنانية في بيروت</option>
+                                                                                                                <option value="السفارة السورية في بيروت">السفارة السورية في بيروت</option>
+                                                                                                                <option value="سجلات النفوس في سورية">سجلات النفوس في سورية</option>
+                                                                                                                <option value="وزارة الداخلية | النفوس اللبنانية">وزارة الداخلية | النفوس اللبنانية</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-31" style="font-size: 16px;margin-top: 5px;" class="form-label">سبب عدم تسجيل الأطفال أو عدم إكماله <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_31" class="form-select" name="children_unregistered__cause" aria-label="Default select example" id="field-31">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="نقص بالأوراق الثبوتية للأهل">نقص بالأوراق الثبوتية للأهل</option>
+                                                                                                                <option value="صعوبات مالية">صعوبات مالية</option>
+                                                                                                                <option value="صعوبات التنقل">صعوبات التنقل</option>
+                                                                                                                <option value="عدم المعرفة بالإجراءات">عدم المعرفة بالإجراءات</option>
+                                                                                                                <option value="بسبب شروط القوانين اللبنانية">بسبب شروط القوانين اللبنانية</option>
+                                                                                                                <option value="إهمال أو عدم الوعي">إهمال أو عدم الوعي</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-32" style="font-size: 16px;margin-top: 5px;" class="form-label">ماهي أبرز التحديات التي تواجهينها بسبب عدم اكتمال أوراق عقد الزواج أو غياب الزوج؟ <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_32" class="form-select" name="challanges_no_contract" aria-label="Default select example" id="field-32">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="عدم القدرة على التنقل والسفر مع الأطفال">عدم القدرة على التنقل والسفر مع الأطفال</option>
+                                                                                                                <option value="عدم القدرة على الاستفادة من الخدمات التي تحتاج الى أوراق ثبوتية">عدم القدرة على الاستفادة من الخدمات التي تحتاج الى أوراق ثبوتية</option>
+                                                                                                                <option value="المعاناة من نظرة المجتمع السيئة والتنمر تجاه الأطفال">المعاناة من نظرة المجتمع السيئة والتنمر تجاه الأطفال</option>
+                                                                                                                <option value="عدم القدرة على الزواج مرة أخرى بسبب عدم اكتمال إجراءات الزواج السابق أو تحرير القيود منه">عدم القدرة على الزواج مرة أخرى بسبب عدم اكتمال إجراءات الزواج السابق أو تحرير القيود منه</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-33" style="font-size: 16px;margin-top: 5px;" class="form-label">مصدر المساعدات <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_33" class="form-select" name="helps_source" aria-label="Default select example" id="field-33">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="UNHCR">UNHCR</option>
+                                                                                                                <option value="وزارة الشؤون الاجتماعية">وزارة الشؤون الاجتماعية</option>
+                                                                                                                <option value="UNRWA">UNRWA</option>
+                                                                                                                <option value="لا يوجد">لا يوجد</option>
+                                                                                                                <option value="أخرى">أخرى</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-34" style="font-size: 16px;margin-top: 5px;" class="form-label">مدّة المساعدة <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_34" class="form-select" name="helps_duration" aria-label="Default select example" id="field-34">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="مرة بالسنة">مرة بالسنة</option>
+                                                                                                                <option value="بمناسبة رمضان والأعياد">بمناسبة رمضان والأعياد</option>
+                                                                                                                <option value="موسمية">موسمية</option>
+                                                                                                                <option value="شهرية">شهرية</option>
+                                                                                                                <option value="لا يوجد">لا يوجد</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-35" style="font-size: 16px;margin-top: 5px;" class="form-label">هل استفدت من URDA مسبقاً ؟ <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_35" class="form-select" name="urda_using" aria-label="Default select example" id="field-35">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="نعم - مساعدات نقدية">نعم - مساعدات نقدية</option>
+                                                                                                                <option value="نعم - مساعدات إغاثية">نعم - مساعدات إغاثية</option>
+                                                                                                                <option value="نعم - إغاثية ونقدية">نعم - إغاثية ونقدية</option>
+                                                                                                                <option value="لا">لا</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-36" style="font-size: 16px;margin-top: 5px;" class="form-label">هل كانت الاستفادة كافية أو غير كافية؟ <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_36" class="form-select" name="urda_using_enough" aria-label="Default select example" id="field-36">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="كافية">كافية</option>
+                                                                                                                <option value="غير كافية">غير كافية</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-37" style="font-size: 16px;margin-top: 5px;" class="form-label">ما هي طبيعة المساعدة التي تحتاجها؟ <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <input required="" type="text" field-id="f_37" autocomplete="false" name="help_you_need" class="form-control" id="field-37">
+                                                </div>
+                                                </div><label for="field-26" style="font-size: 16px;margin-top: 5px;" class="form-label">حالة عقد الزواج <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_26" class="form-select" name="marriage_contract_status" aria-label="Default select example" id="field-26">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="غير مسجل في الدوائر الرسمية">غير مسجل في الدوائر الرسمية</option>
+                                                                                                                <option value="مسجل في لبنان">مسجل في لبنان</option>
+                                                                                                                <option value="مسجل في سوريا">مسجل في سوريا</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-27" style="font-size: 16px;margin-top: 5px;" class="form-label">مرحلة عقد الزواج <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_27" class="form-select" name="marriage_contract_level" aria-label="Default select example" id="field-27">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="عند الشيخ">عند الشيخ</option>
+                                                                                                                <option value="في المحكمة الشرعية">في المحكمة الشرعية</option>
+                                                                                                                <option value="محكمة شرعية ونفوس">محكمة شرعية ونفوس</option>
+                                                                                                                <option value="محكمة شرعية وسجل وقوعات الأجانب">محكمة شرعية وسجل وقوعات الأجانب</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-28" style="font-size: 16px;margin-top: 5px;" class="form-label">الأسباب التي منعت التسجيل <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_28" class="form-select" name="contruct_unregistered_causes" aria-label="Default select example" id="field-28">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="نقص بالأوراق الثبوتية">نقص بالأوراق الثبوتية</option>
+                                                                                                                <option value="صعوبات مالية">صعوبات مالية</option>
+                                                                                                                <option value="صعوبة التنقل">صعوبة التنقل</option>
+                                                                                                                <option value="عدم معرفة الاجراءات">عدم معرفة الاجراءات</option>
+                                                                                                                <option value="بسبب شروط القوانين اللبنانية">بسبب شروط القوانين اللبنانية</option>
+                                                                                                                <option value="إهمال أو عدم وعي">إهمال أو عدم وعي</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-29" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تم تسجيل الأطفال؟ <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_29" class="form-select" name="children_registered" aria-label="Default select example" id="field-29">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="نعم جميع الأطفال مسجلين">نعم جميع الأطفال مسجلين</option>
+                                                                                                                <option value="يوجد أطفال مسجلين وأطفال غير مسجلين">يوجد أطفال مسجلين وأطفال غير مسجلين</option>
+                                                                                                                <option value="جميع الأطفال غير مسجلين">جميع الأطفال غير مسجلين</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-30" style="font-size: 16px;margin-top: 5px;" class="form-label">مكان تسجيل الأطفال <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_30" class="form-select" name="child_reg_place" aria-label="Default select example" id="field-30">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="المختار">المختار</option>
+                                                                                                                <option value="وقوعات الأجانب">وقوعات الأجانب</option>
+                                                                                                                <option value="وزارة الخارجية اللبنانية في بيروت">وزارة الخارجية اللبنانية في بيروت</option>
+                                                                                                                <option value="السفارة السورية في بيروت">السفارة السورية في بيروت</option>
+                                                                                                                <option value="سجلات النفوس في سورية">سجلات النفوس في سورية</option>
+                                                                                                                <option value="وزارة الداخلية | النفوس اللبنانية">وزارة الداخلية | النفوس اللبنانية</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-31" style="font-size: 16px;margin-top: 5px;" class="form-label">سبب عدم تسجيل الأطفال أو عدم إكماله <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_31" class="form-select" name="children_unregistered__cause" aria-label="Default select example" id="field-31">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="نقص بالأوراق الثبوتية للأهل">نقص بالأوراق الثبوتية للأهل</option>
+                                                                                                                <option value="صعوبات مالية">صعوبات مالية</option>
+                                                                                                                <option value="صعوبات التنقل">صعوبات التنقل</option>
+                                                                                                                <option value="عدم المعرفة بالإجراءات">عدم المعرفة بالإجراءات</option>
+                                                                                                                <option value="بسبب شروط القوانين اللبنانية">بسبب شروط القوانين اللبنانية</option>
+                                                                                                                <option value="إهمال أو عدم الوعي">إهمال أو عدم الوعي</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-32" style="font-size: 16px;margin-top: 5px;" class="form-label">ماهي أبرز التحديات التي تواجهينها بسبب عدم اكتمال أوراق عقد الزواج أو غياب الزوج؟ <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_32" class="form-select" name="challanges_no_contract" aria-label="Default select example" id="field-32">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="عدم القدرة على التنقل والسفر مع الأطفال">عدم القدرة على التنقل والسفر مع الأطفال</option>
+                                                                                                                <option value="عدم القدرة على الاستفادة من الخدمات التي تحتاج الى أوراق ثبوتية">عدم القدرة على الاستفادة من الخدمات التي تحتاج الى أوراق ثبوتية</option>
+                                                                                                                <option value="المعاناة من نظرة المجتمع السيئة والتنمر تجاه الأطفال">المعاناة من نظرة المجتمع السيئة والتنمر تجاه الأطفال</option>
+                                                                                                                <option value="عدم القدرة على الزواج مرة أخرى بسبب عدم اكتمال إجراءات الزواج السابق أو تحرير القيود منه">عدم القدرة على الزواج مرة أخرى بسبب عدم اكتمال إجراءات الزواج السابق أو تحرير القيود منه</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-33" style="font-size: 16px;margin-top: 5px;" class="form-label">مصدر المساعدات <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_33" class="form-select" name="helps_source" aria-label="Default select example" id="field-33">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="UNHCR">UNHCR</option>
+                                                                                                                <option value="وزارة الشؤون الاجتماعية">وزارة الشؤون الاجتماعية</option>
+                                                                                                                <option value="UNRWA">UNRWA</option>
+                                                                                                                <option value="لا يوجد">لا يوجد</option>
+                                                                                                                <option value="أخرى">أخرى</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-34" style="font-size: 16px;margin-top: 5px;" class="form-label">مدّة المساعدة <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_34" class="form-select" name="helps_duration" aria-label="Default select example" id="field-34">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="مرة بالسنة">مرة بالسنة</option>
+                                                                                                                <option value="بمناسبة رمضان والأعياد">بمناسبة رمضان والأعياد</option>
+                                                                                                                <option value="موسمية">موسمية</option>
+                                                                                                                <option value="شهرية">شهرية</option>
+                                                                                                                <option value="لا يوجد">لا يوجد</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-35" style="font-size: 16px;margin-top: 5px;" class="form-label">هل استفدت من URDA مسبقاً ؟ <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_35" class="form-select" name="urda_using" aria-label="Default select example" id="field-35">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="نعم - مساعدات نقدية">نعم - مساعدات نقدية</option>
+                                                                                                                <option value="نعم - مساعدات إغاثية">نعم - مساعدات إغاثية</option>
+                                                                                                                <option value="نعم - إغاثية ونقدية">نعم - إغاثية ونقدية</option>
+                                                                                                                <option value="لا">لا</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-36" style="font-size: 16px;margin-top: 5px;" class="form-label">هل كانت الاستفادة كافية أو غير كافية؟ <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <select field-id="f_36" class="form-select" name="urda_using_enough" aria-label="Default select example" id="field-36">
+                                                            <option value="-غير مُحدّد-">
+                                                                -غير محدد-
+                                                            </option>
+                                                                                                                <option value="كافية">كافية</option>
+                                                                                                                <option value="غير كافية">غير كافية</option>
+                                                                                                            </select>
+                                                </div>
+                                                <label for="field-37" style="font-size: 16px;margin-top: 5px;" class="form-label">ما هي طبيعة المساعدة التي تحتاجها؟ <sup class="text-danger">*</sup></label>
+                                                <div class="input-group mb-3">
+                                                    <input required="" type="text" field-id="f_37" autocomplete="false" name="help_you_need" class="form-control" id="field-37">
+                                                </div>
+                                            </div>
+                                </div><!--for nav2-->
+                                <div class="tab-pane fade" id="nav3" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div id="form-fields">
+                                            <label for="field-53" style="font-size: 16px;margin-top: 5px;" class="form-label">هل انعكست الأزمة الاقتصادية على قدرتك على تغطية كلفة التعليم لأولادك؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_53" class="form-select" name="field_1611223471" aria-label="Default select example" id="field-53">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-54" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تعطي أقساط المدرسة الأولوية على حساب مصاريف أخرى؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_54" class="form-select" name="field_1611223484" aria-label="Default select example" id="field-54">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-55" style="font-size: 16px;margin-top: 5px;" class="form-label">طريقة تأمين تكاليف الدراسة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_55" class="form-select" name="field_1611228689" aria-label="Default select example" id="field-55">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="دعم من الدولة">دعم من الدولة</option>
+                                                                                                            <option value="استدانة">استدانة</option>
+                                                                                                            <option value="دعم من جمعية إنسانية">دعم من جمعية إنسانية</option>
+                                                                                                            <option value="تأجيل الدفع">تأجيل الدفع</option>
+                                                                                                            <option value="منحة دراسية">منحة دراسية</option>
+                                                                                                            <option value="من مالك الخاص">من مالك الخاص</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-56" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في الإبتدائي <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_56" type="number" name="field_1611229254" class="form-control" id="field-56">
+                                            </div>
+                                            <label for="field-57" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في المتوسط <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_57" type="number" name="field_1611229269" class="form-control" id="field-57">
+                                            </div>
+                                            <label for="field-58" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في الثانوية <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_58" type="number" name="field_1611229303" class="form-control" id="field-58">
+                                            </div>
+                                            <label for="field-59" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في الجامعة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_59" type="number" name="field_1611229312" class="form-control" id="field-59">
+                                            </div>
+                                            <label for="field-60" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في المهني المدرسي <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" type="text" field-id="f_60" autocomplete="false" name="field_1611229345" class="form-control" id="field-60">
+                                            </div>
+                                            <label for="field-61" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في المهني الجامعي <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_61" type="number" name="field_1611229373" class="form-control" id="field-61">
+                                            </div>
+                                            <label for="field-62" style="font-size: 16px;margin-top: 5px;" class="form-label">هل قمتم بنقل أولادكم من مدرسة خاصة إلى مدرسة رسمية؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_62" class="form-select" name="field_1611229404" aria-label="Default select example" id="field-62">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-63" style="font-size: 16px;margin-top: 5px;" class="form-label">نوع المدرسة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_63" class="form-select" name="field_1611229555" aria-label="Default select example" id="field-63">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="خاصة">خاصة</option>
+                                                                                                            <option value="رسمية">رسمية</option>
+                                                                                                            <option value="ذوي احتياجات خاصة">ذوي احتياجات خاصة</option>
+                                                                                                            <option value="محو أمّية">محو أمّية</option>
+                                                                                                            <option value="تدريب مهني معجل">تدريب مهني معجل</option>
+                                                                                                            <option value="مهني">مهني</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-64" style="font-size: 16px;margin-top: 5px;" class="form-label">نوع المساعدة الماليّة المُحتاجة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_64" class="form-select" name="field_1611229739" aria-label="Default select example" id="field-64">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="قسط">قسط</option>
+                                                                                                            <option value="مواصلات">مواصلات</option>
+                                                                                                            <option value="قرطاسية">قرطاسية</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-65" style="font-size: 16px;margin-top: 5px;" class="form-label">هل يوجد لديكم أولاد توقفوا عن الدراسة؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_65" class="form-select" name="field_1611230071" aria-label="Default select example" id="field-65">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-66" style="font-size: 16px;margin-top: 5px;" class="form-label">أسباب التوقف عن متابعة الدراسة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_66" class="form-select" name="field_1611230788" aria-label="Default select example" id="field-66">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                    <option value="الارتفاع الحالي لكلفة التعليم">الارتفاع الحالي لكلفة التعليم</option>
+                                                    <option value="بسبب عدد الأولاد الذين يدرسون في الأسرة">بسبب عدد الأولاد الذين يدرسون في الأسرة</option>
+                                                    <option value="الرسوب المتكرر">الرسوب المتكرر</option>
+                                                    <option value="عدم الرغبة في الدراسة">عدم الرغبة في الدراسة</option>
+                                                    <option value="البحث عن عمل">البحث عن عمل</option>
+                                                    <option value="البقاء في المنزل">البقاء في المنزل</option>
+                                                </select>
+                                            </div><!--div above-->
+                                        </div><!--for form fields for nav3-->
+                                </div><!--for nav2-->
+                                <div class="tab-pane fade" id="nav4" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div id="form-fields">
+                                            <label for="field-38" style="font-size: 16px;margin-top: 5px;" class="form-label">نوع السكن <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_38" class="form-select" name="home_type" aria-label="Default select example" id="field-38">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="بيت">بيت</option>
+                                                                                                            <option value="مأوى جماعي">مأوى جماعي</option>
+                                                                                                            <option value="خيمة">خيمة</option>
+                                                                                                            <option value="مخزن">مخزن</option>
+                                                                                                            <option value="كراج">كراج</option>
+                                                                                                            <option value="قبو">قبو</option>
+                                                                                                            <option value="منزل غير مؤهل للسكن">منزل غير مؤهل للسكن</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-39" style="font-size: 16px;margin-top: 5px;" class="form-label">وضع المسكن <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_39" class="form-select" name="home_status" aria-label="Default select example" id="field-39">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="مُلك">مُلك</option>
+                                                                                                            <option value="أجار">أجار</option>
+                                                                                                            <option value="مشترك مع الأهل">مشترك مع الأهل</option>
+                                                                                                            <option value="خيمة مُستأجرة">خيمة مُستأجرة</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-40" style="font-size: 16px;margin-top: 5px;" class="form-label">أجار المسكن L.B.P <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_40" type="number" name="home_rent_price" class="form-control" id="field-40">
+                                            </div>
+                                            <label for="field-41" style="font-size: 16px;margin-top: 5px;" class="form-label">هل إقامتك في المنزل قانونية؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_41" class="form-select" name="home_stay_legal" aria-label="Default select example" id="field-41">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                            <option value="غير ذلك">غير ذلك</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-42" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد غرف السكن <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <input required="" field-id="f_42" type="number" name="home_size_rooms" class="form-control" id="field-42">
+                                            </div>
+                                            <label for="field-43" style="font-size: 16px;margin-top: 5px;" class="form-label">هل يوجد منتفعات؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_43" class="form-select" name="home_path_and_kitchen" aria-label="Default select example" id="field-43">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-44" style="font-size: 16px;margin-top: 5px;" class="form-label">صالح للسكن؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_44" class="form-select" name="home_stayable" aria-label="Default select example" id="field-44">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-45" style="font-size: 16px;margin-top: 5px;" class="form-label">يحتاج للترميم <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_45" class="form-select" name="home_needfix" aria-label="Default select example" id="field-45">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-46" style="font-size: 16px;margin-top: 5px;" class="form-label">يحتاج للصيانة <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_46" class="form-select" name="home_needmaintainance" aria-label="Default select example" id="field-46">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-47" style="font-size: 16px;margin-top: 5px;" class="form-label">هل أنتَ قادرٌ على دفع إيجار المسكن؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_47" class="form-select" name="home_rental_ability" aria-label="Default select example" id="field-47">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-48" style="font-size: 16px;margin-top: 5px;" class="form-label">كيف يتم تأمين الإيجار؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_48" class="form-select" name="field_1611222627" aria-label="Default select example" id="field-48">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="استدانة">استدانة</option>
+                                                                                                            <option value="دفع بالتقسيط">دفع بالتقسيط</option>
+                                                                                                            <option value="من المدخول">من المدخول</option>
+                                                                                                            <option value="من جمعية إنسانية">من جمعية إنسانية</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-51" style="font-size: 16px;margin-top: 5px;" class="form-label">هل العلاقة جيدة مع أهل المنطقة؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_51" class="form-select" name="field_1611223377" aria-label="Default select example" id="field-51">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                        </select>
+                                            </div>
+                                            <label for="field-52" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تشعرون بالأمان في محيط منطقة السكن؟ <sup class="text-danger">*</sup></label>
+                                            <div class="input-group mb-3">
+                                                <select field-id="f_52" class="form-select" name="field_1611223407" aria-label="Default select example" id="field-52">
+                                                    <option value="-غير مُحدّد-">
+                                                            -غير محدد-
+                                                    </option>
+                                                                                                            <option value="نعم">نعم</option>
+                                                                                                            <option value="لا">لا</option>
+                                                                                                        </select>
+                                            </div>
+                                        </div><!--for form fields-->
+                                </div><!--for nav 4-->
+                    </div><!--this is for div tab content-->
+                        
+                    <!--</div>-->
+                    <div class="card-footer">
+                        <div class="alert alert-danger" role="alert">
+                          تأكد من تعبئة جميع الحقول في الصفحتين قبل الإضافة
+                        </div>
+                        <button class="btn btn-primary" type="submit">
+                          إضافة
+                        </button>
+                        <button style="display:inline-block" class="btn btn-dark" type="reset">تنظيف الحقول</button>
+                    </div>
+                </form>
+            </div><!--for card-->
+        </div><!--for col col9 ...-->
+    </div><!--for justify center-->
+<!--</div>--><!--for hall form-->
+{% endblock %}

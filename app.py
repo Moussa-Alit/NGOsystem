@@ -1,16 +1,43 @@
 
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, make_response
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, StringField, SelectField, SelectField, IntegerField, HiddenField, DateField, TimeField, SubmitField, PasswordField
 from wtforms.validators import InputRequired, Length, Regexp, NumberRange
 from datetime import datetime
-from flask_bootstrap import Bootstrap
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from cryptography.fernet import Fernet
+import pywhatkit as pwt
+from datetime import datetime
+import time
 
-#data = input("Enter any data: ")
+app = Flask(__name__)
+
+
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:batata@localhost/database1'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://vmfbelplxyvepj:a2979b6807823c413e08a119955da592e94ab4f38696d568553ef3b11dbac674@ec2-54-87-179-4.compute-1.amazonaws.com:5432/deljs855e01f1t'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SECRET_KEY'] = 'FW3434ff545h4RFE55$#f$t%yhtFF'
+
+db = SQLAlchemy(app)
+
+#Flask_login Stuff
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+#functions
+def send(message):
+    now = datetime.now()
+    nowlst = str(now).split()
+    time = nowlst[1]
+    timelst = time.split(":")
+    hour = int(timelst[0])
+    min = int(timelst[1])
+    pwt.sendwhatmsg("+96170594811", message, hour, min+2)
+
 
 #def generate_key():
 #    encrypting_key = Fernet.generate_key()
@@ -38,24 +65,8 @@ def decrypt(encrypted_data):
     #key.close()
     return data
 
-app = Flask(__name__)
-
-Bootstrap(app)
-
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:batata@localhost/database1'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://vmfbelplxyvepj:a2979b6807823c413e08a119955da592e94ab4f38696d568553ef3b11dbac674@ec2-54-87-179-4.compute-1.amazonaws.com:5432/deljs855e01f1t'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.config['SECRET_KEY'] = 'FW3434ff545h4RFE55$#f$t%yhtFF'
-
-db = SQLAlchemy(app)
-
-#Flask_login Stuff
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
-
 #Sqlalchemy classes
+
 
 class Users(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -195,6 +206,10 @@ class AdhaActivities(FlaskForm):
     if_shortcoming_in_requirements = StringField('حدد اللوازم الناقصة إن وُجِدَت.', [Length(min=0, max=100, message='The explanation length should be between 0 and 100') ])
     general_notes = StringField('ملاحظات/Notes', [InputRequired(), Length(min=0, max=150, message='The explanation length should be between 0 and 150')])
     submit = SubmitField(' إضافة ')
+
+class Main_Records(FlaskForm):
+    id_field = HiddenField()
+
 #functions
 
 def finish_datetime():
@@ -250,7 +265,7 @@ def register():
             else:
                 return render_template("register.html", form=form, cu_id=id)
         else:
-            return render_template("register.html", form=form, cu_id=id)
+            return render_template("/data_entry/register.html", form=form, cu_id=id)
     #message = "An error occured try to logout then login again"
     return redirect(url_for("welcome"))
 
@@ -259,11 +274,34 @@ def register():
 @login_required
 def welcome():
     cu_id = current_user.id
-    return render_template("index.html", cu_id=cu_id)
+    cu_enc_username = current_user.username
+    #message = f"The user {cu_enc_username} has logged in to the system"
+    #send(message)
+    #time.sleep(150)
+    #return render_template("index.html", cu_id=cu_id)
+    return render_template("departmentsnavigation.html", cu_id=cu_id)
+
+@app.route('/Ba3dayn_bsewihoun')
+@login_required
+def welcome_mo2akkate():
+    return "<h1> hello this is under development</h1>"
+
+@app.route('/DataEntry')
+@login_required
+def de_welcome():
+    cu_id = current_user.id
+    return render_template("/indexes/de_index.html", cu_id=cu_id)
+
+@app.route('/Graphs_Statistics')
+@login_required
+def gs_welcome():
+    cu_id = current_user.id
+    return "<h1>Hello this is under development</h1>"
 
 @app.route("/A_A_R", methods=['GET', 'POST'])
 @login_required
 def A_A_R():
+    cu_id = current_user.id
     form1 = AdhaActivities()
     if request.method == 'POST':
         if form1.validate_on_submit:
@@ -323,8 +361,88 @@ def A_A_R():
                         getattr(form1, field).label.text,
                         error
                         ), 'error')
-            return render_template("adhaactrating.html", form=form1)
-    return render_template("adhaactrating.html", status4="active", form=form1)
+                    message = "Error in {}: {}".format(
+                        getattr(form1, field).label.text,
+                        error
+                        )#, 'error'
+            return render_template("/data_entry/adhaactrating.html", form=form1, cu_id=cu_id, message=message)
+    return render_template("/data_entry/adhaactrating.html", status4="active", form=form1, cu_id=cu_id)
+
+@app.route('/data_entry/main_records', methods=['POST', 'GET'])
+@login_required
+def main_records():
+    form = Main_Records()
+    if request.method == 'POST':
+        name = request.form["name"]
+        mobile_nb = request.form["mobile_number"]
+        phone_nb = request.form["phone_nb"]
+        city = request.form["city"]
+        address = request.form["address"]
+        family_master_relation = request.form["family_master_relation"] #silat lli 3am ne5od menno l ma3loumet b rab l 2osra
+        family_father_exists = request.form["family_father_exists"]
+        family_mother_exists = request.form["family_mother_exists"]
+        family_count = request.form["family_count"]
+        family_adults_count = request.form["family_adults_count"]
+        family_children_count = request.form["family_children_count"]
+        family_kids_girls_count = request.form["family_kids_girls_count"]
+        family_married_kids_count = request.form["family_married_kids_count"]
+        # = request.form[""] #t5ab3out l up down
+        wrorking_member = request.form["field_1611230997"] #who is working actually from the family members
+        more_info = request.form["field_1611235066"] #more info about working member
+        members_btw_0_4 = request.form["field_1612518121"]
+        members_btw_5_8 = request.form["field_1612518141"]
+        members_btw_9_13 = request.form["field_1612518165"]
+        members_btw_14_18 = request.form["field_1612518219"]
+        members_btw_19_25 = request.form["field_1612518623"]
+        members_btw_26_50 = request.form["field_1612518638"]
+        members_btw_51_64 = request.form["field_1612518659"]
+        members_above_64 = request.form["field_1612518673"]
+        nationality = request.form["field_1617714362"] 
+        #new tab about حالة عقد الزواج
+        #we can include them in a separete table
+        marriage_contract_status = request.form["marriage_contract_status"]
+        marriage_contract_level = request.form["marriage_contract_level"]
+        contract_unregistered_causes = request.form["contruct_unregistered_causes"]
+        children_registered = request.form["children_registered"]
+        child_reg_place = request.form["child_reg_place"]
+        challanges_no_contract = request.form["challanges_no_contract"]
+        helps_source = request.form["helps_source"]
+        helps_duration = request.form["helps_duration"]
+        urda_using = request.form["urda_using"]
+        urda_using_enough = request.form["urda_using_enough"]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        #= request.form[""]
+        print(name, phone_nb)
+        return redirect(url_for("main_records"))
+    return render_template("mainrecords.html", form=form)
+
+
 
 @app.route('/logout', methods=['POST', 'GET'])
 @login_required
@@ -332,6 +450,23 @@ def logout():
     logout_user()
     flash("تم تسجيل الخروج")
     return redirect(url_for("login"))
+
+@app.route('/admin/cookies')
+def cookies():
+    id = current_user.id
+    role = ""
+    if id == 3:
+        role = "admin"
+    else:
+        role = "normaluser"
+    res = make_response("Cookies", 200)
+    res.set_cookie(str(id), value=role,
+    max_age=36000,
+    expires=None,
+    path=request.path,
+    secure=True
+    )
+    return res
 
 if __name__ == "__main__":
     app.run(debug=True, ssl_context='adhoc')

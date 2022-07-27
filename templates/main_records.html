@@ -1,0 +1,1731 @@
+<html dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>URDA System</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+    <link href="http://urda-system.com/css/all.min.css" rel="stylesheet">
+    <link href="http://urda-system.com/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="http://urda-system.com/css/main.css" rel="stylesheet">
+    <link href="http://urda-system.com/css/simple-rating.css" rel="stylesheet">
+<style type="text/css">.location-picker .centerMarker{position:absolute;background:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAABWCAYAAACEsWWHAAAGLElEQVR4AdXcA2xsXReH8f3Ztm3btm2br23btm3btm2rd257b835vVnJStL0sj3Tds6TrOTkzN5r/5925qgorQRPwQewDHbHebgXDQxlNXLfeTlmmZzzlNJOpMyXsA86TJ2O7PGl6DnbQr/CncYx1tNj4JzTde+0la5V/6/x+x+Z85Ov6/jWZ0TFduyL12JMjI05E4iev5pxQXwFV0lGOx7Xf/xRulb5n45vflrH1z4xqYo5MTd6RC9JrvGVmRB6C04dLzR/yw10fP2TGbJyRa/oOVHw1Fh7uqS+jAY0e3uaPXvupOM7n48w01LRO9aItSDX/nKrpf6FYRi85AJzfvy1WHxGKtaKNZPhyNIKoadjZ0nfIfvFYrNSsXYiMz2tilg00Bweas7fZO1YYFYrMkQWKVfl7ScadS7z12jcFhVZxsn9ayoHimHI71RbVWRKhiPrZA7pjZn+TFX4zDWW6lSAU/PoFw3auiJjcuqSryjyPJWH9LauyBhZEXxlcdd+VyFOjDGxFhVZk6vCoUwEv5KXSXlFUYuKrJE5+dXCvlt3Ia7TYkKtKjIndxr/XcOXIMzzgrZWFZkje/Kl8WL7QP/xR7Z0wWs/9X5HvutNdnjdq2z6qpdFxXbsi9daulZkT/YZ/zbsQNwTtWSRuz7/YXu9+bU2ePlLFlcxJsa2ZM3InnSEU8EH5J1v3iRWqhs+9QGbv+plS5TKirExp/K6kT0ckg8ULIO4RW/Jd2q81GTkWvGdC4dkmYLdoXvHLSs3zrffVCrmVl4/HJLdC86r/vmKA8X7ImCVqnxACYfkvIL7EE+OKjWNI11FsehRKUM4JPcVNBCPxSo1jcN4RbHoUSlDOCSNgiHEM79KTeMcVVEselTKEA7JUMEA4pqr9mLhkAwUPAqNX36n9m/Fxi+/K3mk4GaY+/df1/7gEQ7JzQUnwPwN16h8XTjbh/twSE4oWBf6jjio9ifocEjWLfgeDN14be0vqcIh+V7BCzFobKw556ffqO1FcGQPh3AJpxLgROjebrPa3rZE9uTEEgT4IwzffENtbzQje/LH8WLPRQPycXatKjInjXAp48GGMHjx+bUTi8zJhmUieAX60ez8359rIxVZ0czsrygLA9uM+6zVoiJrsnVZFHg55sP8jddqe6nImMyP7GVxYA0Yffyxtn4iHNkiY7J6WRJ4Fu6G3n13a1uxyJbcHZnL0oDvQHNwsJmPDNqqIlNkg8haJgOOgKGrL287sciUHFEmC16FTpi/2bptIxVZks7IWKYC/grN+fOa+bBnVisyRBaIbKUKOBsGzjp11sUiQ3J2qQreij7oWn3ZWZOKtZO+yFRaAVaAsSceb3Z874szLhVrxtoQWUqrwFNxeeWfoVX/2dflkaW0ErwPQ2h2Lvf3GZOKtdDMtd9XpgOsByMP3q/j25+bdqlYI9ZK1ivTBZ6JW6D3kH2nXSzWSG6Jtct0gs+iaWSkOfcvv5g2qehtdLSJqM+WmQC7wND110ybWPROdikzBV6Ih2H+5uu1XCp6Jg/HWmUmwa+gOa+rOedHX22ZVPSKngh+VWYDnAP9Jx3TMrHolZxTZgu8B8PxBHbun39eWSp6RC8MR+8ym2AbGLzo3Mpi0SPZpsw2eCm6oPP/f5myVMxNuqJnaQewKgzdMPXDf8xNVi3tAp6Nh2DemstPWirmJNHj2aWdwDIwfNstkxaLOckypd3Ac/AEdP73T0stFWOTJ6JHaUewBgycecpSi8XYZI3SruBlGGwODy/VT0djTIzFYMwt7QwOhZ69d16iWIxJDi3tDr5CPh/5xqcWKRWvxRgEX6mDWP5GOF0r/muRYl0r/ltyV8wpdQCbQ98xhy1SLF5LNi91AV+A0ccfXaRYvJZ8oU5iT0cXNP7wExOlYl/SFWNLncARMH+L9U0Ui33JEaVuYGXoP/lYE8ViX7JyHcW+uahrx9iXfLOOYq+Bse75JorFvuQ1pY6gE8b/kV1sJ52lruCuib+9GtvJXXUWu2ri72fFdnJVncXOhvgXFykmtpOz6yx2MMzfdB0pJraTg+sstiwM33mbxm9/qPG7H4ntZNk6iz0Hd5hA7ntOqTN4OfbDo1mx/fIyzTwJJedUPgRWtocAAAAASUVORK5CYII=") no-repeat;background-size:100%;top:50%;left:50%;z-index:1;margin-left:-14px;margin-top:-43px;height:44px;width:28px;cursor:pointer}</style><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/49/10/common.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/49/10/util.js"></script></head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <img src="{{ url_for('static', filename='images/logo2.png')}}" style="height: 60px;" alt="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+                        <li class="nav-item">
+              <a class="nav-link" href="http://urda-system.com/projects-table">جدول المشاريع</a>
+            </li>
+                        <li class="nav-item">
+              <button class="nav-link btn btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <i class="fas fa-archive"></i>
+                المسودّات
+              </button>
+            </li>
+                        <li class="nav-item">
+                  <button class="nav-link btn btn-sm btn-primary text-white">
+                    <a href="{{ url_for('logout') }}"></a>
+                  <i class="fas fa-door-open"></i>
+                  تسجيل خروج
+                </button>
+            </li>
+           
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown1" aria-controls="navbarNavDropdown1" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown1">
+        <ul class="navbar-nav">
+                                    <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/1/reg_items">
+                  <i class="fas fa-file-signature"></i> التسجيلات</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/2/reg_items">
+                  <i class="fas fa-file-signature"></i> تقييم الحصص الغذائية</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/3/reg_items">
+                  <i class="fas fa-file-signature"></i> تقييم الإفطارات</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/4/reg_items">
+                  <i class="fas fa-file-signature"></i> الحملات</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/5/reg_items">
+                  <i class="fas fa-file-signature"></i> تقييم حصة اللحمة					</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/6/reg_items">
+                  <i class="fas fa-file-signature"></i> تقييم نشاطات الأضحى</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/7/reg_items">
+                  <i class="fas fa-file-signature"></i> مراقبة المسلخ</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/25/reg_items">
+                  <i class="fas fa-file-signature"></i> تقييم الإفطارات 2022</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/26/reg_items">
+                  <i class="fas fa-file-signature"></i> الحملات 2022</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/27/reg_items">
+                  <i class="fas fa-file-signature"></i> تقييم الحصص الغذائية 2022</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/28/reg_items">
+                  <i class="fas fa-file-signature"></i> مراقبة المسلخ 2022</a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="http://urda-system.com/forms/29/reg_items">
+                  <i class="fas fa-file-signature"></i> حملة فرن ومطبخ</a>
+            </li>
+                       
+        </ul>
+      </div>
+    </div>-->
+    <div id="navbar">{% include "navbar.html" %}</div>
+  </nav>    <div class="p-2">
+                    <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">قائمة المسودات</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-info drift-empty-message">لا يوجد مسودات</div>
+            <ul class="list-group list-group-flush drifts-container">
+                <li class="list-group-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="drift_id" value="fewfw1" id="flexRad<label class="form-check-label" for="flexRadioDefault1">
+                      Khaled ahmad
+                    </label>
+                  </div>
+                </li>
+            </ul>
+            <div class="drift-buttons-container">
+              <button class="btn btn-primary restore-btn"><i class="fas fa-check"></i> استرداد</button>
+              <button class="btn btn-danger clear-btn"><i class="fas fa-trash-o"></i> حذف الكل </button>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+        </div>
+      </div>
+    </div>
+  </div>
+                  <div class="app-messages p-4">
+            </div>
+        
+<!-- Modal -->
+<div class="modal fade" id="locationPicker" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="locationPickerLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="locationPickerLabel"><i class="fas fa-location"></i> GPS تحديد موقع</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="map" style="width:100%;height:80vh">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="location-pick-done-button" class="btn btn-primary" data-bs-dismiss="modal">اختيار الموقع</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col col-lg-9 col-md-12">
+            <div class="card">
+                <div class="card-header bg-dark text-light">
+                    <h4><i class="fas fa-file-plus"></i>
+                        <span>التسجيلات <i style="font-size: 15px; color: #666" class="fas fa-chevron-left"></i> </span>
+                        عنصر جديد
+                    </h4>
+                </div>
+                <form id="form" method="POST" class="driftable-form">
+                    <div class="card-body">
+
+                        {{ form.hidden_tag() }}
+                        <div class="alert alert-primary h6">
+                            <i class="fas fa-exclamation-triangle"></i>
+                                يرجى الانتباه لتعبئة كافة الحقول، والانتباه لوجود عدة صفحات تحوي حقول إضافية.
+                           
+                        </div>
+
+                        <input type="hidden" name="_token" value="NEBcFTilbCOxRCX1tRF8GToGY3e6N13ivRBdIGFM">                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link active" id="main-info" data-bs-toggle="tab" data-bs-target="#nav1" type="button" role="tab" aria-controls="home" aria-selected="true">معلومات أساسية</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link" id="act-rate" data-bs-toggle="tab" data-bs-target="#nav2" type="button" role="tab" aria-controls="profile" aria-selected="false">تقييم النشاط</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="act-rate" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">تقييم النشاط</button>
+                                      </li>
+                                      <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="act-rate" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">تقييم النشاط</button>
+                                      </li>
+                                      <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="act-rate" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">تقييم النشاط</button>
+                                      </li>
+                                  </ul>
+                            </div>
+                        </nav>
+                        <div class="tab-content p-4" id="nav-tabContent">
+                            <div id="form-fields">
+                                <div class="tab-pane fade show active" id="nav1" role="tabpanel" aria-labelledby="nav-2-tab">
+                                
+                                    <label for="field-7" style="font-size: 16px;margin-top: 5px;" class="form-label">الاسم <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="text" field-id="f_7" autocomplete="false" name="name" class="form-control" id="field-7">
+                                    </div>
+                                    <label for="field-8" style="font-size: 16px;margin-top: 5px;" class="form-label">رقم الجوال <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="text" field-id="f_8" autocomplete="false" name="mobile_number" class="form-control" id="field-8">
+                                    </div>
+                                    <label for="field-14" style="font-size: 16px;margin-top: 5px;" class="form-label">رقم الهاتف <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="text" field-id="f_14" autocomplete="false" name="phone_number" class="form-control" id="field-14">
+                                    </div>
+                                    <label for="field-15" style="font-size: 16px;margin-top: 5px;" class="form-label">المحافظة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_15" class="form-select" name="city" aria-label="Default select example" id="field-15">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="بيروت">بيروت</option>
+                                                                                        <option value="جبل لبنان">جبل لبنان</option>
+                                                                                        <option value="الشمال">الشمال</option>
+                                                                                        <option value="الجنوب">الجنوب</option>
+                                                                                        <option value="البقاع">البقاع</option>
+                                                                                        <option value="النبطية">النبطية</option>
+                                                                                        <option value="بعلبك الهرمل">بعلبك الهرمل</option>
+                                                                                        <option value="عكار">عكار</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-16" style="font-size: 16px;margin-top: 5px;" class="form-label">العنوان الكامل <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="text" field-id="f_16" autocomplete="false" name="address" class="form-control" id="field-16">
+                                    </div>
+                                    <label for="field-17" style="font-size: 16px;margin-top: 5px;" class="form-label">الصلة بربِّ الأسرة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="text" field-id="f_17" autocomplete="false" name="family_master_relation" class="form-control" id="field-17">
+                                    </div>
+                                    <label for="field-18" style="font-size: 16px;margin-top: 5px;" class="form-label">هل الأب (ربُّ الأسرة) موجود؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_18" class="form-select" name="family_father_exists" aria-label="Default select example" id="field-18">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                            <option value="موجود">موجود</option>
+                                            <option value="متوفِّ">متوفِّ</option>
+                                            <option value="مفقود">مفقود</option>
+                                            <option value="مطلِّق">مطلِّق</option>
+                                            <option value="غائب">غائب</option>
+                                            <option value="هاجِر">هاجِر</option>
+                                            <option value="زواج ثانٍ">زواج ثانٍ</option>
+                                        </select>
+                                    </div>
+                                    <label for="field-19" style="font-size: 16px;margin-top: 5px;" class="form-label">هل الأم موجودة؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_19" class="form-select" name="family_mother_exists" aria-label="Default select example" id="field-19">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="موجودة">موجودة</option>
+                                                                                        <option value="متوفاة">متوفاة</option>
+                                                                                        <option value="مفقودة">مفقودة</option>
+                                                                                        <option value="مطلّقة">مطلّقة</option>
+                                                                                        <option value="زواج ثانٍ">زواج ثانٍ</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-20" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد أفراد الأسرة (مع الأب والأمّ) <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_20" type="number" name="family_count" class="form-control" id="field-20">
+                                    </div>
+                                    <label for="field-21" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد فوق سنّ 18 سنة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_21" type="number" name="family_adults_count" class="form-control" id="field-21">
+                                    </div>
+                                    <label for="field-22" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد دون سنّ 18 سنة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_22" type="number" name="family_children_count" class="form-control" id="field-22">
+                                    </div>
+                                    <label for="field-23" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الفتيات تحت سنّ 18 سنة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_23" type="number" name="family_kids_girls_count" class="form-control" id="field-23">
+                                    </div>
+                                    <label for="field-24" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الفتيات المتزوِّجات تحت سنّ 18 سنة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_24" type="number" name="family_married_kids_count" class="form-control" id="field-24">
+                                    </div>
+                                    <label for="field-49" style="font-size: 16px;margin-top: 5px;" class="form-label">رتب أولويّاتك باحتياج المُساعدة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="hidden" field-id="f_49" name="field_1611222958" value="مساعدة في دفع الإيجار,مساعدة في الغذاء,إجراء الصيانة,تدريب مهني,مشروع تنموي,قسط مدرسي,قسط جامعي,مساعدات طبية وأدوية,مواد التنظيف والغسيل,مساعدة نقدية,المازوت وسائل التدفئة,السجاد,مستلزمات للمنزل,تأمين كلفة المياه والكهرباء الشهرية,تأمين الضرائب">
+                                        <div class="FieldContainer ui-sortable">
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">مساعدة في دفع الإيجار</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">مساعدة في الغذاء</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">إجراء الصيانة</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">تدريب مهني</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">مشروع تنموي</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">قسط مدرسي</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">قسط جامعي</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">مساعدات طبية وأدوية</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">مواد التنظيف والغسيل</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">مساعدة نقدية</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">المازوت وسائل التدفئة</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">السجاد</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">مستلزمات للمنزل</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">تأمين كلفة المياه والكهرباء الشهرية</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">تأمين الضرائب</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                    </div>
+                                    </div>
+                                    <label for="field-50" style="font-size: 16px;margin-top: 5px;" class="form-label">أولويّات أخرى <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="text" field-id="f_50" autocomplete="false" name="field_1611223354" class="form-control" id="field-50">
+                                <label for="field-67" style="font-size: 16px;margin-top: 5px;" class="form-label">من يعيل الأسرة حالياً <sup class="text-danger">*</sup></label>
+    <div class="input-group mb-3">
+                                        <select field-id="f_67" class="form-select" name="field_1611230997" aria-label="Default select example" id="field-67">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="الأب">الأب</option>
+                                                                                        <option value="الأم">الأم</option>
+                                                                                        <option value="الابن فوق 18">الابن فوق 18</option>
+                                                                                        <option value="الابنة قوق 18">الابنة قوق 18</option>
+                                                                                        <option value="الابن تحت 18">الابن تحت 18</option>
+                                                                                        <option value="الابنة تحت 18">الابنة تحت 18</option>
+                                                                                        <option value="أحد الأقرباء">أحد الأقرباء</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-98" style="font-size: 16px;margin-top: 5px;" class="form-label">هل لديك تفاصيل أخرى؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="text" field-id="f_98" autocomplete="false" name="field_1611235066" class="form-control" id="field-98">
+                                    </div>
+                                    <label for="field-99" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 0 - 4 ) <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_99" type="number" name="field_1612518121" class="form-control" id="field-99">
+                                    </div>
+                                    <label for="field-100" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 5 - 8 ) <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_100" type="number" name="field_1612518141" class="form-control" id="field-100">
+                                    </div>
+                                    <label for="field-101" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 13 - 9 ) <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_101" type="number" name="field_1612518165" class="form-control" id="field-101">
+                                    </div>
+                                    <label for="field-102" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 14 - 18 ) <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_102" type="number" name="field_1612518219" class="form-control" id="field-102">
+                                    </div>
+                                    <label for="field-103" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 19 - 25 ) <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_103" type="number" name="field_1612518623" class="form-control" id="field-103">
+                                    </div>
+                                    <label for="field-104" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 26 - 50 ) <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_104" type="number" name="field_1612518638" class="form-control" id="field-104">
+                                    </div>
+                                    <label for="field-105" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم بين ( 51 - 64 ) <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_105" type="number" name="field_1612518659" class="form-control" id="field-105">
+                                    </div>
+                                    <label for="field-106" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأفراد الذين أعمارهم فوق 64 <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_106" type="number" name="field_1612518673" class="form-control" id="field-106">
+                                    </div>
+                                    <label for="field-108" style="font-size: 16px;margin-top: 5px;" class="form-label">الجنسية <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_108" class="form-select" name="field_1617714362" aria-label="Default select example" id="field-108">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="فلسطيني">فلسطيني</option>
+                                                                                        <option value="سوري">سوري</option>
+                                                                                        <option value="لبناني">لبناني</option>
+                                                                                    </select>
+                                    </div>
+                                        </div>
+                            </div>
+                        <div class="tab-pane fade" id="nav2" role="tabpanel" aria-labelledby="nav-3-tab">
+                                <div id="form-fields">
+                                <label for="field-26" style="font-size: 16px;margin-top: 5px;" class="form-label">حالة عقد الزواج <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_26" class="form-select" name="marriage_contract_status" aria-label="Default select example" id="field-26">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="غير مسجل في الدوائر الرسمية">غير مسجل في الدوائر الرسمية</option>
+                                                                                        <option value="مسجل في لبنان">مسجل في لبنان</option>
+                                                                                        <option value="مسجل في سوريا">مسجل في سوريا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-27" style="font-size: 16px;margin-top: 5px;" class="form-label">مرحلة عقد الزواج <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_27" class="form-select" name="marriage_contract_level" aria-label="Default select example" id="field-27">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="عند الشيخ">عند الشيخ</option>
+                                                                                        <option value="في المحكمة الشرعية">في المحكمة الشرعية</option>
+                                                                                        <option value="محكمة شرعية ونفوس">محكمة شرعية ونفوس</option>
+                                                                                        <option value="محكمة شرعية وسجل وقوعات الأجانب">محكمة شرعية وسجل وقوعات الأجانب</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-28" style="font-size: 16px;margin-top: 5px;" class="form-label">الأسباب التي منعت التسجيل <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_28" class="form-select" name="contruct_unregistered_causes" aria-label="Default select example" id="field-28">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نقص بالأوراق الثبوتية">نقص بالأوراق الثبوتية</option>
+                                                                                        <option value="صعوبات مالية">صعوبات مالية</option>
+                                                                                        <option value="صعوبة التنقل">صعوبة التنقل</option>
+                                                                                        <option value="عدم معرفة الاجراءات">عدم معرفة الاجراءات</option>
+                                                                                        <option value="بسبب شروط القوانين اللبنانية">بسبب شروط القوانين اللبنانية</option>
+                                                                                        <option value="إهمال أو عدم وعي">إهمال أو عدم وعي</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-29" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تم تسجيل الأطفال؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_29" class="form-select" name="children_registered" aria-label="Default select example" id="field-29">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم جميع الأطفال مسجلين">نعم جميع الأطفال مسجلين</option>
+                                                                                        <option value="يوجد أطفال مسجلين وأطفال غير مسجلين">يوجد أطفال مسجلين وأطفال غير مسجلين</option>
+                                                                                        <option value="جميع الأطفال غير مسجلين">جميع الأطفال غير مسجلين</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-30" style="font-size: 16px;margin-top: 5px;" class="form-label">مكان تسجيل الأطفال <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_30" class="form-select" name="child_reg_place" aria-label="Default select example" id="field-30">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="المختار">المختار</option>
+                                                                                        <option value="وقوعات الأجانب">وقوعات الأجانب</option>
+                                                                                        <option value="وزارة الخارجية اللبنانية في بيروت">وزارة الخارجية اللبنانية في بيروت</option>
+                                                                                        <option value="السفارة السورية في بيروت">السفارة السورية في بيروت</option>
+                                                                                        <option value="سجلات النفوس في سورية">سجلات النفوس في سورية</option>
+                                                                                        <option value="وزارة الداخلية | النفوس اللبنانية">وزارة الداخلية | النفوس اللبنانية</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-31" style="font-size: 16px;margin-top: 5px;" class="form-label">سبب عدم تسجيل الأطفال أو عدم إكماله <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_31" class="form-select" name="children_unregistered__cause" aria-label="Default select example" id="field-31">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نقص بالأوراق الثبوتية للأهل">نقص بالأوراق الثبوتية للأهل</option>
+                                                                                        <option value="صعوبات مالية">صعوبات مالية</option>
+                                                                                        <option value="صعوبات التنقل">صعوبات التنقل</option>
+                                                                                        <option value="عدم المعرفة بالإجراءات">عدم المعرفة بالإجراءات</option>
+                                                                                        <option value="بسبب شروط القوانين اللبنانية">بسبب شروط القوانين اللبنانية</option>
+                                                                                        <option value="إهمال أو عدم الوعي">إهمال أو عدم الوعي</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-32" style="font-size: 16px;margin-top: 5px;" class="form-label">ماهي أبرز التحديات التي تواجهينها بسبب عدم اكتمال أوراق عقد الزواج أو غياب الزوج؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_32" class="form-select" name="challanges_no_contract" aria-label="Default select example" id="field-32">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="عدم القدرة على التنقل والسفر مع الأطفال">عدم القدرة على التنقل والسفر مع الأطفال</option>
+                                                                                        <option value="عدم القدرة على الاستفادة من الخدمات التي تحتاج الى أوراق ثبوتية">عدم القدرة على الاستفادة من الخدمات التي تحتاج الى أوراق ثبوتية</option>
+                                                                                        <option value="المعاناة من نظرة المجتمع السيئة والتنمر تجاه الأطفال">المعاناة من نظرة المجتمع السيئة والتنمر تجاه الأطفال</option>
+                                                                                        <option value="عدم القدرة على الزواج مرة أخرى بسبب عدم اكتمال إجراءات الزواج السابق أو تحرير القيود منه">عدم القدرة على الزواج مرة أخرى بسبب عدم اكتمال إجراءات الزواج السابق أو تحرير القيود منه</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-33" style="font-size: 16px;margin-top: 5px;" class="form-label">مصدر المساعدات <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_33" class="form-select" name="helps_source" aria-label="Default select example" id="field-33">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="UNHCR">UNHCR</option>
+                                                                                        <option value="وزارة الشؤون الاجتماعية">وزارة الشؤون الاجتماعية</option>
+                                                                                        <option value="UNRWA">UNRWA</option>
+                                                                                        <option value="لا يوجد">لا يوجد</option>
+                                                                                        <option value="أخرى">أخرى</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-34" style="font-size: 16px;margin-top: 5px;" class="form-label">مدّة المساعدة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_34" class="form-select" name="helps_duration" aria-label="Default select example" id="field-34">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="مرة بالسنة">مرة بالسنة</option>
+                                                                                        <option value="بمناسبة رمضان والأعياد">بمناسبة رمضان والأعياد</option>
+                                                                                        <option value="موسمية">موسمية</option>
+                                                                                        <option value="شهرية">شهرية</option>
+                                                                                        <option value="لا يوجد">لا يوجد</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-35" style="font-size: 16px;margin-top: 5px;" class="form-label">هل استفدت من URDA مسبقاً ؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_35" class="form-select" name="urda_using" aria-label="Default select example" id="field-35">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم - مساعدات نقدية">نعم - مساعدات نقدية</option>
+                                                                                        <option value="نعم - مساعدات إغاثية">نعم - مساعدات إغاثية</option>
+                                                                                        <option value="نعم - إغاثية ونقدية">نعم - إغاثية ونقدية</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-36" style="font-size: 16px;margin-top: 5px;" class="form-label">هل كانت الاستفادة كافية أو غير كافية؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_36" class="form-select" name="urda_using_enough" aria-label="Default select example" id="field-36">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="كافية">كافية</option>
+                                                                                        <option value="غير كافية">غير كافية</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-37" style="font-size: 16px;margin-top: 5px;" class="form-label">ما هي طبيعة المساعدة التي تحتاجها؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="text" field-id="f_37" autocomplete="false" name="help_you_need" class="form-control" id="field-37">
+                                    </div>
+                                    </div>
+                            </div>
+                        <div class="tab-pane fade" id="nav-4" role="tabpanel" aria-labelledby="nav-4-tab">
+                                <div id="form-fields">
+                                    <label for="field-53" style="font-size: 16px;margin-top: 5px;" class="form-label">هل انعكست الأزمة الاقتصادية على قدرتك على تغطية كلفة التعليم لأولادك؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_53" class="form-select" name="field_1611223471" aria-label="Default select example" id="field-53">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-54" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تعطي أقساط المدرسة الأولوية على حساب مصاريف أخرى؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_54" class="form-select" name="field_1611223484" aria-label="Default select example" id="field-54">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-55" style="font-size: 16px;margin-top: 5px;" class="form-label">طريقة تأمين تكاليف الدراسة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_55" class="form-select" name="field_1611228689" aria-label="Default select example" id="field-55">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="دعم من الدولة">دعم من الدولة</option>
+                                                                                        <option value="استدانة">استدانة</option>
+                                                                                        <option value="دعم من جمعية إنسانية">دعم من جمعية إنسانية</option>
+                                                                                        <option value="تأجيل الدفع">تأجيل الدفع</option>
+                                                                                        <option value="منحة دراسية">منحة دراسية</option>
+                                                                                        <option value="من مالك الخاص">من مالك الخاص</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-56" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في الإبتدائي <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_56" type="number" name="field_1611229254" class="form-control" id="field-56">
+                                    </div>
+                                    <label for="field-57" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في المتوسط <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_57" type="number" name="field_1611229269" class="form-control" id="field-57">
+                                    </div>
+                                    <label for="field-58" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في الثانوية <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_58" type="number" name="field_1611229303" class="form-control" id="field-58">
+                                    </div>
+                                    <label for="field-59" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في الجامعة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_59" type="number" name="field_1611229312" class="form-control" id="field-59">
+                                    </div>
+                                    <label for="field-60" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في المهني المدرسي <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="text" field-id="f_60" autocomplete="false" name="field_1611229345" class="form-control" id="field-60">
+                                    </div>
+                                    <label for="field-61" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأولاد في المهني الجامعي <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_61" type="number" name="field_1611229373" class="form-control" id="field-61">
+                                    </div>
+                                    <label for="field-62" style="font-size: 16px;margin-top: 5px;" class="form-label">هل قمتم بنقل أولادكم من مدرسة خاصة إلى مدرسة رسمية؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_62" class="form-select" name="field_1611229404" aria-label="Default select example" id="field-62">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-63" style="font-size: 16px;margin-top: 5px;" class="form-label">نوع المدرسة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_63" class="form-select" name="field_1611229555" aria-label="Default select example" id="field-63">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="خاصة">خاصة</option>
+                                                                                        <option value="رسمية">رسمية</option>
+                                                                                        <option value="ذوي احتياجات خاصة">ذوي احتياجات خاصة</option>
+                                                                                        <option value="محو أمّية">محو أمّية</option>
+                                                                                        <option value="تدريب مهني معجل">تدريب مهني معجل</option>
+                                                                                        <option value="مهني">مهني</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-64" style="font-size: 16px;margin-top: 5px;" class="form-label">نوع المساعدة الماليّة المُحتاجة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_64" class="form-select" name="field_1611229739" aria-label="Default select example" id="field-64">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="قسط">قسط</option>
+                                                                                        <option value="مواصلات">مواصلات</option>
+                                                                                        <option value="قرطاسية">قرطاسية</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-65" style="font-size: 16px;margin-top: 5px;" class="form-label">هل يوجد لديكم أولاد توقفوا عن الدراسة؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_65" class="form-select" name="field_1611230071" aria-label="Default select example" id="field-65">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-66" style="font-size: 16px;margin-top: 5px;" class="form-label">أسباب التوقف عن متابعة الدراسة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_66" class="form-select" name="field_1611230788" aria-label="Default select example" id="field-66">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="الارتفاع الحالي لكلفة التعليم">الارتفاع الحالي لكلفة التعليم</option>
+                                                                                        <option value="بسبب عدد الأولاد الذين يدرسون في الأسرة">بسبب عدد الأولاد الذين يدرسون في الأسرة</option>
+                                                                                        <option value="الرسوب المتكرر">الرسوب المتكرر</option>
+                                                                                        <option value="عدم الرغبة في الدراسة">عدم الرغبة في الدراسة</option>
+                                                                                        <option value="البحث عن عمل">البحث عن عمل</option>
+                                                                                        <option value="البقاء في المنزل">البقاء في المنزل</option>
+                                                                                    </select>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-5" role="tabpanel" aria-labelledby="nav-5-tab">
+                                <div id="form-fields">
+                                    <label for="field-38" style="font-size: 16px;margin-top: 5px;" class="form-label">نوع السكن <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_38" class="form-select" name="home_type" aria-label="Default select example" id="field-38">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="بيت">بيت</option>
+                                                                                        <option value="مأوى جماعي">مأوى جماعي</option>
+                                                                                        <option value="خيمة">خيمة</option>
+                                                                                        <option value="مخزن">مخزن</option>
+                                                                                        <option value="كراج">كراج</option>
+                                                                                        <option value="قبو">قبو</option>
+                                                                                        <option value="منزل غير مؤهل للسكن">منزل غير مؤهل للسكن</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-39" style="font-size: 16px;margin-top: 5px;" class="form-label">وضع المسكن <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_39" class="form-select" name="home_status" aria-label="Default select example" id="field-39">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="مُلك">مُلك</option>
+                                                                                        <option value="أجار">أجار</option>
+                                                                                        <option value="مشترك مع الأهل">مشترك مع الأهل</option>
+                                                                                        <option value="خيمة مُستأجرة">خيمة مُستأجرة</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-40" style="font-size: 16px;margin-top: 5px;" class="form-label">أجار المسكن L.B.P <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_40" type="number" name="home_rent_price" class="form-control" id="field-40">
+                                    </div>
+                                    <label for="field-41" style="font-size: 16px;margin-top: 5px;" class="form-label">هل إقامتك في المنزل قانونية؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_41" class="form-select" name="home_stay_legal" aria-label="Default select example" id="field-41">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                        <option value="غير ذلك">غير ذلك</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-42" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد غرف السكن <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_42" type="number" name="home_size_rooms" class="form-control" id="field-42">
+                                    </div>
+                                    <label for="field-43" style="font-size: 16px;margin-top: 5px;" class="form-label">هل يوجد منتفعات؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_43" class="form-select" name="home_path_and_kitchen" aria-label="Default select example" id="field-43">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-44" style="font-size: 16px;margin-top: 5px;" class="form-label">صالح للسكن؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_44" class="form-select" name="home_stayable" aria-label="Default select example" id="field-44">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-45" style="font-size: 16px;margin-top: 5px;" class="form-label">يحتاج للترميم <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_45" class="form-select" name="home_needfix" aria-label="Default select example" id="field-45">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-46" style="font-size: 16px;margin-top: 5px;" class="form-label">يحتاج للصيانة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_46" class="form-select" name="home_needmaintainance" aria-label="Default select example" id="field-46">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-47" style="font-size: 16px;margin-top: 5px;" class="form-label">هل أنتَ قادرٌ على دفع إيجار المسكن؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_47" class="form-select" name="home_rental_ability" aria-label="Default select example" id="field-47">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-48" style="font-size: 16px;margin-top: 5px;" class="form-label">كيف يتم تأمين الإيجار؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_48" class="form-select" name="field_1611222627" aria-label="Default select example" id="field-48">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="استدانة">استدانة</option>
+                                                                                        <option value="دفع بالتقسيط">دفع بالتقسيط</option>
+                                                                                        <option value="من المدخول">من المدخول</option>
+                                                                                        <option value="من جمعية إنسانية">من جمعية إنسانية</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-51" style="font-size: 16px;margin-top: 5px;" class="form-label">هل العلاقة جيدة مع أهل المنطقة؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_51" class="form-select" name="field_1611223377" aria-label="Default select example" id="field-51">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-52" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تشعرون بالأمان في محيط منطقة السكن؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_52" class="form-select" name="field_1611223407" aria-label="Default select example" id="field-52">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                                                                                        </div>
+                            </div>
+                                                        <div class="tab-pane fade" id="nav-6" role="tabpanel" aria-labelledby="nav-6-tab">
+                                <div id="form-fields">
+<label for="field-68" style="font-size: 16px;margin-top: 5px;" class="form-label">مجال العمل <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_68" class="form-select" name="field_161123151" aria-label="Default select example" id="field-68">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="زراعة">زراعة</option>
+                                                                                        <option value="أعمال بناء">أعمال بناء</option>
+                                                                                        <option value="أعمال الصناعة والتصليحات">أعمال الصناعة والتصليحات</option>
+                                                                                        <option value="بائع متجول">بائع متجول</option>
+                                                                                        <option value="بائع في المحلات التجارية">بائع في المحلات التجارية</option>
+                                                                                        <option value="خدمات">خدمات</option>
+                                                                                        <option value="تنظيفات">تنظيفات</option>
+                                                                                        <option value="سكرتاريا">سكرتاريا</option>
+                                                                                        <option value="التعليم">التعليم</option>
+                                                                                        <option value="غير ذلك">غير ذلك</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-69" style="font-size: 16px;margin-top: 5px;" class="form-label">هل أثرت الأزمة الاقتصادية على مدخول أسرتكم؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_69" class="form-select" name="field_1611231583" aria-label="Default select example" id="field-69">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-70" style="font-size: 16px;margin-top: 5px;" class="form-label">كيف تُقيّم وضع الأسرة الاقتصادي؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_70" class="form-select" name="field_1611231721" aria-label="Default select example" id="field-70">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="تراجع الدخل الشّهري">تراجع الدخل الشّهري</option>
+                                                                                        <option value="أقبض الراتب كاملاً">أقبض الراتب كاملاً</option>
+                                                                                        <option value="يوجد مدّخرات سابقة">يوجد مدّخرات سابقة</option>
+                                                                                        <option value="أقبض نصف الراتب">أقبض نصف الراتب</option>
+                                                                                        <option value="أوقِفتُ عن العمل">أوقِفتُ عن العمل</option>
+                                                                                        <option value="مهدد بالتوقيف عن العمل">مهدد بالتوقيف عن العمل</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-71" style="font-size: 16px;margin-top: 5px;" class="form-label">ما هي الاحتياجات من حيث الأولويّة؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="hidden" field-id="f_71" name="field_1611231841" value="تأمين استمرارية تكاليف العلاج والأدوية,تأمين استمرارية المأكل والمواد الغذائية,تأمين الملابس,تأمين كلفة التعليم,تأمين احتياجات الأطفال من حليب وحفاضات,تأمين احتياجات كبار السن من أدوية وحفاضات,تأمين الترفيه للعائلة">
+                                        <div class="FieldContainer ui-sortable">
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">تأمين استمرارية تكاليف العلاج والأدوية</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">تأمين استمرارية المأكل والمواد الغذائية</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">تأمين الملابس</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">تأمين كلفة التعليم</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">تأمين احتياجات الأطفال من حليب وحفاضات</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">تأمين احتياجات كبار السن من أدوية وحفاضات</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                        <div class="OrderingField mb-1 ui-sortable-handle">
+                                                <div class="value float-start d-block">تأمين الترفيه للعائلة</div>
+                                                <div class="btns float-end">
+                                                    <button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>
+                                                    <button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                                                                    </div>
+                                    </div>
+                                    <label for="field-72" style="font-size: 16px;margin-top: 5px;" class="form-label">ماذا تفعل في حال لا يغطي المدخول كلفة تأمين الاحتياجات المعيشية؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_72" class="form-select" name="field_1611232012" aria-label="Default select example" id="field-72">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="الاستدانة">الاستدانة</option>
+                                                                                        <option value="التركيز على تغطية الأساسيات">التركيز على تغطية الأساسيات</option>
+                                                                                        <option value="طلب المساعدة من الأقارب">طلب المساعدة من الأقارب</option>
+                                                                                        <option value="طلب المساعدة من الجمعيات">طلب المساعدة من الجمعيات</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-73" style="font-size: 16px;margin-top: 5px;" class="form-label">هل ترغب في التدريب على مهنة مُنتِجة؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_73" class="form-select" name="field_1611232079" aria-label="Default select example" id="field-73">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-74" style="font-size: 16px;margin-top: 5px;" class="form-label">هل ترغب في الحصول على قرض إنتاجي أو مساعدة تمكّنك من الإنتاج؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_74" class="form-select" name="field_1611232131" aria-label="Default select example" id="field-74">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                                                                                        </div>
+                            </div>
+                                                        <div class="tab-pane fade" id="nav-7" role="tabpanel" aria-labelledby="nav-7-tab">
+                                <div id="form-fields">
+<label for="field-85" style="font-size: 16px;margin-top: 5px;" class="form-label">هل أنتم قادرون على الحصول على الخدمات الطبية <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_85" class="form-select" name="field_1611234202" aria-label="Default select example" id="field-85">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم، بشكلٍ كامل">نعم، بشكلٍ كامل</option>
+                                                                                        <option value="نعم، بشكل جزئي">نعم، بشكل جزئي</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-86" style="font-size: 16px;margin-top: 5px;" class="form-label">عدد الأشخاص الذين يُعانون من أمراض مزمنة <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" field-id="f_86" type="number" name="field_1611234229" class="form-control" id="field-86">
+                                    </div>
+                                    <label for="field-87" style="font-size: 16px;margin-top: 5px;" class="form-label">هل هناك جهة تساعدكم في تغطية تكاليف الطبابة؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_87" class="form-select" name="field_1611234292" aria-label="Default select example" id="field-87">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="جهة ضامنة">جهة ضامنة</option>
+                                                                                        <option value="تغطية كاملة">تغطية كاملة</option>
+                                                                                        <option value="نصف تغطية">نصف تغطية</option>
+                                                                                        <option value="تغطية جزئية">تغطية جزئية</option>
+                                                                                        <option value="لا أحصل على المُساعدة">لا أحصل على المُساعدة</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-88" style="font-size: 16px;margin-top: 5px;" class="form-label">هل أصيب أحد أفراد الأسرة بفيروس الكورونا؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_88" class="form-select" name="field_1611234352" aria-label="Default select example" id="field-88">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم وشُفي">نعم وشُفي</option>
+                                                                                        <option value="نعم وترك أثر على صحّته">نعم وترك أثر على صحّته</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-89" style="font-size: 16px;margin-top: 5px;" class="form-label">هل يعاني أحد أطفالك لأي نوع من الاضطرابات النفسية أو الاجتماعية؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_89" class="form-select" name="field_1611234514" aria-label="Default select example" id="field-89">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="تنمر">تنمر</option>
+                                                                                        <option value="استغلال">استغلال</option>
+                                                                                        <option value="عنف جسدي">عنف جسدي</option>
+                                                                                        <option value="عنف لفظي">عنف لفظي</option>
+                                                                                        <option value="اعتداء جنسي">اعتداء جنسي</option>
+                                                                                        <option value="إهمال">إهمال</option>
+                                                                                        <option value="صعوبة في النّوم">صعوبة في النّوم</option>
+                                                                                        <option value="التبوّل اللاإرادي">التبوّل اللاإرادي</option>
+                                                                                        <option value="اكتئاب">اكتئاب</option>
+                                                                                        <option value="انعزال">انعزال</option>
+                                                                                        <option value="قلق وتوتر">قلق وتوتر</option>
+                                                                                        <option value="حل مشاكله بالضرب">حل مشاكله بالضرب</option>
+                                                                                        <option value="سرقة">سرقة</option>
+                                                                                        <option value="كذب">كذب</option>
+                                                                                        <option value="يُصاحب رفاقَ السوء">يُصاحب رفاقَ السوء</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-90" style="font-size: 16px;margin-top: 5px;" class="form-label">هل يشترك طفلك ببرنامج الدعم النفسي الاجتماعي والأنشطة التي تنمي المهارات الحياتية؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_90" class="form-select" name="field_161123461" aria-label="Default select example" id="field-90">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-91" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تعرضت (المرأة) لأي نوع من أنواع العنف أو الإساءة؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_91" class="form-select" name="field_1611234681" aria-label="Default select example" id="field-91">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="لفظي">لفظي</option>
+                                                                                        <option value="جسدي">جسدي</option>
+                                                                                        <option value="جنسي">جنسي</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-92" style="font-size: 16px;margin-top: 5px;" class="form-label">في حال تعرضها للعنف أو الإساءة، متى تم هذا الحادث؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_92" class="form-select" name="field_1611234747" aria-label="Default select example" id="field-92">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="أثناء الحجر المنزلي">أثناء الحجر المنزلي</option>
+                                                                                        <option value="قبل ذلك">قبل ذلك</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-93" style="font-size: 16px;margin-top: 5px;" class="form-label">في حال تم التعرض لعنف أو إساءة، حدد أين وقع هذا الحادث؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_93" class="form-select" name="field_1611234793" aria-label="Default select example" id="field-93">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="المنزل">المنزل</option>
+                                                                                        <option value="الشارع">الشارع</option>
+                                                                                        <option value="العمل">العمل</option>
+                                                                                        <option value="غير ذلك">غير ذلك</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-94" style="font-size: 16px;margin-top: 5px;" class="form-label">في حال تم التعرض لعنف أو إعتداء او إساءة، هل تم التبليغ عن الحادث؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_94" class="form-select" name="field_1611234853" aria-label="Default select example" id="field-94">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم، تم التبليغ للأصدقاء">نعم، تم التبليغ للأصدقاء</option>
+                                                                                        <option value="نعم، تم التبليغ لجهة حكومية">نعم، تم التبليغ لجهة حكومية</option>
+                                                                                        <option value="نعم، تم التبليغ لجمعية اجتماعية">نعم، تم التبليغ لجمعية اجتماعية</option>
+                                                                                        <option value="لم يتم التبليغ">لم يتم التبليغ</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-95" style="font-size: 16px;margin-top: 5px;" class="form-label">في حال تم التبليغ هل تمت المتابعة وتقديم الدعم النفسي الاجتماعي من قبل جمعية متخصصة ومتابعتك من قبل الجمعية؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_95" class="form-select" name="field_16112349" aria-label="Default select example" id="field-95">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-96" style="font-size: 16px;margin-top: 5px;" class="form-label">هل يوجد في العائلة (أو الجيران) فتاة من ذوي الاحتياجات الخاصة و تتعرض للعنف والإساءة؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_96" class="form-select" name="field_1611235001" aria-label="Default select example" id="field-96">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم، عنف جسدي">نعم، عنف جسدي</option>
+                                                                                        <option value="نعم، عنف جنسي">نعم، عنف جنسي</option>
+                                                                                        <option value="نعم، عنف لفظي">نعم، عنف لفظي</option>
+                                                                                        <option value="نعم، إهمال">نعم، إهمال</option>
+                                                                                        <option value="لا يوجد">لا يوجد</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-97" style="font-size: 16px;margin-top: 5px;" class="form-label">في حال وجود في العائلة أو الجيران فتاة من ذوي الاحتياجات الخاصة وتتعرض للعنف والإساءة، حدد من؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="text" field-id="f_97" autocomplete="false" name="field_161123504" class="form-control" id="field-97">
+                                    </div>
+                                                                                                        </div>
+                            </div>
+                                                        <div class="tab-pane fade" id="nav-8" role="tabpanel" aria-labelledby="nav-8-tab">
+                                <div id="form-fields">
+<label for="field-75" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تجيدين استعمال الحاسوب؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <div field-id="f_75" class="form-check form-switch" style="font-size:20px;">
+                                            <input required="" class="form-check-input" name="field_1611232363" type="checkbox" id="flexSwitchCheckDefault">
+                                        </div>
+                                    </div>
+                                    <label for="field-76" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تجيدين استعمال الهاتف الذكي اوالايباد؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <div field-id="f_76" class="form-check form-switch" style="font-size:20px;">
+                                            <input required="" class="form-check-input" name="field_1611232384" type="checkbox" id="flexSwitchCheckDefault">
+                                        </div>
+                                    </div>
+                                    <label for="field-77" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تجيدين استعمال برنامج Word؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <div field-id="f_77" class="form-check form-switch" style="font-size:20px;">
+                                            <input required="" class="form-check-input" name="field_1611232399" type="checkbox" id="flexSwitchCheckDefault">
+                                        </div>
+                                    </div>
+                                    <label for="field-78" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تجيدين استعمال برنامج Excel؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <div field-id="f_78" class="form-check form-switch" style="font-size:20px;">
+                                            <input required="" class="form-check-input" name="field_1611232415" type="checkbox" id="flexSwitchCheckDefault">
+                                        </div>
+                                    </div>
+                                    <label for="field-79" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تجيدين استعمال برنامج PowerPoint؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <div field-id="f_79" class="form-check form-switch" style="font-size:20px;">
+                                            <input required="" class="form-check-input" name="field_1611232677" type="checkbox" id="flexSwitchCheckDefault">
+                                        </div>
+                                    </div>
+                                    <label for="field-80" style="font-size: 16px;margin-top: 5px;" class="form-label">هل تجيدين لغات أخرى، حدّديها. <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <input required="" type="text" field-id="f_80" autocomplete="false" name="field_1611232983" class="form-control" id="field-80">
+                                    </div>
+                                    <label for="field-81" style="font-size: 16px;margin-top: 5px;" class="form-label">أي نوع من التدريبات أنتِ بحاجة إليها؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_81" class="form-select" name="field_1611233605" aria-label="Default select example" id="field-81">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="سكرتاريا">سكرتاريا</option>
+                                                                                        <option value="محاسبة">محاسبة</option>
+                                                                                        <option value="طبخ">طبخ</option>
+                                                                                        <option value="خياطة">خياطة</option>
+                                                                                        <option value="رعاية مسنين">رعاية مسنين</option>
+                                                                                        <option value="تدبير منزلي">تدبير منزلي</option>
+                                                                                        <option value="تدريبات تقنية">تدريبات تقنية</option>
+                                                                                        <option value="تدريبات مهنية">تدريبات مهنية</option>
+                                                                                        <option value="طبخ وحلويات">طبخ وحلويات</option>
+                                                                                        <option value="خياطة وتطريز">خياطة وتطريز</option>
+                                                                                        <option value="صناعة المونة">صناعة المونة</option>
+                                                                                        <option value="الزراعة">الزراعة</option>
+                                                                                        <option value="صناعة الألبان والأجبان">صناعة الألبان والأجبان</option>
+                                                                                        <option value="التجميل والمكياج">التجميل والمكياج</option>
+                                                                                        <option value="صناعة الصابون">صناعة الصابون</option>
+                                                                                        <option value="أشغال يدوية">أشغال يدوية</option>
+                                                                                        <option value="تربية مواشي والنحل والدواجن">تربية مواشي والنحل والدواجن</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-82" style="font-size: 16px;margin-top: 5px;" class="form-label">في أي قطاع تعملين؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_82" class="form-select" name="field_1611233711" aria-label="Default select example" id="field-82">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="زراعة">زراعة</option>
+                                                                                        <option value="الصناعة">الصناعة</option>
+                                                                                        <option value="بائعة متجولة">بائعة متجولة</option>
+                                                                                        <option value="بائعة في المحلات التجارية">بائعة في المحلات التجارية</option>
+                                                                                        <option value="خدمات">خدمات</option>
+                                                                                        <option value="تنظيفات">تنظيفات</option>
+                                                                                        <option value="سكرتاريا">سكرتاريا</option>
+                                                                                        <option value="التعليم">التعليم</option>
+                                                                                        <option value="عمل خاص">عمل خاص</option>
+                                                                                        <option value="لا أعمل">لا أعمل</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-83" style="font-size: 16px;margin-top: 5px;" class="form-label">هل لديك خبرة بالعمل الذي تقومين به؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_83" class="form-select" name="field_1611233728" aria-label="Default select example" id="field-83">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-84" style="font-size: 16px;margin-top: 5px;" class="form-label">هل ترغبين بتدريب مهني يحسن من أدائك؟ <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_84" class="form-select" name="field_1611233749" aria-label="Default select example" id="field-84">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="نعم">نعم</option>
+                                                                                        <option value="لا">لا</option>
+                                                                                    </select>
+                                    </div>
+                                    <label for="field-107" style="font-size: 16px;margin-top: 5px;" class="form-label">هل هنالك مانع أمام المشاركة في تدريب مهني <sup class="text-danger">*</sup></label>
+                                    <div class="input-group mb-3">
+                                        <select field-id="f_107" class="form-select" name="field_1612987669" aria-label="Default select example" id="field-107">
+                                            <option value="-غير مُحدّد-">
+                                                -غير محدد-
+                                            </option>
+                                                                                        <option value="مانع صحي">مانع صحي</option>
+                                                                                        <option value="مانع عائلي">مانع عائلي</option>
+                                                                                        <option value="أسباب أخرى">أسباب أخرى</option>
+                                                                                    </select>
+                                    </div>
+                                                                                                        </div>
+                            </div>
+                                                    </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="alert alert-primary h5">
+                            <i class="fas fa-exclamation-triangle"></i>
+                           لن تتمكّن من الإضافة قبل تعبئة كل الحقول المطلوبة في كل الصفحات.
+                        </div>
+                        <div>
+                            <button type="submit">إضافة</button>
+                            <!--<button class="btn btn-primary btn-block"><i class="fas fa-save"></i> إضافة</button>-->
+                                                        <button class="btn btn-secondary btn-block drift-save"><i class="fas fa-save"></i> حفظ
+                                للمسودات</button>
+                                                        <button type="reset" class="btn btn-dark btn-block"><i class="fas fa-broom"></i> تنظيف
+                                الحقول</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+    <div class="loading-screen" style="display: none">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script src="http://urda-system.com/js/bootstrap.min.js"></script>
+    <!--<script src="http://urda-system.com/js/jquery.min.js"></script>
+    <script src="http://urda-system.com/js/jquery-ui.min.js"></script>
+    <script src="http://urda-system.com/js/main.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+    <script src="http://urda-system.com/js/simple-rating.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5Jrp9PtHe0WapppUzxbIpMDWMAcV3qE4"></script>
+<script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        var lastKnownLocation = null;
+        var map = null;
+        var lp = null;
+
+        function initLocationPicker() {
+            map = document.getElementById('map');
+            lp = new locationPicker(map, {
+                setCurrentPosition: true, // You can omit this, defaults to true
+                lat: 45.5017,
+                lng: -73.5673
+            }, {
+                zoom: 15 // You can set any google map options here, zoom defaults to 15
+            });
+        }
+
+        function onLocationGot(locationResult) {
+            console.log("location changed: " + locationResult.coords);
+            lastKnownLocation = locationResult;
+            lp.setLocation(parseFloat(locationResult.coords.latitude ),parseFloat(locationResult.coords.longitude));
+        }
+
+        $('#location-pick-done-button').on('click', function (event) {
+            var location = lp.getMarkerPosition();
+            var locationString = location.lat + ',' + location.lng;
+            console.log("Location: " + locationString);
+            console.log(locationPickerInput);
+            $(locationPickerInput).val(locationString);
+            $(googleMapsLink).attr('href' , 'https://www.google.com/maps?q=loc:' + location.lat + "," + location.lng);
+        });
+
+        var locationPickerInput = null;
+        var googleMapsLink = null;
+        $('.gps-pick-button').on('click', function (event) {
+            event.preventDefault();
+
+            locationPickerInput = $(this).parent().children()[1];
+            googleMapsLink = $(this).parent().parent().children()[1];
+            initLocationPicker();
+
+            $('#locationPicker').modal('show');
+
+            if (!navigator.geolocation) {
+                return;
+            }
+
+            navigator.permissions.query({
+                name: 'geolocation'
+            }).then(function (result) {
+                requestLocation();
+                // console.log(result);
+                // if (result.state == 'granted') {
+                //     requestLocation();
+                // } else if (result.state == 'prompt') {
+
+                // } else if (result.state == 'denied') {
+
+                // }
+                // result.onchange = function (r) {
+                //     if (r.state == 'granted') {
+                //         requestLocation();
+                //     }
+                // }
+            });
+
+        });
+
+        function requestLocation() {
+            console.log("request location...");
+            navigator.geolocation.getCurrentPosition(onLocationGot, showError);
+        }
+
+        function showError(error) {
+
+            var message = "";
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    message = "User denied the request for Geolocation."
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    message = "Location information is unavailable."
+                    break;
+                case error.TIMEOUT:
+                    message = "The request to get user location timed out."
+                    break;
+                case error.UNKNOWN_ERROR:
+                    message = "An unknown error occurred."
+                    break;
+            }
+
+            console.log(message);
+        }
+
+        $('.stars-rating-field').rating();
+
+        $('.nav-tabs .nav-link').each(function (i, e) {
+            if (i == 0) {
+                $(e).addClass('active');
+            }
+        });
+
+        $('.tab-pane').each(function (i, e) {
+            if (i == 0) {
+                $(e).addClass('show');
+                $(e).addClass('active');
+            }
+        });
+
+        // Sortable Lists
+        function moveUp(item) {
+            var prev = item.prev();
+            if (prev.length == 0)
+                return;
+            prev.css('z-index', 999).css('position', 'relative').animate({
+                top: item.height()
+            }, 250);
+            item.css('z-index', 1000).css('position', 'relative').animate({
+                top: '-' + prev.height()
+            }, 300, function () {
+                prev.css('z-index', '').css('top', '').css('position', '');
+                item.css('z-index', '').css('top', '').css('position', '');
+                item.insertBefore(prev);
+                // Update Input Value
+                UpdateInputField(item.parent('.FieldContainer'));
+            });
+        }
+
+        function moveDown(item) {
+            var next = item.next();
+            if (next.length == 0)
+                return;
+            next.css('z-index', 999).css('position', 'relative').animate({
+                top: '-' + item.height()
+            }, 250);
+            item.css('z-index', 1000).css('position', 'relative').animate({
+                top: next.height()
+            }, 300, function () {
+                next.css('z-index', '').css('top', '').css('position', '');
+                item.css('z-index', '').css('top', '').css('position', '');
+                item.insertAfter(next);
+                // Update Input Value
+                UpdateInputField(item.parent('.FieldContainer'));
+            });
+        }
+
+        $(".FieldContainer").sortable({
+            items: ".OrderingField",
+            distance: 10
+        });
+
+
+        $(".FieldContainer").bind("DOMSubtreeModified", function () {
+            UpdateInputField(this);
+        });
+
+
+        $('.sortable-list-btn').click(function (e) {
+            e.preventDefault();
+            var btn = $(this);
+            var val = btn.val();
+            if (val == 'up')
+                moveUp(btn.parents('.OrderingField'));
+            else if (val == 'down')
+                moveDown(btn.parents('.OrderingField'));
+        });
+
+        $(".FieldContainer").each(function (index, element) {
+            UpdateInputField(element);
+        });
+
+        function UpdateInputField(fieldContainer) {
+            var value = "";
+            $(fieldContainer).prev().val("");
+            $(fieldContainer).children().each(function (index, element) {
+                var extra = "";
+                if (index > 0)
+                    extra = ",";
+                if ($(element).find('.value').text().length > 0)
+                    value += extra + $(element).find('.value').text();
+            });
+
+            $(fieldContainer).prev().val(value);
+        }
+
+
+    });
+
+
+    function ReAddListener() {
+        $('.sortable-list-btn').click(function (e) {
+            e.preventDefault();
+            var btn = $(this);
+            var val = btn.val();
+            if (val == 'up')
+                moveUp(btn.parents('.OrderingField'));
+            else if (val == 'down')
+                moveDown(btn.parents('.OrderingField'));
+        });
+    }
+
+    function moveUp(item) {
+        var prev = item.prev();
+        if (prev.length == 0)
+            return;
+        prev.css('z-index', 999).css('position', 'relative').animate({
+            top: item.height()
+        }, 250);
+        item.css('z-index', 1000).css('position', 'relative').animate({
+            top: '-' + prev.height()
+        }, 300, function () {
+            prev.css('z-index', '').css('top', '').css('position', '');
+            item.css('z-index', '').css('top', '').css('position', '');
+            item.insertBefore(prev);
+            // Update Input Value
+            UpdateInputField(item.parent('.FieldContainer'));
+        });
+    }
+
+    function moveDown(item) {
+        var next = item.next();
+        if (next.length == 0)
+            return;
+        next.css('z-index', 999).css('position', 'relative').animate({
+            top: '-' + item.height()
+        }, 250);
+        item.css('z-index', 1000).css('position', 'relative').animate({
+            top: next.height()
+        }, 300, function () {
+            next.css('z-index', '').css('top', '').css('position', '');
+            item.css('z-index', '').css('top', '').css('position', '');
+            item.insertAfter(next);
+            // Update Input Value
+            UpdateInputField(item.parent('.FieldContainer'));
+        });
+    }
+
+    function UpdateInputField(fieldContainer) {
+        var value = "";
+        $(fieldContainer).prev().val("");
+        $(fieldContainer).children().each(function (index, element) {
+            var extra = "";
+            if (index > 0)
+                extra = ",";
+            if ($(element).find('.value').text().length > 0)
+                value += extra + $(element).find('.value').text();
+        });
+
+        $(fieldContainer).prev().val(value);
+    }
+</script>
+          <script>
+        $(document).ready(function(){
+
+          // loading drifts to modal
+          var driftsModal = document.getElementById('staticBackdrop');
+          driftsModal.addEventListener('show.bs.modal', function (event) {
+            UpdateDriftList();
+          });
+
+          function UpdateDriftList(){
+            // get all Cookies
+            var allCookies = localStorage;
+
+            // get just formDrifts
+            var allDrifts = new Array();
+            for (var key of Object.keys(allCookies)) {
+              if ( IsDriftCookieKey(key) )
+                allDrifts[key] = allCookies[key];
+            }
+
+            $('.drifts-container').html(""); // empty
+
+            // check count of drifts
+            if ( Object.keys(allDrifts).length == 0)
+            {
+
+              // show empty message
+              $('.drift-empty-message').slideDown();
+              $('.drift-buttons-container').slideUp();
+
+            } 
+            else {
+
+              // hide empty message
+              $('.drift-empty-message').slideUp();
+              $('.drift-buttons-container').slideDown();
+
+              // render drifts to list
+              for (var key of Object.keys(allDrifts)) {
+                var htmlCode = "";
+                htmlCode += '<li class="list-group-item"><div class="form-check">\n';
+                htmlCode +=   '<input class="form-check-input" type="radio" name="drift_id" value="' + key + '" id="radioButton_' + key + '">\n';
+    <label class="form-check-label" for="radioButton_' + key + '">;
+                htmlCode +=   JSON.parse(allDrifts[key])['name'];
+                htmlCode +=    '</label>\n's;
+                htmlCode += '</div></li>\n';
+
+                // append item to container
+                $('.drifts-container').append(htmlCode + "\n");
+              }
+            }
+          }
+
+          $('.restore-btn').click(function(e){
+            // get selected drift id 
+            var driftID = $('input[name=drift_id]:checked').val();
+            var drift = JSON.parse(localStorage.getItem(driftID));
+            
+            // update input type text and number and select
+            $('input[type=text],input[type=number],input[type=hidden],select').each(function(i,e){
+              var name = $(e).attr('name');
+              $(e).val(drift[name]);
+            })
+            // update sortable list
+            $('.FieldContainer').each(function(index,element){
+              var value = $(element).parent().find('input[type=hidden').val();
+              var name = $(element).parent().find('input[type=hidden').attr('name');
+              var sortableListItems = drift[name].split(',');
+              $(element).html("");
+              $(sortableListItems).each(function(i,e){
+                var htmlCode = "";
+                htmlCode += '<div class="OrderingField mb-1 ui-sortable-handle">';
+                htmlCode += '<div class="value float-start d-block">' + e + '</div>';
+                htmlCode +=   '<div class="btns float-end">';
+                htmlCode +=     '<button value="up" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-up"></i></button>';
+                htmlCode +=     '<button value="down" class="sortable-list-btn btn btn-sm btn-light text-primary"><i class="fas fa-chevron-down"></i></button>';
+                htmlCode +=   '</div>';
+                htmlCode += '<div class="clearfix"></div>';
+                htmlCode += '</div>';
+                $(element).append(htmlCode);
+              });
+              ReAddListener();
+            });
+
+            // update checkboxes
+            $('input[type=checkbox]').each(function(i,e){
+              var name = $(e).attr('name');
+              if ( drift[name] == 'on' )
+                $(e).prop('checked' , true );
+              else 
+                $(e).prop('checked' , false);
+            })
+
+            $('.modal').modal('hide');
+
+          });
+
+          $('.clear-btn').click(function(e){
+            if ( confirm("ستفقد كل المسودات هل أنت متأكّد؟") )
+            {
+              // get all Cookies
+              var allCookies = localStorage;
+              // get just formDrifts
+              var allDrifts = new Array();
+              for (var key of Object.keys(allCookies)) {
+                if ( IsDriftCookieKey(key) )
+                  localStorage.removeItem(key);
+              }
+              UpdateDriftList();
+            }
+          });
+
+          // save drifts to cookies
+          $('.drift-save').click(function (e) {
+            e.preventDefault();
+
+            // serialize form data
+            var driftableFormData = $('.driftable-form').serializeObject();
+
+            // save all drifts to cookies after stringify them.
+            var cookieKey = "formDrifts_" + Date.now();
+            console.log(cookieKey);
+            localStorage.setItem(cookieKey, JSON.stringify(driftableFormData));
+            console.log("Saved Drift:" + localStorage.getItem(cookieKey) );
+
+            $('.modal').modal('show');
+
+          });
+
+          $.fn.serializeObject = function() {
+            var o = {};
+            var a = this.serializeArray();
+            $.each(a, function() {
+                if (o[this.name]) {
+                    if (!o[this.name].push) {
+                        o[this.name] = [o[this.name]];
+                    }
+                    o[this.name].push(this.value || '');
+                } else {
+                    o[this.name] = this.value || '';
+                }
+            });
+            return o;
+          };
+
+        });
+        function IsDriftCookieKey(key){
+            var arr = key.split('_');
+            if ( arr.length > 0 )
+              if ( arr[0] == "formDrifts")
+                return true
+            
+            return false;
+          }
+          
+      </script>
+  
+
+</body>
+</html>

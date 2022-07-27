@@ -3,7 +3,6 @@
 {% block content %}
 
 <div id="hall_form">
- <!-- <div class="container">-->
     <div class="row justify-content-center"><div class="col col-lg-9 col-md-12">
   <div class="card">
     <div class="card-header bg-dark text-light">
@@ -78,7 +77,7 @@
             <!--<input type="submit" value=" إضافة " class="btn btn-primary"/>-->
             <!--{{ form.submit() }}</div>-->
     </div>
-  </div>
+  </div><!-- for my tab content-->
   <div class="card-footer">
     <div class="alert alert-danger" role="alert">
       تأكد من تعبئة جميع الحقول في الصفحتين قبل الإضافة
@@ -87,8 +86,10 @@
       إضافة
     </button>
     <button style="display:inline-block" class="btn btn-dark" type="reset">تنظيف الحقول</button>
-  </div>
-</form></div></div>
+  </div><!--for card footer-->
+</form>
+</div><!--card-->
+</div><!-- col col9-->
 <br/>
 {% for i in get_flashed_messages() %}
   <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -96,6 +97,12 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 {% endfor %}
+{% if message %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>{{ message }}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-</div>
+{% endif %}
+</div><!-- justify center-->
+</div><!--for hall form-->
   {% endblock %}
