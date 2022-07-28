@@ -8,9 +8,8 @@ from datetime import datetime
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from cryptography.fernet import Fernet
-import pywhatkit as pwt
 from datetime import datetime
-import time
+
 
 app = Flask(__name__)
 
@@ -29,14 +28,14 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 #functions
-def send(message):
-    now = datetime.now()
-    nowlst = str(now).split()
-    time = nowlst[1]
-    timelst = time.split(":")
-    hour = int(timelst[0])
-    min = int(timelst[1])
-    pwt.sendwhatmsg("+96170594811", message, hour, min+2)
+#def send(message):
+#    now = datetime.now()
+#    nowlst = str(now).split()
+#    time = nowlst[1]
+#    timelst = time.split(":")
+#    hour = int(timelst[0])
+#    min = int(timelst[1])
+#    pwt.sendwhatmsg("+96170594811", message, hour, min+2)
 
 
 #def generate_key():
