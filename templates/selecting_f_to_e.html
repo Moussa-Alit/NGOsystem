@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Select{% endblock %}
+{% block content %}
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.form.label(class_="form-label") }}<br/>
+    {{ form.form(class_="form-control") }}<br/>
+    {{ form.submit() }}
+</form>
+{% endblock %}

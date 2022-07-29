@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Select Record{% endblock %}
+{% block content %}
+<form method="POST" id="select_record">
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>الإستمارة المختارة</th>
+            <th>تاريخ ووقت إضافة الإستمارة</th>
+        </tr>
+        {% for i in queried_records %}
+        <tr>
+            <td class="center-align"><input type="radio" name="id" value="{{ i.id }}" required></td>
+            <td>{{ wich_form }}</td>
+            <td>{{ i.date_added }}</td> <!--khalas ma 3ad badde b7ottolo baddak l 2a5ira wala lli kabelha walla lli kabl lli kabelha-->
+        </tr>
+        {% endfor %}
+    </table>
+    <p><input type="radio" name="what_to_do" value="edit | تعديل" required/> edit</p>
+    <p><input type="radio" name="what_to_do" value="delete(only_for_admins) | حذف" required/> delete</p>
+    <input type="submit" class="btn btn-primary" value="إختر"/>
+</form>
+{% endblock %}

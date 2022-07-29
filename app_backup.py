@@ -1,13 +1,13 @@
-
-from flask import Flask, render_template, redirect, url_for, request, flash, make_response, session
+from flask import Flask, render_template, redirect, url_for, request, flash, make_response
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import FlaskForm
+from wtforms import SubmitField, StringField, SelectField, SelectField, IntegerField, HiddenField, DateField, TimeField, SubmitField, PasswordField
+from wtforms.validators import InputRequired, Length, Regexp, NumberRange
 from datetime import datetime
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from cryptography.fernet import Fernet
 from datetime import datetime
-from mywtforms import RegisterForm, loginform, AdhaActivities, Main_Records, SelectinFormToEdit
-from flask_migrate import Migrate
 
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = 'FW3434ff545h4RFE55$#f$t%yhtFF'
 
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+
 #Flask_login Stuff
 
 login_manager = LoginManager()
@@ -63,23 +63,8 @@ def decrypt(encrypted_data):
     #key.close()
     return data
 
-def finish_datetime():
-    finish_datetime = datetime.now()
-    return finish_datetime
-
-def determine_model(table_name):
-    if table_name == 'Users':
-        model = Users
-    elif table_name == 'AdhaActivitiesRating':
-        model = AdhaActivitiesRating
-    return model
-
-def columns_names(model):
-    columns_list = model.__table__.columns.keys()
-    return columns_list
-
-
 #Sqlalchemy classes
+
 
 class Users(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -89,15 +74,15 @@ class Users(db.Model, UserMixin):
     username = db.Column(db.String, unique=True)
     email = db.Column(db.String, unique=True)
     password_hash = db.Column(db.String)
-    date_added = db.Column(db.String)
+    staff_type = db.Column(db.String)
 
-    def __init__(self, name, surname, username, email, password_hash, date_added):
+    def __init__(self, name, surname, username, email, password_hash, staff_type):
         self.name = name
         self.surname = surname
         self.username = username
         self.email = email
         self.password_hash = generate_password_hash(password_hash)
-        self.date_added = date_added
+        self.staff_type = staff_type
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute!')
@@ -106,7 +91,7 @@ class Users(db.Model, UserMixin):
         return check_password_hash(self.password_hash, pwd)
 
 class AdhaActivitiesRating(db.Model):
-    __tablename__ = "adhaactsrating"
+    __tablename__ = "AdhaActivitiesRating"
     id = db.Column(db.Integer, primary_key=True)
     starting_date_time = db.Column(db.String) #note that in form start date time are separated but in database are combined(no time data type in mysql)
     finishing_date_time = db.Column(db.String)
@@ -119,7 +104,7 @@ class AdhaActivitiesRating(db.Model):
     activity_type = db.Column(db.String)
     if_other_type = db.Column(db.String) 
     donor = db.Column(db.String)
-    team_leader = db.Column(db.String)
+    team_leader = db.Column(db.Integer)
     targeted_nb_in_camp = db.Column(db.Integer)
     distributed_items = db.Column(db.Integer)
     nb_of_itmes_to_be_distributed_in_this_act = db.Column(db.Integer)
@@ -134,12 +119,11 @@ class AdhaActivitiesRating(db.Model):
     randomly_checked_item_rate = db.Column(db.Integer)
     staff_performance = db.Column(db.Integer)
     general_notes = db.Column(db.String)
-    added_by = db.Column(db.Integer)
    
     def __init__(self, starting_date_time, finishing_date_time, gps_location, governorate, location, its_name, p_code, nb_of_families, activity_type, if_other_type, donor, team_leader, targeted_nb_in_camp, distributed_items, 
     nb_of_itmes_to_be_distributed_in_this_act, exists_of_written_scheduled, voucher_distributed, beneficiaries_list_ready_used,
     protect_policies_respect_rate, controlling_workplacce_rate, commitment_to_Covid_precautions, existing_of_requirements,
-     if_shortcoming_in_requirements, randomly_checked_item_rate, staff_performance, general_notes, added_by):
+     if_shortcoming_in_requirements, randomly_checked_item_rate, staff_performance, general_notes):
         self.starting_date_time = starting_date_time
         self.finishing_date_time = finishing_date_time
         self.gps_location = gps_location
@@ -166,7 +150,69 @@ class AdhaActivitiesRating(db.Model):
         self.randomly_checked_item_rate = randomly_checked_item_rate
         self.staff_performance = staff_performance
         self.general_notes = general_notes
-        self.added_by = added_by
+        
+#Forms classes:
+
+class RegisterForm(FlaskForm):
+    name = StringField('Name', [InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid location!'),
+        Length(min=3, max=20, message="The name length should be between 3 and 20")])
+    surname = StringField('Surname', [InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid location!'),
+        Length(min=3, max=20, message="The name length should be between 3 and 20") ])
+    username = StringField('Username',[InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid location!'),
+        Length(min=5, max=20, message="The name length should be between 5 and 20") ])
+    email = StringField('Email', [InputRequired(), Regexp(r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$', message="Invalid email")])
+    password = PasswordField('Password', [InputRequired(), Length(min=8, max=16, message="No more than 16 No less than 8")])
+    #staff_type = SelectField('Staff type', [InputRequired()], choices=[('', ''), ('admin', 'Admin'), ('data_entry', 'Data Entry')])
+    submit = SubmitField()
+
+class loginform(FlaskForm):
+    username = StringField('إسم المستخدم',[InputRequired()])
+    password = PasswordField('كلمة المرور',[InputRequired()])
+
+class AdhaActivities(FlaskForm):
+    id_field = HiddenField()
+    starting_date = DateField('تاريخ بدء التنفيذ/Execution starting date', [InputRequired(),
+     Regexp(r'/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/', message='The date format should be YYYY-MM-DD')])
+    #starting_time = TimeField('موعد بدء التنفيذ/Execution starting time', [InputRequired(), Regexp(r'^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$',
+     #message='The time format should be HH:MM:SS')])
+    #dont forget date time
+    governorate = SelectField('المحافظة/Governorate', [InputRequired()], choices=[('', ''), ('baalbek-hermel', 'بعلبك الهرمل'), ('bekaa', 'البقاع'), ('akkar', 'عكار'),
+     ('saida', 'صيدا'), ('alshamal', 'الشمال'), ('beirut', 'بيروت'), ('jabal_lobnan', 'جبل لبنان'), ('alnabatiyeh', 'النبطية'), ('aljanoub', 'الجنوب')])
+    location = StringField('المنطقة/location', [InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid location!'), 
+            Length(min=8, max=70, message='The location length should be between 8 and 70')])
+    its_name = StringField('إسم المخيم/ITS Name', [InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid ITS Name!'), 
+            Length(min=2, max=35, message='The ITS name length should be between 2 and 35')])
+    p_code = StringField('كود المخيم/P Code', [InputRequired(), Length(min=2, max=5, message='The P-code length should be between 2 and 5')])
+    #GPS location I should use location API of HTML5
+    nb_of_families = IntegerField('عدد العائلات/Nb. Of Families', [InputRequired(), NumberRange(min=5, max=5000, message="The nb. of families should be between 5 and 5000")])
+    activity_type = SelectField('نوع النشاط/Activity Type', [InputRequired()], choices=[('', ''), ('food_items', 'حصص غذائية/Food Items'), ('clothes', 'ألبسة/Clothes'), 
+    ('iftar_meal', 'وجبة إفطار/Iftar Meal'), ('eid_festival', 'مهرجان للعيد/Eid Festival'),
+     ('adha_food_item', 'حصص من الأضاحي/Adha Food Items'), ('hygiene_kits', 'حصص نظافة/Hygiene Kits'), ('others', 'غيره/Others')])
+    if_other_type = StringField('حدد نوع النشاط إن لم يكن ضمن القائمة', [Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid activity type!'), 
+                    Length(min=2, max=35, message='The avtivity type length should be between 2 and 35')])
+    donor = StringField('الجهة المانحة/Donor', [InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid donor name!'), 
+            Length(min=2, max=35, message='The donor name length should be between 2 and 35')])
+    team_leader = StringField('المسؤول عن الفريق/Team Leader', [InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid name!'), 
+            Length(min=2, max=35, message='The name length should be between 2 and 35')])
+    targeted_nb_in_camp = IntegerField('الهدف الكلي في هذا المخيم/Overall target in this camp', [InputRequired(), NumberRange(min=50, max=25000, message="The overall target should be between 50 and 25000") ])
+    distributed_items = IntegerField('عدد الحصص الموزع/Distributed items Count',[InputRequired(), NumberRange(min=50, max=25000, message="The overall target should be between 50 and 25000")])
+    nb_of_itmes_to_be_distributed_in_this_act = IntegerField('عدد الحصص التي سيتم توزيعها في هذا النشاط/Nb. Of Items To Be Distributed In This Activity', [InputRequired(), NumberRange(min=50, max=25000, message="The overall target should be between 50 and 25000")] )
+    exists_of_written_scheduled = SelectField('Written schedule exists that was approved by the sector management/تم التأكّد من وجود جدول منظم للأنشطة موافق عليه من إدارة القطاع؟', [InputRequired(message="Please input!")], choices=[('', ''), (1, 'نعم'), (0, 'كلا')])
+    voucher_distributed = SelectField('The vouchers were distributed before the activity | هل تم توزيع بونات قبل تنفيذ النشاط؟ ', [InputRequired(message="Please input!")], choices=[('', ''), (1, 'نعم'), (0, 'كلا')])
+    beneficiaries_list_ready_used = SelectField('Family lists are ready and used during distribution| هل يوجد قوائم المستفيدين وتمت الاستعانة بها خلال التوزيع ', [InputRequired(message="Please input!")], choices=[('', ''), (1, 'نعم'), (0, 'كلا')] )
+    existing_of_requirements = SelectField('All requirements related to distribution are in the place |التأكد من وجود كافة لوازم التنفيذ اللوجستية وغيرها في المكان', [InputRequired(message="Please input!")], choices=[('', ''), (1, 'نعم'), (0,'كلا')])
+    if_shortcoming_in_requirements = StringField('حدد اللوازم الناقصة إن وُجِدَت.', [Length(min=0, max=100, message='The explanation length should be between 0 and 100') ])
+    general_notes = StringField('ملاحظات/Notes', [InputRequired(), Length(min=0, max=150, message='The explanation length should be between 0 and 150')])
+    submit = SubmitField(' إضافة ')
+
+class Main_Records(FlaskForm):
+    id_field = HiddenField()
+
+#functions
+
+def finish_datetime():
+    finish_datetime = datetime.now()
+    return finish_datetime
 
 # routes
 @login_manager.user_loader
@@ -205,13 +251,11 @@ def register():
                 username = request.form["username"]
                 email = request.form["email"]
                 password = request.form["password"]
-                date_added = finish_datetime()
-                #enc_date_added = encrypt(date_added)
                 enc_name = encrypt(name)
                 enc_surname = encrypt(surname)
                 #enc_username = encrypt(username)
                 enc_email = encrypt(email)
-                record = Users(enc_name, enc_surname, username, enc_email, password, date_added)
+                record = Users(enc_name, enc_surname, username, enc_email, password, staff_type="")
                 db.session.add(record)
                 db.session.commit()
                 flash("The new user has been added successfully")
@@ -298,14 +342,15 @@ def A_A_R():
             staff_performance = request.form["staff_performance"]
             #staff_performance = 7
             general_notes = request.form['general_notes']
-            added_by = cu_id
             record = AdhaActivitiesRating(starting_datetime, finish_date_time, gps, governorate, location, its_name, p_code, nb_of_families, activity_type, if_other_type, donor, team_leader, targeted_nb_in_camp, distributed_items, nb_of_itmes_to_be_distributed_in_this_act,
         exists_of_written_scheduled, voucher_distributed, beneficiaries_list_ready_used, protect_policies_respect_rate, controlling_workplacce_rate,
         commitment_to_covid_precautions, existing_of_requirements, if_shortcoming_in_requirements, randomly_checked_item_rate,
-        staff_performance, general_notes, added_by)
+        staff_performance, general_notes)
             db.session.add(record)
             db.session.commit()
             flash("لقد تمت إضافة المعلومات بنجاح!")
+            #form1.data = ""
+            form1.activity_type.data = ''
             return redirect(url_for("A_A_R"))
         else:
             for field, errors in form1.errors.items():
@@ -395,101 +440,7 @@ def main_records():
         return redirect(url_for("main_records"))
     return render_template("mainrecords.html", form=form)
 
-@app.route('/data_entry/update', methods=['POST', 'GET'])
-@login_required
-def select_form_type():
-    cu_id = current_user.id
-    form = SelectinFormToEdit()
-    if request.method == 'POST':
-        #if form.validate_on_submit():
-        selected_form = request.form['form']
-        if cu_id == 3 and (selected_form == 'register'):#selected_form == 'Register' and cu_id == 3:
-            session['table'] = 'Users'
-            #session['queried_records'] = table.query.order_by(table.id.desc()).limit(3)
-            session['wich_form'] = 'Register'
-            return redirect(url_for('select_form'))
-        elif selected_form == 'AdhaActivities':
-            la_net2akkad = AdhaActivitiesRating.query.filter_by(added_by=cu_id).order_by(AdhaActivitiesRating.id.desc()).limit(3) #la net2akkad 2eno howwe 3emil mn he l form aslan
-            if la_net2akkad or cu_id == 3:
-                session['table'] = 'AdhaActivitiesRating'
-                session['wich_form'] = 'تقييم نشاطات الأضحى'
-                return redirect(url_for('select_form'))
-        else:
-            flash("تأكد من إختيارك")
-            return redirect(url_for('select_form_type'))
-    else:
-        new = "new"
-        form = SelectinFormToEdit()
-        return render_template('selecting_f_to_e.html', form=form)
 
-@app.route('/data_entry/select_form', methods=['POST', 'GET'])
-@login_required
-def select_form(): #tab3an badna n7awwil na3mil functions la nhawwin l sho8l
-    cu_id = current_user.id
-    table = session.get('table')
-    if request.method == 'POST': #ba3d ma ykoun na22a
-        record_to_workwith_id = request.form['id']
-        what_to_do = request.form['what_to_do']
-        if table == 'Users':
-            if what_to_do == 'delete(only_for_admins) | حذف' and cu_id == 3:
-                user_to_delete = Users.query.filter_by(Users.id == record_to_workwith_id).first()
-                db.session.delete(user_to_delete)
-                db.session.commit()
-                session['deleted_successfully'] = 'تم حذف المستخدم بنجاح'
-                return redirect(url_for('select_form_type'))
-            elif what_to_do == 'edit | تعديل' and cu_id == 3:
-                session['record_to_edit_id'] = record_to_workwith_id
-                return redirect(url_for('edit'))
-        elif table == 'AdhaActivitiesRating':
-            if what_to_do == 'delete(only_for_admins) | حذف' and cu_id == 3:
-                record_to_delete = AdhaActivitiesRating.query.filter_by(AdhaActivitiesRating.id == record_to_workwith_id).first()
-                db.session.delete(record_to_delete)
-                db.session.commit()
-                session['deleted_succefully'] = 'تم حذف التسجيل بنجاح'
-                return redirect(url_for('select_form_type'))
-            elif what_to_do == 'edit | تعديل':
-                session['record_to_edit_id'] = record_to_workwith_id
-                return redirect(url_for('edit'))
-        return "hello 2"
-    #queried_records = session.get('queried_records')
-    else:
-        if table == 'Users':
-            query = Users.query.order_by(Users.id.desc()).limit(3)
-            return render_template("selecting_record.html", queried_records=query, wich_form=session['wich_form'])
-        elif table == 'AdhaActivitiesRating':
-            if cu_id == 3:
-                query = AdhaActivitiesRating.query.order_by(AdhaActivitiesRating.id.desc()).limit(3)
-                return render_template('selecting_record.html', queried_records=query, wich_form=session['wich_form'])
-            else:
-                query = AdhaActivitiesRating.query.filter_by(added_by=cu_id).order_by(AdhaActivitiesRating.id.desc()).limit(3)
-                return render_template('selecting_record.html', queried_records=query, wich_form=session['wich_form'])
-    return "else"
-
-@app.route('/data_entry/edit', methods=['POST', 'GET'])
-@login_required
-def edit():
-    form = AdhaActivities()
-    cu_id = current_user.id
-    table_name = session.get('table')
-    model = determine_model(table_name)
-    try:
-        columns_dict = { 'id': id, 'name': model.name, 'surname': model.surname, 'username': model.username} #contain_all_columns names
-    except:
-        try:
-            columns_dict = {'governorate': model.governorate,
-            'location': model.location, 'its_name': model.its_name, 'p_code': model.p_code, 'nb_of_families': model.nb_of_families, 
-            'activity_type': model.activity_type, 'if_other_type': model.if_other_type, 'donor': model.donor, 'team_leader': model.team_leader,
-            'targeted_nb_in_camp': model.targeted_nb_in_camp, 'distributed_items': model.distributed_items, 'nb_of_itmes_to_be_distributed_in_this_act': model.nb_of_itmes_to_be_distributed_in_this_act} #bn7ot bas l2eshya lli btet3addal
-        except:
-            columns_dict = {1: 1}
-    record_id = session.get('record_to_edit_id')
-    query = model.query.filter(model.id==record_id).first()
-    columns_list = columns_names(model)
-    if request.method == 'POST':
-        for i in columns_dict:
-                columns_dict[i] = request.form[i]
-                return "hello no problemo"
-    return render_template(f'/edit/{table_name}_to_edit.html', form=form) #bnsamme l template 7asab 2esm l table name lli jeybino mn l session mdre mnayn msh l model w bnzid _to_edit
 
 @app.route('/logout', methods=['POST', 'GET'])
 @login_required
@@ -499,7 +450,6 @@ def logout():
     return redirect(url_for("login"))
 
 @app.route('/admin/cookies')
-@login_required
 def cookies():
     id = current_user.id
     role = ""
