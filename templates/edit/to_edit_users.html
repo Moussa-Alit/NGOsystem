@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Register{% endblock %}
+{% block title %}EditUsers{% endblock %}
 {% block content %}
 <div id="hall_form">
     <!-- <div class="container">-->
-       <div class="row justify-content-center"><div class="col col-lg-9 col-md-12">
+<div class="row justify-content-center"><div class="col col-lg-9 col-md-12">
      <div class="card">
        <div class="card-header bg-dark text-light">
          <h4><i class="fas fa-file-plus"></i>
@@ -24,15 +24,15 @@
        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
            {{ form.hidden_tag() }}<br/>
             {{ form.name.label(class_="form-label") }}<br/>
-            {{ form.name(class_="form-control") }}<br/>
+            {{ form.name(class_="form-control", value=record.name ) }}<br/>
             {{ form.surname.label(class_="form-label")}}<br/>
-            {{ form.surname(class_="form-control") }}<br/>
+            {{ form.surname(class_="form-control", value=record.surname) }}<br/>
             {{ form.username.label(class_="form-label") }}<br/>
-            {{ form.username(class_="form-control") }}<br/>
+            {{ form.username(class_="form-control", value=record.username) }}<br/>
             {{ form.email.label(class_="form-label") }}<br/>
-            {{ form.email(class_="form-control") }}<br/>
+            {{ form.email(class_="form-control", value=record.email) }}<br/>
             {{ form.password.label(class_="form-label") }}<br/>
-            {{ form.password(class_="form-control")}}
+            {{ form.password(class_="form-control", placeholder='Type a new password')}}
        </div>
        <!--<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
@@ -48,10 +48,7 @@
        {{ form.submit() }}
        <button style="display:inline-block" class="btn btn-dark" type="reset">تنظيف الحقول</button>
      </div>
-   </form></div></div>
-   </div>
-   </div>
-
-
-
+</form></div></div>
+</div>
+</div>
 {% endblock %}

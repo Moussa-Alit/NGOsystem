@@ -12,13 +12,16 @@
           <li class="nav-item">
             <a class="nav-link" href="{{url_for('A_A_R')}}">تقييم نشاطات عيد الأضحى</a>
           </li>
-          {% if cu_id == 3 %}
+          {% if cu_id in admins %}
             <li class="nav-item">
               <a class="nav-link" href="{{url_for('register')}}">Register</a>
             </li>
           {% endif %}
           <li>
             <a class="nav-link" href="{{url_for('main_records')}}">التسجيلات الأساسية</a>
+          </li>
+          <li>
+            <a class="nav-link" href="{{url_for('select_form_type')}}">تعديل/حذف تسجيل</a>
           </li>
           <!--<li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

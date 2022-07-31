@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="rtl">
     <head>
         <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +11,12 @@
     </head>
 <body>
 {% include "upnavbar.html" %}
+{% for i in get_flashed_messages() %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ i }}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
 <div id="container" style="margin-top: 5%">
     <div class="d-grid gap-2">
         <div class="btn-group">

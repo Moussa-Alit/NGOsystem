@@ -59,7 +59,7 @@ class AdhaActivities(FlaskForm):
 class Main_Records(FlaskForm):
     id_field = HiddenField()
 
-class SelectinFormToEdit(FlaskForm): #selecting form type
+class SelectingFormToEdit(FlaskForm): #selecting form type
     id_field = HiddenField()
     form = SelectField('Select what type of forms you want to edit | إختر نوع الإستمارة اللتي تود تعديلها', [InputRequired()], choices=[('', ''), ('register', 'Register'), ('AdhaActivities', 'تقييم نشاطات الأضحى')])
     submit = SubmitField('إختيار')

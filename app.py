@@ -6,7 +6,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 from werkzeug.security import generate_password_hash, check_password_hash
 from cryptography.fernet import Fernet
 from datetime import datetime
-from mywtforms import RegisterForm, loginform, AdhaActivities, Main_Records, SelectinFormToEdit
+from mywtforms import RegisterForm, loginform, AdhaActivities, Main_Records, SelectingFormToEdit
 from flask_migrate import Migrate
 
 
@@ -26,6 +26,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
+#important lists
+sys_admins = [3, 6]
 #functions
 #def send(message):
 #    now = datetime.now()
@@ -63,6 +66,7 @@ def decrypt(encrypted_data):
     #key.close()
     return data
 
+
 def finish_datetime():
     finish_datetime = datetime.now()
     return finish_datetime
@@ -90,14 +94,16 @@ class Users(db.Model, UserMixin):
     email = db.Column(db.String, unique=True)
     password_hash = db.Column(db.String)
     date_added = db.Column(db.String)
+    date_edited = db.Column(db.String)
 
-    def __init__(self, name, surname, username, email, password_hash, date_added):
+    def __init__(self, name, surname, username, email, password_hash, date_added, date_edited):
         self.name = name
         self.surname = surname
         self.username = username
         self.email = email
         self.password_hash = generate_password_hash(password_hash)
         self.date_added = date_added
+        self.date_edited = date_edited
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute!')
@@ -129,17 +135,19 @@ class AdhaActivitiesRating(db.Model):
     protect_policies_respect_rate = db.Column(db.Integer)
     controllcing_workplacce_rate = db.Column(db.Integer)
     commitment_to_Covid_precautions = db.Column(db.Integer)
-    existing_of_requicrements = db.Column(db.Integer)
+    existing_of_requirements = db.Column(db.Integer)
     if_shortcoming_in_requirements = db.Column(db.String)
     randomly_checked_item_rate = db.Column(db.Integer)
     staff_performance = db.Column(db.Integer)
     general_notes = db.Column(db.String)
     added_by = db.Column(db.Integer)
+    date_added = db.Column(db.String)
+    date_edited = db.Column(db.String)
    
     def __init__(self, starting_date_time, finishing_date_time, gps_location, governorate, location, its_name, p_code, nb_of_families, activity_type, if_other_type, donor, team_leader, targeted_nb_in_camp, distributed_items, 
     nb_of_itmes_to_be_distributed_in_this_act, exists_of_written_scheduled, voucher_distributed, beneficiaries_list_ready_used,
     protect_policies_respect_rate, controlling_workplacce_rate, commitment_to_Covid_precautions, existing_of_requirements,
-     if_shortcoming_in_requirements, randomly_checked_item_rate, staff_performance, general_notes, added_by):
+     if_shortcoming_in_requirements, randomly_checked_item_rate, staff_performance, general_notes, added_by, date_added, date_edited):
         self.starting_date_time = starting_date_time
         self.finishing_date_time = finishing_date_time
         self.gps_location = gps_location
@@ -167,6 +175,8 @@ class AdhaActivitiesRating(db.Model):
         self.staff_performance = staff_performance
         self.general_notes = general_notes
         self.added_by = added_by
+        self.date_added = date_added
+        self.date_edited = date_edited
 
 # routes
 @login_manager.user_loader
@@ -206,12 +216,7 @@ def register():
                 email = request.form["email"]
                 password = request.form["password"]
                 date_added = finish_datetime()
-                #enc_date_added = encrypt(date_added)
-                enc_name = encrypt(name)
-                enc_surname = encrypt(surname)
-                #enc_username = encrypt(username)
-                enc_email = encrypt(email)
-                record = Users(enc_name, enc_surname, username, enc_email, password, date_added)
+                record = Users(name, surname, username, email, password, date_added, date_edited=None)
                 db.session.add(record)
                 db.session.commit()
                 flash("The new user has been added successfully")
@@ -219,7 +224,7 @@ def register():
             else:
                 return render_template("register.html", form=form, cu_id=id)
         else:
-            return render_template("/data_entry/register.html", form=form, cu_id=id)
+            return render_template("/data_entry/register.html", form=form, cu_id=id, admins=sys_admins)
     #message = "An error occured try to logout then login again"
     return redirect(url_for("welcome"))
 
@@ -228,11 +233,6 @@ def register():
 @login_required
 def welcome():
     cu_id = current_user.id
-    cu_enc_username = current_user.username
-    #message = f"The user {cu_enc_username} has logged in to the system"
-    #send(message)
-    #time.sleep(150)
-    #return render_template("index.html", cu_id=cu_id)
     return render_template("departmentsnavigation.html", cu_id=cu_id)
 
 @app.route('/Ba3dayn_bsewihoun')
@@ -244,7 +244,7 @@ def welcome_mo2akkate():
 @login_required
 def de_welcome():
     cu_id = current_user.id
-    return render_template("/indexes/de_index.html", cu_id=cu_id)
+    return render_template("/indexes/de_index.html", cu_id=cu_id, admins=sys_admins)
 
 @app.route('/Graphs_Statistics')
 @login_required
@@ -259,14 +259,12 @@ def A_A_R():
     form1 = AdhaActivities()
     if request.method == 'POST':
         if form1.validate_on_submit:
-            #date_time_start_should_be_cobining_2_request
-        #date_time_of_finish_sshould_be_taken_from_a_function
         #gps_location_should_be_taken_auto
             starting_date = request.form["starting_date"]
             #starting_date = "2020-11-22" 
-            #starting_time = request.form["starting_time"]
-            starting_time = "11:11:11.321333"
-            starting_datetime = starting_date + "," + starting_time
+            starting_time = request.form["starting_time"]
+            #starting_time = "11:11:11.321333"
+            starting_datetime = starting_date + " " + starting_time
             finish_date_time = finish_datetime()
             governorate = request.form['governorate']
             location = request.form['location']
@@ -299,10 +297,11 @@ def A_A_R():
             #staff_performance = 7
             general_notes = request.form['general_notes']
             added_by = cu_id
+            date_added = finish_datetime()
             record = AdhaActivitiesRating(starting_datetime, finish_date_time, gps, governorate, location, its_name, p_code, nb_of_families, activity_type, if_other_type, donor, team_leader, targeted_nb_in_camp, distributed_items, nb_of_itmes_to_be_distributed_in_this_act,
         exists_of_written_scheduled, voucher_distributed, beneficiaries_list_ready_used, protect_policies_respect_rate, controlling_workplacce_rate,
         commitment_to_covid_precautions, existing_of_requirements, if_shortcoming_in_requirements, randomly_checked_item_rate,
-        staff_performance, general_notes, added_by)
+        staff_performance, general_notes, added_by, date_added, date_edited=None)
             db.session.add(record)
             db.session.commit()
             flash("لقد تمت إضافة المعلومات بنجاح!")
@@ -319,12 +318,13 @@ def A_A_R():
                         error
                         )#, 'error'
             return render_template("/data_entry/adhaactrating.html", form=form1, cu_id=cu_id, message=message)
-    return render_template("/data_entry/adhaactrating.html", status4="active", form=form1, cu_id=cu_id)
+    return render_template("/data_entry/adhaactrating.html", status4="active", form=form1, cu_id=cu_id, admins=sys_admins)
 
 @app.route('/data_entry/main_records', methods=['POST', 'GET'])
 @login_required
 def main_records():
     form = Main_Records()
+    cu_id = current_user.id
     if request.method == 'POST':
         name = request.form["name"]
         mobile_nb = request.form["mobile_number"]
@@ -393,24 +393,24 @@ def main_records():
         #= request.form[""]
         print(name, phone_nb)
         return redirect(url_for("main_records"))
-    return render_template("mainrecords.html", form=form)
+    return render_template("mainrecords.html", form=form, cu_id=cu_id, admins=sys_admins)
 
 @app.route('/data_entry/update', methods=['POST', 'GET'])
 @login_required
 def select_form_type():
     cu_id = current_user.id
-    form = SelectinFormToEdit()
+    form = SelectingFormToEdit()
     if request.method == 'POST':
         #if form.validate_on_submit():
         selected_form = request.form['form']
-        if cu_id == 3 and (selected_form == 'register'):#selected_form == 'Register' and cu_id == 3:
+        if cu_id in sys_admins and (selected_form == 'register'):#selected_form == 'Register' and cu_id == 3:
             session['table'] = 'Users'
             #session['queried_records'] = table.query.order_by(table.id.desc()).limit(3)
             session['wich_form'] = 'Register'
             return redirect(url_for('select_form'))
         elif selected_form == 'AdhaActivities':
             la_net2akkad = AdhaActivitiesRating.query.filter_by(added_by=cu_id).order_by(AdhaActivitiesRating.id.desc()).limit(3) #la net2akkad 2eno howwe 3emil mn he l form aslan
-            if la_net2akkad or cu_id == 3:
+            if la_net2akkad or cu_id in sys_admins:
                 session['table'] = 'AdhaActivitiesRating'
                 session['wich_form'] = 'تقييم نشاطات الأضحى'
                 return redirect(url_for('select_form'))
@@ -419,8 +419,8 @@ def select_form_type():
             return redirect(url_for('select_form_type'))
     else:
         new = "new"
-        form = SelectinFormToEdit()
-        return render_template('selecting_f_to_e.html', form=form)
+        form = SelectingFormToEdit()
+        return render_template('selecting_f_to_e.html', form=form, cu_id=cu_id, admins=sys_admins)
 
 @app.route('/data_entry/select_form', methods=['POST', 'GET'])
 @login_required
@@ -431,65 +431,129 @@ def select_form(): #tab3an badna n7awwil na3mil functions la nhawwin l sho8l
         record_to_workwith_id = request.form['id']
         what_to_do = request.form['what_to_do']
         if table == 'Users':
-            if what_to_do == 'delete(only_for_admins) | حذف' and cu_id == 3:
-                user_to_delete = Users.query.filter_by(Users.id == record_to_workwith_id).first()
+            if what_to_do == 'delete(only_for_admins) | حذف' and cu_id in sys_admins:
+                user_to_delete = Users.query.filter(Users.id == record_to_workwith_id).first()
                 db.session.delete(user_to_delete)
                 db.session.commit()
-                session['deleted_successfully'] = 'تم حذف المستخدم بنجاح'
+                flash('تم حذف المستخدم بنجاح')
                 return redirect(url_for('select_form_type'))
-            elif what_to_do == 'edit | تعديل' and cu_id == 3:
+            elif what_to_do == 'delete(only_for_admins) | حذف' and cu_id not in sys_admins:
+                flash('Only for admins')
+                return redirect(url_for('select_form_type'))
+            elif what_to_do == 'edit | تعديل' and cu_id in sys_admins:
+                session['passed'] = 'passed'
                 session['record_to_edit_id'] = record_to_workwith_id
-                return redirect(url_for('edit'))
+                return redirect(url_for('edit_users'))
         elif table == 'AdhaActivitiesRating':
-            if what_to_do == 'delete(only_for_admins) | حذف' and cu_id == 3:
-                record_to_delete = AdhaActivitiesRating.query.filter_by(AdhaActivitiesRating.id == record_to_workwith_id).first()
+            if what_to_do == 'delete(only_for_admins) | حذف' and cu_id in sys_admins:
+                record_to_delete = AdhaActivitiesRating.query.filter(AdhaActivitiesRating.id == record_to_workwith_id).first()
                 db.session.delete(record_to_delete)
                 db.session.commit()
-                session['deleted_succefully'] = 'تم حذف التسجيل بنجاح'
+                flash('تم حذف التسجيل بنجاح')
                 return redirect(url_for('select_form_type'))
             elif what_to_do == 'edit | تعديل':
                 session['record_to_edit_id'] = record_to_workwith_id
-                return redirect(url_for('edit'))
-        return "hello 2"
+                session['passed'] = 'passed'
+                return redirect(url_for('edit_a_a_r'))
+            else:
+                flash('Only for admins')
+                return redirect(url_for('select_form_type'))
+                #return "Only admins can delete forms"
+        return "hello2"
     #queried_records = session.get('queried_records')
     else:
         if table == 'Users':
             query = Users.query.order_by(Users.id.desc()).limit(3)
             return render_template("selecting_record.html", queried_records=query, wich_form=session['wich_form'])
         elif table == 'AdhaActivitiesRating':
-            if cu_id == 3:
+            if cu_id in sys_admins:
                 query = AdhaActivitiesRating.query.order_by(AdhaActivitiesRating.id.desc()).limit(3)
-                return render_template('selecting_record.html', queried_records=query, wich_form=session['wich_form'])
+                return render_template('selecting_record.html', queried_records=query, wich_form=session['wich_form'], cu_id=cu_id, admins=sys_admins)
             else:
                 query = AdhaActivitiesRating.query.filter_by(added_by=cu_id).order_by(AdhaActivitiesRating.id.desc()).limit(3)
-                return render_template('selecting_record.html', queried_records=query, wich_form=session['wich_form'])
-    return "else"
+                return render_template('selecting_record.html', queried_records=query, wich_form=session['wich_form'], cu_id=cu_id, admins=sys_admins)
+        else:
+            return "You shoyld select a form first"
 
-@app.route('/data_entry/edit', methods=['POST', 'GET'])
+@app.route('/data_entry/edit/adha_acts_rating', methods=['POST', 'GET'])
 @login_required
-def edit():
+def edit_a_a_r():
     form = AdhaActivities()
-    cu_id = current_user.id
-    table_name = session.get('table')
-    model = determine_model(table_name)
-    try:
-        columns_dict = { 'id': id, 'name': model.name, 'surname': model.surname, 'username': model.username} #contain_all_columns names
-    except:
-        try:
-            columns_dict = {'governorate': model.governorate,
-            'location': model.location, 'its_name': model.its_name, 'p_code': model.p_code, 'nb_of_families': model.nb_of_families, 
-            'activity_type': model.activity_type, 'if_other_type': model.if_other_type, 'donor': model.donor, 'team_leader': model.team_leader,
-            'targeted_nb_in_camp': model.targeted_nb_in_camp, 'distributed_items': model.distributed_items, 'nb_of_itmes_to_be_distributed_in_this_act': model.nb_of_itmes_to_be_distributed_in_this_act} #bn7ot bas l2eshya lli btet3addal
-        except:
-            columns_dict = {1: 1}
+    cu_id = current_user.id #kormel l navbar
+    #model = determine_model(table_name)
+    passed = session['passed']
     record_id = session.get('record_to_edit_id')
-    query = model.query.filter(model.id==record_id).first()
-    columns_list = columns_names(model)
-    if request.method == 'POST':
-        for i in columns_dict:
-                columns_dict[i] = request.form[i]
-                return "hello no problemo"
-    return render_template(f'/edit/{table_name}_to_edit.html', form=form) #bnsamme l template 7asab 2esm l table name lli jeybino mn l session mdre mnayn msh l model w bnzid _to_edit
+    record = AdhaActivitiesRating.query.filter(AdhaActivitiesRating.id==record_id).first()
+    if request.method == 'POST' and form.validate_on_submit:
+        starting_date = request.form["starting_date"]
+            #starting_date = "2020-11-22" 
+        starting_time = request.form["starting_time"]
+        #starting_time = "11:11:11.321333"
+        record.starting_datetime = starting_date + " " + starting_time
+        record.finishing_date_time = record.finishing_date_time
+        record.governorate = request.form['governorate']
+        record.location = request.form['location']
+        #gps = request.form["gps"] #la 7atta ysir l site taba3e https la tsir tshti8il l gps
+        gps = "12.123123,88,312342"
+        record.its_name = request.form['its_name']
+        record.p_code = request.form['p_code']
+        record.nb_of_families = request.form['nb_of_families']
+        record.activity_type = request.form['activity_type']
+        record.if_other_type = request.form['if_other_type']
+        record.donor = request.form['donor']
+        record.team_leader = request.form['team_leader']
+        record.targeted_nb_in_camp = request.form['targeted_nb_in_camp']
+        record.distributed_items = request.form['distributed_items']
+        record.nb_of_itmes_to_be_distributed_in_this_act = request.form['nb_of_itmes_to_be_distributed_in_this_act']
+        record.exists_of_written_scheduled = request.form['exists_of_written_scheduled']
+        record.voucher_distributed = request.form['voucher_distributed']
+        record.beneficiaries_list_ready_used = request.form['beneficiaries_list_ready_used']
+        record.protect_policies_respect_rate = request.form['pprr']
+            #protect_policies_respect_rate = 7
+        record.controlling_workplacce_rate = request.form["controlling_workplacce_rate"]
+        record.commitment_to_covid_precautions = request.form["commitment_to_covid_precautions"]
+            #controlling_workplacce_rate = 10
+            #commitment_to_covid_precautions = 4
+        record.existing_of_requirements = request.form['existing_of_requirements'] #tawejoud l ma3added wl mostalzamet llojistiyye
+        record.if_shortcoming_in_requirements = request.form['if_shortcoming_in_requirements'] #iza fi nawa2es bl mostalzamet
+        record.randomly_checked_item_rate = request.form["randomly_checked_item_rate"]
+            #randomly_checked_item_rate = 8
+        record.staff_performance = request.form["staff_performance"]
+            #staff_performance = 7
+        record.general_notes = request.form['general_notes']
+        record.added_by = record.added_by
+        db.session.commit()
+        flash("تم التعديل بنجاح")
+        return redirect(url_for('de_welcome'))
+    elif passed == 'passed':
+        return render_template('/edit/aar_to_edit.html', form=form, record=record, cu_id=cu_id, admins=sys_admins) 
+    return(redirect(url_for('select_form_type')))
+
+@app.route('/data_entry/edit/users', methods=['POST', 'GET'])
+@login_required
+def edit_users():
+    form = RegisterForm()
+    passed = session.get('passed')
+    cu_id = current_user.id
+    record_id = session.get('record_to_edit_id')
+    record = Users.query.filter(Users.id==record_id).first()
+    if passed == 'passed' and cu_id == 3:
+        if request.method == 'POST' and form.validate_on_submit:
+            record.name = request.form["name"]
+            record.surname = request.form["surname"]
+            record.username = request.form["username"]
+            record.email = request.form["email"]
+            new_psswd = request.form["password"]
+            record.password_hash = generate_password_hash(new_psswd)
+            record.date_edited = finish_datetime()
+            db.session.commit()
+            print(db.session.commit())
+            flash('User updated succefully')
+            return redirect(url_for('select_form_type'))
+        else:
+            return render_template('/edit/to_edit_users.html', form=form, record=record, cu_id=cu_id, admins=sys_admins)
+    flash('you can\'t ;)')
+    return(redirect(url_for('de_welcome')))
 
 @app.route('/logout', methods=['POST', 'GET'])
 @login_required
@@ -501,9 +565,9 @@ def logout():
 @app.route('/admin/cookies')
 @login_required
 def cookies():
-    id = current_user.id
+    cu_id = current_user.id
     role = ""
-    if id == 3:
+    if cu_id in sys_admins:
         role = "admin"
     else:
         role = "normaluser"

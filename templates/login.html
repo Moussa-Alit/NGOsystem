@@ -1,12 +1,8 @@
 {% extends "base.html" %}
 {% block title %}LOG-IN{% endblock %}
 {% block content %}
-{% for i in get_flashed_messages() %}
-<div class="alert alert-success alert-dismissible fade show" role="alert" >
-  <strong>{{i}}</strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{% endfor %}
+
+
 
 <div class="app-messages p-4">
 </div>

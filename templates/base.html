@@ -46,6 +46,12 @@
   
     </nav>
     <nav>{% include 'navbar.html' %}</nav>
+    {% for i in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{ i }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
     <div>{% block content %}{% endblock %}</div>
     <script>
       //var next = document.getElementById("next");
