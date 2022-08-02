@@ -64,6 +64,18 @@ class SelectingFormToEdit(FlaskForm): #selecting form type
     form = SelectField('Select what type of forms you want to edit | إختر نوع الإستمارة اللتي تود تعديلها', [InputRequired()], choices=[('', ''), ('register', 'Register'), ('AdhaActivities', 'تقييم نشاطات الأضحى')])
     submit = SubmitField('إختيار')
 
-class SelectingWichFormBlZabt(FlaskForm): #ya3ne 2aya form mn bayn 2e5ir 3 form 3melnehoun
+class SelectQueringBase(FlaskForm):
+    type = RadioField("Select querying base", [InputRequired()], choices=[('', ''), ('records', 'Records'), ('columns', 'Fields'), ('cells', 'Cells')]) 
+
+
+class QueryingRecordsTDateTime(FlaskForm):
     id_field = HiddenField()
-    records = RadioField('Select wich form to edit | إختر الإستمارة التي تريد تعيديلها', [InputRequired()], choices=[('', ''), ('top', '')])
+    table = SelectField('Select what form to query from it | إختر أي إستمكارة لتاخذ منها', [InputRequired()], choices=[('', ''), ('usesrs', 'Register'), ('adhaactsrating', 'تقييم نشاطات الأضحى')])
+    first_date = DateField('', [InputRequired(), Regexp(r'/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/', message='The date format should be YYYY-MM-DD')])
+    last_date = DateField('', [InputRequired(), Regexp(r'/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/', message='The date format should be YYYY-MM-DD')])
+    first_time = TimeField("", [InputRequired(), Regexp(r'^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$',
+     message='The time format should be HH:MM:SS')])
+    last_time = TimeField("", [InputRequired(), Regexp(r'^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$',
+     message='The time format should be HH:MM:SS')])
+    how_much = IntegerField('How much', [InputRequired()])
+    order = SelectField('Order (Acsending is preffered)', [InputRequired()], choices=[('', ''), ('asc', 'Ascendind'), ('desc', 'Descending')])

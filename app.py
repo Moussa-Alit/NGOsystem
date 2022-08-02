@@ -1,13 +1,17 @@
 
-from flask import Flask, render_template, redirect, url_for, request, flash, make_response, session
+from flask import Flask, after_this_request, render_template, redirect, send_file, url_for, request, flash, make_response, session
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 from datetime import datetime
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from cryptography.fernet import Fernet
 from datetime import datetime
-from mywtforms import RegisterForm, loginform, AdhaActivities, Main_Records, SelectingFormToEdit
+from mywtforms import RegisterForm, loginform, AdhaActivities, Main_Records, SelectingFormToEdit, SelectQueringBase, QueryingRecordsTDateTime
 from flask_migrate import Migrate
+import openpyxl
+from openpyxl.styles import Font
+import os
 
 
 app = Flask(__name__)
@@ -29,6 +33,15 @@ login_manager.login_view = 'login'
 
 #important lists
 sys_admins = [3, 6]
+users_headings = ['id', 'name', 'surname', 'username', 'email', 'password_hash', 'date_added', 'date_edited']
+aar_headings = ['id', 'starting_date_time', 'finishing_date_time', 'gps_location', 'governorate',
+ 'location', 'its_name', 'p_code', 'nb_of_families', 'activity_type', 'if_other_type', 'donor', 'team_leader',
+  'targeted_nb_in_camp', 'distributed_items', 'nb_of_itmes_to_be_distributed_in_this_act', 'exists_of_written_scheduled','voucher_distributed',
+   'beneficiaries_list_ready_used', 'protect_policies_respect_rate', 'controllcing_workplacce_rate', 'commitment_to_Covid_precautions',
+    'existing_of_requirements', 'if_shortcoming_in_requirements', 'randomly_checked_item_rate', 'staff_performance', 'general_notes',
+ 'added_by', 'date_added', 'date_edited']
+#imp dict
+#how_much = { '': first()}
 #functions
 #def send(message):
 #    now = datetime.now()
@@ -66,6 +79,18 @@ def decrypt(encrypted_data):
     #key.close()
     return data
 
+def query_to_excel(headings, query):
+    wb = openpyxl.Workbook() #workboook
+    sheet = wb.get_active_sheet()
+    sheet.row_dimensions[1].font = Font() #we cxan include bold = True in Font()
+    for colno, heading in enumerate(headings,  start = 1):
+        sheet.cell(row = 1, column = colno).alue = heading
+    for rowno, row in enumerate(query, start = 2):
+        for colno, cell_value in enumerate(row, start = 1):
+            sheet.cell(row = rowno, column = colno).value = cell_value
+    wb.save('/excel/query.xlsx')
+
+
 
 def finish_datetime():
     finish_datetime = datetime.now()
@@ -93,8 +118,8 @@ class Users(db.Model, UserMixin):
     username = db.Column(db.String, unique=True)
     email = db.Column(db.String, unique=True)
     password_hash = db.Column(db.String)
-    date_added = db.Column(db.String)
-    date_edited = db.Column(db.String)
+    date_added = db.Column(db.DateTime)
+    date_edited = db.Column(db.DateTime)
 
     def __init__(self, name, surname, username, email, password_hash, date_added, date_edited):
         self.name = name
@@ -114,8 +139,8 @@ class Users(db.Model, UserMixin):
 class AdhaActivitiesRating(db.Model):
     __tablename__ = "adhaactsrating"
     id = db.Column(db.Integer, primary_key=True)
-    starting_date_time = db.Column(db.String) #note that in form start date time are separated but in database are combined(no time data type in mysql)
-    finishing_date_time = db.Column(db.String)
+    starting_date_time = db.Column(db.DateTime) #note that in form start date time are separated but in database are combined(no time data type in mysql)
+    finishing_date_time = db.Column(db.DateTime)
     gps_location = db.Column(db.String)
     governorate = db.Column(db.String)    
     location = db.Column(db.String) 
@@ -141,8 +166,8 @@ class AdhaActivitiesRating(db.Model):
     staff_performance = db.Column(db.Integer)
     general_notes = db.Column(db.String)
     added_by = db.Column(db.Integer)
-    date_added = db.Column(db.String)
-    date_edited = db.Column(db.String)
+    date_added = db.Column(db.DateTime)
+    date_edited = db.Column(db.DateTime)
    
     def __init__(self, starting_date_time, finishing_date_time, gps_location, governorate, location, its_name, p_code, nb_of_families, activity_type, if_other_type, donor, team_leader, targeted_nb_in_camp, distributed_items, 
     nb_of_itmes_to_be_distributed_in_this_act, exists_of_written_scheduled, voucher_distributed, beneficiaries_list_ready_used,
@@ -250,7 +275,10 @@ def de_welcome():
 @login_required
 def gs_welcome():
     cu_id = current_user.id
-    return "<h1>Hello this is under development</h1>"
+    if cu_id in sys_admins:
+        return render_template("/indexes/gs_index.html")
+    flash("Only for admins")
+    return redirect(url_for('welcome'))
 
 @app.route("/A_A_R", methods=['GET', 'POST'])
 @login_required
@@ -262,8 +290,8 @@ def A_A_R():
         #gps_location_should_be_taken_auto
             starting_date = request.form["starting_date"]
             #starting_date = "2020-11-22" 
-            starting_time = request.form["starting_time"]
-            #starting_time = "11:11:11.321333"
+            #starting_time = request.form["starting_time"]
+            starting_time = "11:11:11.321333"
             starting_datetime = starting_date + " " + starting_time
             finish_date_time = finish_datetime()
             governorate = request.form['governorate']
@@ -522,6 +550,8 @@ def edit_a_a_r():
             #staff_performance = 7
         record.general_notes = request.form['general_notes']
         record.added_by = record.added_by
+        record.date_added = record.date_added
+        record.date_edited = finish_datetime()
         db.session.commit()
         flash("تم التعديل بنجاح")
         return redirect(url_for('de_welcome'))
@@ -554,6 +584,73 @@ def edit_users():
             return render_template('/edit/to_edit_users.html', form=form, record=record, cu_id=cu_id, admins=sys_admins)
     flash('you can\'t ;)')
     return(redirect(url_for('de_welcome')))
+
+@app.route('/gs/select_query_type', methods=['POST', 'GET'])
+@login_required
+def querying_downloading():
+    cu_id = current_user.id
+    form = SelectQueringBase()
+    if cu_id in sys_admins:
+        if request.method == 'POST' and form.validate_on_submit:
+            type = request.form['type']
+            session['type'] = type
+            if type == 'records':
+                return redirect(url_for('querying'))
+            elif type == 'columns':
+                return redirect(url_for('querying'))
+            elif type == 'cells':
+                return redirect(url_for('querying'))
+            else:
+                return "Impossible"
+        return render_template('/gs/select_query_type.html', form1=SelectQueringBase())
+    flash("Only for admins")
+    return redirect(url_for('welcome'))
+
+@app.route('/gs/QueryRecords', methods=['POST', 'GET'])
+@login_required
+def querying():
+    type = session['type'] #3anda 2este5demayn l 2awwal bt2akkid 2eno luser mara2 bl mar7le l 2abl l tene la nshouf shou nsewe
+    cu_id = current_user.id
+    form = QueryingRecordsTDateTime()
+    #form0 = QueryingRecords
+    #form1 = QueryingColumns
+    #form2 = QueryingCells
+    if cu_id in sys_admins:
+        if type == 'records':
+            if request.method == 'POST' and form.validate_on_submit:
+                table = request.form['table']
+                first_date = request.form['first_date']
+                last_date = request.form['last_date']
+                first_time = request.form['first_time']
+                last_time = request.form['last_time']
+                how_much = request.form['how_much']
+                order = request.form['order']
+                query = db.engine.execute(f"select * from {table} where date_added between '{first_date} {first_time}' and '{last_date} {last_time}' order by id {order} limit {how_much}")
+                query_to_excel(aar_headings, query)
+                file = '/excel/query.xlsx'
+                file_handle = open(file, 'r')
+                @after_this_request
+                def remove_file(response):
+                    os.remove(file)
+                    return response
+                return  render_template('querying.html', type=type, query=query) and send_file(file_handle)
+            #elif request.method == 'POST' and form0.validate_on_submit:
+            #    return 
+            return render_template('/gs/querying.html', type=type, form=form) 
+       # elif type == 'columns':
+
+        #elif type == 'cells':
+    flash("Only for admins")
+    return redirect(url_for('welcome'))
+
+@app.route('/t')
+@login_required
+def testing():
+    query = db.engine.execute("select id, date_added from users where date_added between '2022-08-02 06:37:19.000000' and '2022-08-02 07:55:30.000000' order by date_added desc limit 5")
+    for i in query:
+        print(i)
+    return "heyy"
+
 
 @app.route('/logout', methods=['POST', 'GET'])
 @login_required
