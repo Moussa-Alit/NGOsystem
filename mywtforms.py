@@ -45,8 +45,8 @@ class AdhaActivities(FlaskForm):
             Length(min=2, max=35, message='The donor name length should be between 2 and 35')])
     team_leader = StringField('المسؤول عن الفريق/Team Leader', [InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid name!'), 
             Length(min=2, max=35, message='The name length should be between 2 and 35')])
-    targeted_nb_in_camp = IntegerField('الهدف الكلي في هذا المخيم/Overall target in this camp', [InputRequired(), NumberRange(min=50, max=25000, message="The overall target should be between 50 and 25000") ])
-    distributed_items = IntegerField('عدد الحصص الموزع/Distributed items Count',[InputRequired(), NumberRange(min=50, max=25000, message="The overall target should be between 50 and 25000")])
+    targeted_nb_in_camp = IntegerField('الهدف الكلي في هذا المخيم/Overall target in this camp', [InputRequired(), NumberRange(min=3, max=25000, message="The overall target should be between 3 and 25000") ])
+    distributed_items = IntegerField('عدد الحصص الموزع/Distributed items Count',[InputRequired(), NumberRange(min=3, max=25000, message="The overall target should be between 3 and 25000")])
     nb_of_itmes_to_be_distributed_in_this_act = IntegerField('عدد الحصص التي سيتم توزيعها في هذا النشاط/Nb. Of Items To Be Distributed In This Activity', [InputRequired(), NumberRange(min=50, max=25000, message="The overall target should be between 50 and 25000")] )
     exists_of_written_scheduled = SelectField('Written schedule exists that was approved by the sector management/تم التأكّد من وجود جدول منظم للأنشطة موافق عليه من إدارة القطاع؟', [InputRequired(message="Please input!")], choices=[('', ''), (1, 'نعم'), (0, 'كلا')])
     voucher_distributed = SelectField('The vouchers were distributed before the activity | هل تم توزيع بونات قبل تنفيذ النشاط؟ ', [InputRequired(message="Please input!")], choices=[('', ''), (1, 'نعم'), (0, 'كلا')])
@@ -69,13 +69,13 @@ class SelectQueringBase(FlaskForm):
 
 
 class QueryingRecordsTDateTime(FlaskForm):
-    id_field = HiddenField()
-    table = SelectField('Select what form to query from it | إختر أي إستمكارة لتاخذ منها', [InputRequired()], choices=[('', ''), ('usesrs', 'Register'), ('adhaactsrating', 'تقييم نشاطات الأضحى')])
+    #id_field = HiddenField()
+    table = SelectField('Select what form to query from it | إختر أي إستمكارة لتاخذ منها', [InputRequired()], choices=[('', ''), ('users', 'Register'), ('adhaactsrating', 'تقييم نشاطات الأضحى')])
     first_date = DateField('', [InputRequired(), Regexp(r'/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/', message='The date format should be YYYY-MM-DD')])
     last_date = DateField('', [InputRequired(), Regexp(r'/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/', message='The date format should be YYYY-MM-DD')])
-    first_time = TimeField("", [InputRequired(), Regexp(r'^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$',
-     message='The time format should be HH:MM:SS')])
-    last_time = TimeField("", [InputRequired(), Regexp(r'^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$',
-     message='The time format should be HH:MM:SS')])
-    how_much = IntegerField('How much', [InputRequired()])
+    #first_time = TimeField("", [InputRequired(), Regexp(r'^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$',
+     #message='The time format should be HH:MM:SS')])
+    #last_time = TimeField("", [InputRequired(), Regexp(r'^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$',
+     #message='The time format should be HH:MM:SS')])
+    how_much = IntegerField('How much', [InputRequired(), NumberRange(min=1, max=25000, message="The overall target should be between 1 and 25000")])
     order = SelectField('Order (Acsending is preffered)', [InputRequired()], choices=[('', ''), ('asc', 'Ascendind'), ('desc', 'Descending')])

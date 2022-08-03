@@ -12,6 +12,7 @@ from flask_migrate import Migrate
 import openpyxl
 from openpyxl.styles import Font
 import os
+import pandas as pd
 
 
 app = Flask(__name__)
@@ -22,6 +23,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://vmfbelplxyvepj:a2979b68078
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = 'FW3434ff545h4RFE55$#f$t%yhtFF'
 
+
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 #Flask_login Stuff
@@ -30,7 +32,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-
+uri = 'postgresql://vmfbelplxyvepj:a2979b6807823c413e08a119955da592e94ab4f38696d568553ef3b11dbac674@ec2-54-87-179-4.compute-1.amazonaws.com:5432/deljs855e01f1t'
 #important lists
 sys_admins = [3, 6]
 users_headings = ['id', 'name', 'surname', 'username', 'email', 'password_hash', 'date_added', 'date_edited']
@@ -81,14 +83,14 @@ def decrypt(encrypted_data):
 
 def query_to_excel(headings, query):
     wb = openpyxl.Workbook() #workboook
-    sheet = wb.get_active_sheet()
+    sheet = wb.active
     sheet.row_dimensions[1].font = Font() #we cxan include bold = True in Font()
     for colno, heading in enumerate(headings,  start = 1):
-        sheet.cell(row = 1, column = colno).alue = heading
+        sheet.cell(row = 1, column = colno).value = heading
     for rowno, row in enumerate(query, start = 2):
         for colno, cell_value in enumerate(row, start = 1):
             sheet.cell(row = rowno, column = colno).value = cell_value
-    wb.save('/excel/query.xlsx')
+    wb.save("/home/kali/Desktop/'FLASK TESTS'/ex/qu.xlsx")
 
 
 
@@ -103,9 +105,17 @@ def determine_model(table_name):
         model = AdhaActivitiesRating
     return model
 
-def columns_names(model):
+def columns_names(model): #!!!!!!!!!!!!!!!!!!!1
     columns_list = model.__table__.columns.keys()
     return columns_list
+
+def query_to_csv_excel(query_cmd): 
+    df = pd.read_sql(query_cmd, con = uri)
+    df.to_csv("query.csv", index = False)
+    df1 = pd.read_csv("query.csv")
+    excel_file = pd.ExcelWriter("query.xlsx")
+    df1.to_excel(excel_file, index = False)
+    excel_file.save()
 
 
 #Sqlalchemy classes
@@ -621,19 +631,26 @@ def querying():
                 table = request.form['table']
                 first_date = request.form['first_date']
                 last_date = request.form['last_date']
-                first_time = request.form['first_time']
-                last_time = request.form['last_time']
+                #first_time = request.form['first_time']
+                #last_time = request.form['last_time']
+                first_time= "05:05:05.111111"
+                last_time = "13:33:33.333333"
                 how_much = request.form['how_much']
                 order = request.form['order']
-                query = db.engine.execute(f"select * from {table} where date_added between '{first_date} {first_time}' and '{last_date} {last_time}' order by id {order} limit {how_much}")
-                query_to_excel(aar_headings, query)
-                file = '/excel/query.xlsx'
+                query_cmd = f"select * from {table} where date_added between '{first_date} {first_time}' and '{last_date} {last_time}' order by id {order} limit {how_much}"
+                query = db.engine.execute(query_cmd)
+                #query_to_excel(aar_headings, query)
+                query_to_csv_excel(query_cmd)
+                file = 'query.xlsx'
+                file2 = 'query.csv'
                 file_handle = open(file, 'r')
+                send_file(file)
                 @after_this_request
                 def remove_file(response):
                     os.remove(file)
+                    os.remove(file2)
                     return response
-                return  render_template('querying.html', type=type, query=query) and send_file(file_handle)
+                return  render_template('/gs/querying.html', type=type, query=query)# and send_file(file_handle)
             #elif request.method == 'POST' and form0.validate_on_submit:
             #    return 
             return render_template('/gs/querying.html', type=type, form=form) 
