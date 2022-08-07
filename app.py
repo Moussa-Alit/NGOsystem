@@ -1,22 +1,17 @@
 
-from flask import Flask, after_this_request, render_template, redirect, send_file, url_for, request, flash, make_response, session
+from flask import Flask, after_this_request, render_template, redirect, send_file, send_from_directory, url_for, request, flash, make_response, session
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
 from datetime import datetime
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from cryptography.fernet import Fernet
 from datetime import datetime
-from mywtforms import RegisterForm, loginform, AdhaActivities, Main_Records, SelectingFormToEdit, SelectQueringBase, QueryingRecordsTDateTime
-from flask_migrate import Migrate
-import openpyxl
-from openpyxl.styles import Font
-import os
+from mywtforms import MakeForm, RegisterForm, loginform, AdhaActivities, Main_Records, SelectingFormToEdit, SelectQueringBase, QueryingRecordsTDateTime
+from dbmodels import Users, AdhaActivitiesRating
+#from flask_migrate import Migrate
 import pandas as pd
 
-
 app = Flask(__name__)
-
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:batata@localhost/database1'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://vmfbelplxyvepj:a2979b6807823c413e08a119955da592e94ab4f38696d568553ef3b11dbac674@ec2-54-87-179-4.compute-1.amazonaws.com:5432/deljs855e01f1t'
@@ -25,7 +20,7 @@ app.config['SECRET_KEY'] = 'FW3434ff545h4RFE55$#f$t%yhtFF'
 
 
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+#migrate = Migrate(app, db)
 #Flask_login Stuff
 
 login_manager = LoginManager()
@@ -42,18 +37,6 @@ aar_headings = ['id', 'starting_date_time', 'finishing_date_time', 'gps_location
    'beneficiaries_list_ready_used', 'protect_policies_respect_rate', 'controllcing_workplacce_rate', 'commitment_to_Covid_precautions',
     'existing_of_requirements', 'if_shortcoming_in_requirements', 'randomly_checked_item_rate', 'staff_performance', 'general_notes',
  'added_by', 'date_added', 'date_edited']
-#imp dict
-#how_much = { '': first()}
-#functions
-#def send(message):
-#    now = datetime.now()
-#    nowlst = str(now).split()
-#    time = nowlst[1]
-#    timelst = time.split(":")
-#    hour = int(timelst[0])
-#    min = int(timelst[1])
-#    pwt.sendwhatmsg("+96170594811", message, hour, min+2)
-
 
 #def generate_key():
 #    encrypting_key = Fernet.generate_key()
@@ -81,17 +64,6 @@ def decrypt(encrypted_data):
     #key.close()
     return data
 
-def query_to_excel(headings, query):
-    wb = openpyxl.Workbook() #workboook
-    sheet = wb.active
-    sheet.row_dimensions[1].font = Font() #we cxan include bold = True in Font()
-    for colno, heading in enumerate(headings,  start = 1):
-        sheet.cell(row = 1, column = colno).value = heading
-    for rowno, row in enumerate(query, start = 2):
-        for colno, cell_value in enumerate(row, start = 1):
-            sheet.cell(row = rowno, column = colno).value = cell_value
-    wb.save("/home/kali/Desktop/'FLASK TESTS'/ex/qu.xlsx")
-
 
 
 def finish_datetime():
@@ -116,102 +88,6 @@ def query_to_csv_excel(query_cmd):
     excel_file = pd.ExcelWriter("query.xlsx")
     df1.to_excel(excel_file, index = False)
     excel_file.save()
-
-
-#Sqlalchemy classes
-
-class Users(db.Model, UserMixin):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    surname = db.Column(db.String)
-    username = db.Column(db.String, unique=True)
-    email = db.Column(db.String, unique=True)
-    password_hash = db.Column(db.String)
-    date_added = db.Column(db.DateTime)
-    date_edited = db.Column(db.DateTime)
-
-    def __init__(self, name, surname, username, email, password_hash, date_added, date_edited):
-        self.name = name
-        self.surname = surname
-        self.username = username
-        self.email = email
-        self.password_hash = generate_password_hash(password_hash)
-        self.date_added = date_added
-        self.date_edited = date_edited
-    @property
-    def password(self):
-        raise AttributeError('password is not a readable attribute!')
-
-    def verify_password(self, pwd):
-        return check_password_hash(self.password_hash, pwd)
-
-class AdhaActivitiesRating(db.Model):
-    __tablename__ = "adhaactsrating"
-    id = db.Column(db.Integer, primary_key=True)
-    starting_date_time = db.Column(db.DateTime) #note that in form start date time are separated but in database are combined(no time data type in mysql)
-    finishing_date_time = db.Column(db.DateTime)
-    gps_location = db.Column(db.String)
-    governorate = db.Column(db.String)    
-    location = db.Column(db.String) 
-    its_name = db.Column(db.String) 
-    p_code = db.Column(db.String)
-    nb_of_families = db.Column(db.Integer)
-    activity_type = db.Column(db.String)
-    if_other_type = db.Column(db.String) 
-    donor = db.Column(db.String)
-    team_leader = db.Column(db.String)
-    targeted_nb_in_camp = db.Column(db.Integer)
-    distributed_items = db.Column(db.Integer)
-    nb_of_itmes_to_be_distributed_in_this_act = db.Column(db.Integer)
-    exists_of_written_scheduled = db.Column(db.Integer)
-    voucher_distributed = db.Column(db.Integer)
-    beneficiaries_list_ready_used = db.Column(db.Integer)
-    protect_policies_respect_rate = db.Column(db.Integer)
-    controllcing_workplacce_rate = db.Column(db.Integer)
-    commitment_to_Covid_precautions = db.Column(db.Integer)
-    existing_of_requirements = db.Column(db.Integer)
-    if_shortcoming_in_requirements = db.Column(db.String)
-    randomly_checked_item_rate = db.Column(db.Integer)
-    staff_performance = db.Column(db.Integer)
-    general_notes = db.Column(db.String)
-    added_by = db.Column(db.Integer)
-    date_added = db.Column(db.DateTime)
-    date_edited = db.Column(db.DateTime)
-   
-    def __init__(self, starting_date_time, finishing_date_time, gps_location, governorate, location, its_name, p_code, nb_of_families, activity_type, if_other_type, donor, team_leader, targeted_nb_in_camp, distributed_items, 
-    nb_of_itmes_to_be_distributed_in_this_act, exists_of_written_scheduled, voucher_distributed, beneficiaries_list_ready_used,
-    protect_policies_respect_rate, controlling_workplacce_rate, commitment_to_Covid_precautions, existing_of_requirements,
-     if_shortcoming_in_requirements, randomly_checked_item_rate, staff_performance, general_notes, added_by, date_added, date_edited):
-        self.starting_date_time = starting_date_time
-        self.finishing_date_time = finishing_date_time
-        self.gps_location = gps_location
-        self.governorate = governorate
-        self.location = location
-        self.its_name = its_name
-        self.p_code = p_code
-        self.nb_of_families = nb_of_families
-        self.activity_type = activity_type
-        self.if_other_type = if_other_type
-        self.donor = donor
-        self.team_leader = team_leader
-        self.targeted_nb_in_camp = targeted_nb_in_camp
-        self.distributed_items = distributed_items
-        self.nb_of_itmes_to_be_distributed_in_this_act = nb_of_itmes_to_be_distributed_in_this_act
-        self.exists_of_written_scheduled = exists_of_written_scheduled
-        self.voucher_distributed = voucher_distributed
-        self.beneficiaries_list_ready_used = beneficiaries_list_ready_used
-        self.protect_policies_respect_rate = protect_policies_respect_rate
-        self.controlling_workplacce_rate = controlling_workplacce_rate
-        self.commitment_to_Covid_precautions = commitment_to_Covid_precautions
-        self.existing_of_requirements = existing_of_requirements
-        self.if_shortcoming_in_requirements = if_shortcoming_in_requirements
-        self.randomly_checked_item_rate = randomly_checked_item_rate
-        self.staff_performance = staff_performance
-        self.general_notes = general_notes
-        self.added_by = added_by
-        self.date_added = date_added
-        self.date_edited = date_edited
 
 # routes
 @login_manager.user_loader
@@ -587,7 +463,7 @@ def edit_users():
             record.password_hash = generate_password_hash(new_psswd)
             record.date_edited = finish_datetime()
             db.session.commit()
-            print(db.session.commit())
+            #print(db.session.commit())
             flash('User updated succefully')
             return redirect(url_for('select_form_type'))
         else:
@@ -627,10 +503,11 @@ def querying():
     #form2 = QueryingCells
     if cu_id in sys_admins:
         if type == 'records':
-            if request.method == 'POST' and form.validate_on_submit:
+            if request.method == 'POST' and form.validate_on_submit:# and os.path.isfile("query.xlsx"):
                 table = request.form['table']
                 first_date = request.form['first_date']
                 last_date = request.form['last_date']
+                form.last_date.data = ""
                 #first_time = request.form['first_time']
                 #last_time = request.form['last_time']
                 first_time= "05:05:05.111111"
@@ -644,15 +521,9 @@ def querying():
                 file = 'query.xlsx'
                 file2 = 'query.csv'
                 file_handle = open(file, 'r')
-                send_file(file)
-                @after_this_request
-                def remove_file(response):
-                    os.remove(file)
-                    os.remove(file2)
-                    return response
-                return  render_template('/gs/querying.html', type=type, query=query)# and send_file(file_handle)
-            #elif request.method == 'POST' and form0.validate_on_submit:
-            #    return 
+                #redirect(url_for('welcome'))
+                return send_file(file, as_attachment=True)#, redirect(url_for('querying'))
+                #return redirect(url_for('querying'))
             return render_template('/gs/querying.html', type=type, form=form) 
        # elif type == 'columns':
 
@@ -660,13 +531,41 @@ def querying():
     flash("Only for admins")
     return redirect(url_for('welcome'))
 
+@app.route('/data_entry/new_form', methods=['POST', 'GET'])
+@login_required
+def new_form():
+    form = MakeForm()
+    cu_id = current_user.id
+    validators = []
+    if cu_id in sys_admins:
+        if request.method == 'POST' and form.validate_on_submit:
+            form_title = request.form["form_title"]
+            form_class = request.form["form_class"]
+            table = request.form["table"]
+            field_type = request.form["field_type"]
+            in_req = request.form["in_req"]
+            text_only = request.form["text_only"]
+            some_char = request.form["some_char"]
+            length = request.form["length"]
+            nb_range = request.form["nb_range"]
+            min_nb = request.form["min_nb"]
+            max_nb = request.form["max_nb"] 
+            min_char = request.form["min_char"]
+            max_char = request.form["max_char"]
+            hm_choices = request.form["hm_choices"]
+            if field_type in ["radio", "select"]:
+                return render_template("/data_entry/sf_chopices.html", hm=hm_choices) #dont forget csrf token is needed
+            redirect(url_for("new_form"))
+        return render_template('/data_entry/make_form.html', form=form, cu_id=cu_id)
+    flash(f"only for admins {cu_id}")    
+    return redirect(url_for('de_welcome'))
+
 @app.route('/t')
 @login_required
 def testing():
-    query = db.engine.execute("select id, date_added from users where date_added between '2022-08-02 06:37:19.000000' and '2022-08-02 07:55:30.000000' order by date_added desc limit 5")
-    for i in query:
-        print(i)
-    return "heyy"
+    #form = Datetime()
+
+    return render_template("testing.html")
 
 
 @app.route('/logout', methods=['POST', 'GET'])

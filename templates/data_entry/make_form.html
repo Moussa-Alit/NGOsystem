@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MakeForm</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+</head>
+<body>
+{% include "upnavbar.html" %}
+{% include "navbar.html" %}
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.form_title.label(class_="form-label") }}<br>
+    {{ form.form_title(class_="form-control") }}<br>
+    {{ form.form_class.label(class_="form-label") }}<br>
+    {{ form.form_class(class_="form-control") }}<br>
+    {{ form.table.label(class_="form-label") }}<br>
+    {{ form.table(class_="form-control") }}<br>
+    {{ form.field_type.label(class_="form-label") }}<br>
+    {{ form.field_type(class_="form-control") }}<br>
+    {{ form.in_req.label(class_="form-label") }}<br>
+    {{ form.in_req(class_="form-control") }}<br>
+    {{ form.text_only.label(class_="form-label")}}<br>
+    {{ form.text_only(class_="form-control")}}<br>
+    {{ form.some_char.label(class_="form-label")}}<br>
+    {{ form.some_char(class_="form-control")}}<br>
+    {{ form.length.label(class_="form-label")}}<br>
+    {{ form.length(class_="form-control")}}<br>
+    {{ form.nb_range.label(class_="form-label")}}<br>
+    {{ form.nb_range(class_="form-control")}}<br>
+    {{ form.min_nb.label(class_="form-label") }}<br>
+    {{ form.min_nb(class_="form-control") }}<br>
+    {{ form.max_nb.label(class_="form-label") }}<br>
+    {{ form.max_nb(class_="form-control") }}<br>
+    {{ form.min_char.label(class_="form-label") }}<br>
+    {{ form.min_char(class_="form-control") }}<br>
+    {{ form.max_char.label(class_="form-label") }}<br>
+    {{ form.max_char(class_="form-control") }}<br>
+    {{ form.hm_choices.label(class_="form-label") }}<br>
+    {{ form.hm_choices(class_="form-control") }}<br>
+    <button class="btn btn-primary" type="submit">Make</button>
+    <button style="display:inline-block" class="btn btn-dark" type="reset" >Clear</button>
+</form>
+</body>
+</html>
