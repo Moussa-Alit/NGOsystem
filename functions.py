@@ -48,7 +48,7 @@ def route_function(form_class):
 def append_db_class_title(form_class, table):
     db_class = db_model(form_class)
     with open("dbmodels.py", "a") as file:
-        file.write(f"""\n\nclass {db_class}(db.Model):\n    __tablename__ = '{table}'\n    id = db.Column(db.Integer, primary_key=True""")
+        file.write(f"""\n\nclass {db_class}(db.Model):\n    __tablename__ = '{table}'\n    id = db.Column(db.Integer, primary_key=True)""")
         file.close()
         return
 
@@ -63,10 +63,11 @@ def append_route(form_class):
     route_func = route_function(form_class)
     with open("app.py") as file:
         lines = file.readlines()
+        print(lines)
         i = -1 #count_indexes
         for line in lines:
             i += 1
-            if line == """if __name__ == "__main__":""":
+            if line == """if __name__ == "__main__"\n:""":
                 with open("app.py", "w") as file:
                     lines.insert(i, f"""@app.route('/data_entry/{form_class}', methods=['GET', 'POST'])\n@login_required\ndef {route_func}():""")
                     file.write("\n".join(lines))

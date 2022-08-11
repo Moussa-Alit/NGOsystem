@@ -106,3 +106,12 @@ class AdhaActivitiesRating(db.Model):
         self.added_by = added_by
         self.date_added = date_added
         self.date_edited = date_edited
+
+
+class eyeryeyDb(db.Model):
+    __tablename__ = '555544hh'
+    id = db.Column(db.Integer, primary_key=True)
+
+class eyeryeyDb(db.Model):
+    __tablename__ = 'hdfhfd'
+    id = db.Column(db.Integer, primary_key=True)

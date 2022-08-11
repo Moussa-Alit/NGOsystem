@@ -484,16 +484,19 @@ def new_form_titles():
     form = Titles()
     cu_id = current_user.id
     if cu_id in sys_admins:
-        if request.method == 'POST' and form.validate_on_submit:
-            form_title = request.form["form_title"]
-            form_class = request.form["form_class"]
-            table = request.form["table"]
-            append_form_title(form_title)
-            append_wtf_title(form_class)
-            append_db_class_title(form_class, table)
-            append_route(form_class)
-            flash("Titles writed successfully")
-            return redirect(url_for('new_form'))
+        if request.method == 'POST':
+            if form.validate_on_submit:
+                form_title = request.form["form_title"]
+                form_class = request.form["form_class"]
+                table = request.form["table"]
+                append_form_title(form_title)
+                append_wtf_title(form_class)
+                append_db_class_title(form_class, table)
+                append_route(form_class)
+                flash("Titles writed successfully")
+                return redirect(url_for('new_form'))
+            flash("not valide")
+            return render_template('/data_entry/add_titles.html', form=form ,cu_id=cu_id)
         return render_template('/data_entry/add_titles.html', form=form ,cu_id=cu_id)
 
     flash("Only for admins")

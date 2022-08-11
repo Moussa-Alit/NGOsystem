@@ -125,3 +125,8 @@ class Choices(FlaskForm):
     choice = StringField("Choice", [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=30, message='Min length=3, max=30')])
     value = StringField("Give the choice a value to be inserted at the database",
      [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=30, message='Min length=3, max=30')])
+
+class eyeryey(FlaskForm):
+    a = 1
+class eyeryey(FlaskForm):
+    a = 1
