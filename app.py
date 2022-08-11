@@ -8,7 +8,7 @@ from cryptography.fernet import Fernet
 from mywtforms import MakeForm, RegisterForm, loginform, AdhaActivities, Main_Records, SelectingFormToEdit, SelectQueringBase, QueryingRecordsTDateTime, Titles
 from dbmodels import Users, AdhaActivitiesRating
 #from flask_migrate import Migrate
-from functions import append_route, append_wtform, append_form_title, append_db_class_title, db_model, append_wtf_title, query_to_csv_excel, columns_names, determine_model, finish_datetime
+from functions import append_route, append_wtform, append_form_title, append_db_class_title, append_wtf_title, query_to_csv_excel, columns_names, determine_model, finish_datetime
 
 app = Flask(__name__)
 
@@ -488,14 +488,13 @@ def new_form_titles():
             form_title = request.form["form_title"]
             form_class = request.form["form_class"]
             table = request.form["table"]
-            db_class = db_model(form_class)
             append_form_title(form_title)
             append_wtf_title(form_class)
-            append_db_class_title(form_class)
+            append_db_class_title(form_class, table)
             append_route(form_class)
             flash("Titles writed successfully")
             return redirect(url_for('new_form'))
-        return render_template('/data_entry/add_titles.html', form=form)
+        return render_template('/data_entry/add_titles.html', form=form ,cu_id=cu_id)
 
     flash("Only for admins")
     return redirect(url_for("de_welcome"))
@@ -508,9 +507,6 @@ def new_form():
     validators = []
     if cu_id in sys_admins:
         if request.method == 'POST' and form.validate_on_submit:
-            #form_title = request.form["form_title"]
-            #form_class = request.form["form_class"]
-            #table = request.form["table"]
             field_type = request.form["field_type"]
             in_req = request.form["in_req"]
             validators = request.form["validators"]

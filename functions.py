@@ -45,10 +45,10 @@ def route_function(form_class):
     route_func = form_class + "route"
     return route_func
 
-def append_db_class_title(form_class):
+def append_db_class_title(form_class, table):
     db_class = db_model(form_class)
     with open("dbmodels.py", "a") as file:
-        file.write(f"\n\nclass {db_class}(db.Model):\n    a = 1")
+        file.write(f"""\n\nclass {db_class}(db.Model):\n    __tablename__ = '{table}'\n    id = db.Column(db.Integer, primary_key=True""")
         file.close()
         return
 
