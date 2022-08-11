@@ -39,6 +39,7 @@
 <div class="tab-content " id="pills-tabContent">
     <div class="tab-pane fade" id="pills-thdate" role="tabpanel" aria-labelledby="pills-thdate-tab">
     <form method="POST">
+      {{ form.hidden_tag() }}
       {{ form.table.label(class_="form-label") }}<br>
       {{ form.table(class_="form-control") }}<br>
       <p>Query data from <span>{{ form.first_date(class_="form-control") }}</span>

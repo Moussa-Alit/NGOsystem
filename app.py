@@ -1,15 +1,14 @@
 
-from flask import Flask, after_this_request, render_template, redirect, send_file, send_from_directory, url_for, request, flash, make_response, session
+from flask import Flask, after_this_request, render_template, redirect, send_file, url_for, request, flash, make_response, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from cryptography.fernet import Fernet
-from datetime import datetime
-from mywtforms import MakeForm, RegisterForm, loginform, AdhaActivities, Main_Records, SelectingFormToEdit, SelectQueringBase, QueryingRecordsTDateTime
+from mywtforms import MakeForm, RegisterForm, loginform, AdhaActivities, Main_Records, SelectingFormToEdit, SelectQueringBase, QueryingRecordsTDateTime, Titles
 from dbmodels import Users, AdhaActivitiesRating
 #from flask_migrate import Migrate
-import pandas as pd
+from functions import append_route, append_wtform, append_form_title, append_db_class_title, db_model, append_wtf_title, query_to_csv_excel, columns_names, determine_model, finish_datetime
 
 app = Flask(__name__)
 
@@ -27,7 +26,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-uri = 'postgresql://vmfbelplxyvepj:a2979b6807823c413e08a119955da592e94ab4f38696d568553ef3b11dbac674@ec2-54-87-179-4.compute-1.amazonaws.com:5432/deljs855e01f1t'
 #important lists
 sys_admins = [3, 6]
 users_headings = ['id', 'name', 'surname', 'username', 'email', 'password_hash', 'date_added', 'date_edited']
@@ -37,57 +35,6 @@ aar_headings = ['id', 'starting_date_time', 'finishing_date_time', 'gps_location
    'beneficiaries_list_ready_used', 'protect_policies_respect_rate', 'controllcing_workplacce_rate', 'commitment_to_Covid_precautions',
     'existing_of_requirements', 'if_shortcoming_in_requirements', 'randomly_checked_item_rate', 'staff_performance', 'general_notes',
  'added_by', 'date_added', 'date_edited']
-
-#def generate_key():
-#    encrypting_key = Fernet.generate_key()
-#    file = open("key_file.key", "wb")
-#    file.write(encrypting_key)
-#    file.close()
-
-def encrypt(data):
-    #open_file = open(".key_file.key", "rb")
-    #key = open_file.read()
-    key = b'kaYShGLbw1PD58npID1sf_mwnnVO4nmehsq5RNAro_I='
-    encoded_data = data.encode()
-    ferneted_key = Fernet(key)
-    encrypted_data = ferneted_key.encrypt(encoded_data)
-    #key.close()
-    return encrypted_data
-
-def decrypt(encrypted_data):
-    #open_file = open(".key_file.key", "rb")
-    #key = open_file.read()
-    key = b'kaYShGLbw1PD58npID1sf_mwnnVO4nmehsq5RNAro_I='
-    ferneted_key = Fernet(key)
-    decrypted_data = ferneted_key.decrypt(encrypted_data)
-    data = decrypted_data.decode()
-    #key.close()
-    return data
-
-
-
-def finish_datetime():
-    finish_datetime = datetime.now()
-    return finish_datetime
-
-def determine_model(table_name):
-    if table_name == 'Users':
-        model = Users
-    elif table_name == 'AdhaActivitiesRating':
-        model = AdhaActivitiesRating
-    return model
-
-def columns_names(model): #!!!!!!!!!!!!!!!!!!!1
-    columns_list = model.__table__.columns.keys()
-    return columns_list
-
-def query_to_csv_excel(query_cmd): 
-    df = pd.read_sql(query_cmd, con = uri)
-    df.to_csv("query.csv", index = False)
-    df1 = pd.read_csv("query.csv")
-    excel_file = pd.ExcelWriter("query.xlsx")
-    df1.to_excel(excel_file, index = False)
-    excel_file.save()
 
 # routes
 @login_manager.user_loader
@@ -531,6 +478,28 @@ def querying():
     flash("Only for admins")
     return redirect(url_for('welcome'))
 
+@app.route('/data_entry/new_form/titles', methods=['POST', 'GET'])
+@login_required
+def new_form_titles():
+    form = Titles()
+    cu_id = current_user.id
+    if cu_id in sys_admins:
+        if request.method == 'POST' and form.validate_on_submit:
+            form_title = request.form["form_title"]
+            form_class = request.form["form_class"]
+            table = request.form["table"]
+            db_class = db_model(form_class)
+            append_form_title(form_title)
+            append_wtf_title(form_class)
+            append_db_class_title(form_class)
+            append_route(form_class)
+            flash("Titles writed successfully")
+            return redirect(url_for('new_form'))
+        return render_template('/data_entry/add_titles.html', form=form)
+
+    flash("Only for admins")
+    return redirect(url_for("de_welcome"))
+
 @app.route('/data_entry/new_form', methods=['POST', 'GET'])
 @login_required
 def new_form():
@@ -539,11 +508,13 @@ def new_form():
     validators = []
     if cu_id in sys_admins:
         if request.method == 'POST' and form.validate_on_submit:
-            form_title = request.form["form_title"]
-            form_class = request.form["form_class"]
-            table = request.form["table"]
+            #form_title = request.form["form_title"]
+            #form_class = request.form["form_class"]
+            #table = request.form["table"]
             field_type = request.form["field_type"]
             in_req = request.form["in_req"]
+            validators = request.form["validators"]
+            print(validators)
             text_only = request.form["text_only"]
             some_char = request.form["some_char"]
             length = request.form["length"]
@@ -553,12 +524,20 @@ def new_form():
             min_char = request.form["min_char"]
             max_char = request.form["max_char"]
             hm_choices = request.form["hm_choices"]
+            code = f"""\n    field_type = {field_type}('label', [{in_req}])"""
+            append_wtform(code)
             if field_type in ["radio", "select"]:
-                return render_template("/data_entry/sf_chopices.html", hm=hm_choices) #dont forget csrf token is needed
+                return redirect(url_for('nf_choices'))
             redirect(url_for("new_form"))
         return render_template('/data_entry/make_form.html', form=form, cu_id=cu_id)
     flash(f"only for admins {cu_id}")    
     return redirect(url_for('de_welcome'))
+
+@app.route('/data_entry/new_form/choices', methods=['POST', 'GET'])
+@login_required
+def nf_choices():
+    return
+
 
 @app.route('/t')
 @login_required
@@ -595,3 +574,4 @@ def cookies():
 
 if __name__ == "__main__":
     app.run(debug=True, ssl_context='adhoc')
+

@@ -12,13 +12,31 @@
         {% include "upnavbar.html" %}
         {% include "navbar.html" %}
         <br>
-        <form>
-            <label>Fill the choices</label>
-            {% for i in hm %}
-                <input type="text">
-                <p>Give a value to be inserted in the database, preffered to not exceeds 15 characters and in english</p>
-                <input type="text">
-            {% endfor %}
-        </form>    
+        <div id="hall_form">
+            <div class="row justify-content-center">
+                <div class="col col-lg-9 col-md-12">
+                    <div class="card">
+                        <form>
+                            <label>Fill the choices</label>
+                            {% for i in hm %}
+                                {{ form.hidden_tag() }}
+                                {{ form.choice.label(class_="form-label") }}
+                                {{ form.choice(class_="form-control") }}
+                                {{ form.choice.label(class_="form-label") }}
+                                {{ form.choice(class_="form-control") }}
+                            {% endfor %}
+                            <div class="card-footer">
+                                <button class="btn btn-primary" type="submit">
+                                    Done
+                                </button>
+                                <button style="display:inline-block" class="btn btn-dark" type="reset">
+                                    تنظيف الحقول
+                                </button>
+                            </div>
+                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>    
     </body>
 </html>

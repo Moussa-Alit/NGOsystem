@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}AddTitles{% endblock %}
+{% block content %}
+<div id="hall_form">
+    <div class="row justify-content-center">
+        <div class="col col-lg-9 col-md-12">
+            <div class="card">
+                <form method="POST">
+                    {{ form.hidden_tag() }}<br>
+                    {{ form.form_title.label(class_="form-label") }}<br>
+                    {{ form.form_title(class_="form-control") }}<br>
+                    {{ form.form_class.label(class_="form-label") }}<br>
+                    {{ form.form_class(class_="form-control") }}<br>
+                    {{ form.table.label(class_="form-label") }}<br>
+                    {{ form.table(class_="form-control") }}<br>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" type="submit">
+                            إضافة
+                        </button>
+                        <button style="display:inline-block" class="btn btn-dark" type="reset">
+                            تنظيف الحقول
+                        </button>
+                    </div><!--footer-->
+                </form>
+            </div><!--card-->
+        </div><!--col col-->
+    </div><!--justify center-->
+</div><!--hall_form-->
+{% endblock %}

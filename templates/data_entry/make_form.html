@@ -13,14 +13,12 @@
 {% include "navbar.html" %}
 <form method="POST">
     {{ form.hidden_tag() }}
-    {{ form.form_title.label(class_="form-label") }}<br>
-    {{ form.form_title(class_="form-control") }}<br>
-    {{ form.form_class.label(class_="form-label") }}<br>
-    {{ form.form_class(class_="form-control") }}<br>
-    {{ form.table.label(class_="form-label") }}<br>
-    {{ form.table(class_="form-control") }}<br>
     {{ form.field_type.label(class_="form-label") }}<br>
     {{ form.field_type(class_="form-control") }}<br>
+    {% for field in form.validators %}
+        {{ field.label(class_="form-label") }}<br>
+        {{ field(class_="form-control") }}<br>
+    {% endfor %}
     {{ form.in_req.label(class_="form-label") }}<br>
     {{ form.in_req(class_="form-control") }}<br>
     {{ form.text_only.label(class_="form-label")}}<br>

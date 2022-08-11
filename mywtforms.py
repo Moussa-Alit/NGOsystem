@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, IntegerField, HiddenField, DateField, TimeField, SubmitField, PasswordField, RadioField, SelectMultipleField
+from wtforms import StringField, SelectField, IntegerField, HiddenField, DateField, TimeField, SubmitField, PasswordField, RadioField, FormField, FieldList
 from wtforms.validators import InputRequired, Length, Regexp, NumberRange
 
 
@@ -80,26 +80,48 @@ class QueryingRecordsTDateTime(FlaskForm):
     how_much = IntegerField('How much', [InputRequired(), NumberRange(min=1, max=25000, message="The overall target should be between 1 and 25000")])
     order = SelectField('Order (Acsending is preffered)', [InputRequired()], choices=[('', ''), ('asc', 'Ascendind'), ('desc', 'Descending')])
 
-class MakeForm(FlaskForm):
+class Titles(FlaskForm):
     form_title = StringField("Give a title for the form (can be in arabic)", [InputRequired(), 
     Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
     Length(min=3, max=20, message='The Title length should be between 3 and 20') ])
     form_class = StringField('Give the form an english name without spaces(CamelCase is preffered)',[InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
     Length(min=3, max=20, message='The Name length should be between 3 and 20')])
-    table = StringField('Give an english name without spaces/numbers/characters to the table that the data will be stored in, (CamelCase is preffered).',[InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
+    table = StringField('Give an english name without spaces/numbers/characters/uppercase letters to the table that the data will be stored in.',[InputRequired(), Regexp(r'^[a-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
     Length(min=3, max=20, message='The Name length should be between 3 and 20')])
-    field_type = SelectField('Select the type of the field', [InputRequired()], choices=[('', ''), ('text', 'Text field'), ('number', 'Number field'), ('radio', 'Radio field'), ('select', 'Select field'),
-    ('date', 'Date field'), ('time', 'Time field'), 
-     ('password', 'Password field'), ('hidden', 'Hidden field needed for forms\'s id')])
-    #validators = SelectMultipleField('Select needed validators', choices=[('', ''), ('in_requ', 'Input required'), ('text_only', 'Text only, commas "," periods "." semicolumns and all other characters are not allowed'),
-    # ('some_char', 'Text with some other characters only (commas, periods, semicolumns'), ('nb_range', 'Number range btw min and max(only for nb fields'), ('length', 'Length of text btw min and max')])
-    in_req =  SelectField("Input required?", choices=[('', ''), ('yes', 'YES'), ('no', 'NO')])
-    text_only =  SelectField("Text only?", choices=[('', ''), ('yes', 'YES'), ('no', 'NO')])
-    some_char =  SelectField("Text, numbers, commas, semicolumns,peeriods only?", choices=[('', ''), ('yes', 'YES'), ('no', 'NO')])
-    length =  SelectField("Special length range for text/password fields?", choices=[('', ''), ('yes', 'YES'), ('no', 'NO')])
-    nb_range =  SelectField("Special number range for number field?", choices=[('', ''), ('yes', 'YES'), ('no', 'NO')])
+    #db_class is a function
+
+class Validators(FlaskForm):
+    in_req =  SelectField("Input required?", choices=[('', ''), ('InputRequired()', 'YES'), ('', 'NO')])
+    text_only =  SelectField("Text only?", choices=[('', ''), ('Regexp(r"^[A-Za-z\s\-\']+$", message="Invalid!")', 'YES'), ('', 'NO')])
+    some_char =  SelectField("Text, numbers, commas, semicolumns,peeriods only?", choices=[('', ''), ('yes', 'YES'), ('', 'NO')])
+    length =  SelectField("Special length range for text/password fields?", choices=[('', ''), ('yes', 'YES'), ('', 'NO')])
     min_nb = IntegerField()
     max_nb = IntegerField()
     min_char = IntegerField()
     max_char = IntegerField()
     hm_choices = IntegerField("If the type is select/radio field;\nHow much are the choices?(Don't forget to count the choice 'غير محدد' or vide!)", [NumberRange(min=3, max=100, message='Choices should be btw 3 and 100')])
+
+
+class MakeForm(FlaskForm):
+    label = StringField('Write a label for the field', [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=200, message='Min length=3, max=200')])
+    field_type = SelectField('Select the type of the field', [InputRequired()], choices=[('', ''), ('StringField', 'Text field'), ('IntegerField', 'Number field'), ('RadioField', 'Radio field'),
+     ('SelectField', 'Select field'), ('DateField', 'Date field'), ('TimeField', 'Time field'), 
+     ('PasswordField', 'Password field'), ('HiddenField', 'Hidden field needed for forms\'s id')])
+    #validators = SelectMultipleField('Select needed validators', choices=[('', ''), ('in_requ', 'Input required'), ('text_only', 'Text only, commas "," periods "." semicolumns and all other characters are not allowed'),
+    # ('some_char', 'Text with some other characters only (commas, periods, semicolumns'), ('nb_range', 'Number range btw min and max(only for nb fields'), ('length', 'Length of text btw min and max')])
+    in_req =  SelectField("Input required?", choices=[('', ''), ('InputRequired()', 'YES'), ('', 'NO')])
+    text_only =  SelectField("Text only?", choices=[('', ''), ('Regexp(r"^[A-Za-z\s\-\']+$", message="Invalid!")', 'YES'), ('', 'NO')])
+    some_char =  SelectField("Text, numbers, commas, semicolumns,peeriods only?", choices=[('', ''), ('yes', 'YES'), ('', 'NO')])
+    length =  SelectField("Special length range for text/password fields?", choices=[('', ''), ('yes', 'YES'), ('', 'NO')])
+    nb_range =  SelectField("Special number range for number field?", choices=[('', ''), ('yes', 'YES'), ('', 'NO')])
+    validators = FieldList(FormField(Validators))
+    min_nb = IntegerField()
+    max_nb = IntegerField()
+    min_char = IntegerField()
+    max_char = IntegerField()
+    hm_choices = IntegerField("If the type is select/radio field;\nHow much are the choices?(Don't forget to count the choice 'غير محدد' or vide!)", [NumberRange(min=3, max=100, message='Choices should be btw 3 and 100')])
+
+class Choices(FlaskForm):
+    choice = StringField("Choice", [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=30, message='Min length=3, max=30')])
+    value = StringField("Give the choice a value to be inserted at the database",
+     [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=30, message='Min length=3, max=30')])
