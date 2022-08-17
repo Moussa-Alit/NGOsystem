@@ -7,40 +7,164 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+    <style>
+        .hiddens {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 {% include "upnavbar.html" %}
 {% include "navbar.html" %}
+{% for i in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{ i }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
 <form method="POST">
     {{ form.hidden_tag() }}
-    {{ form.field_type.label(class_="form-label") }}<br>
-    {{ form.field_type(class_="form-control") }}<br>
-    {% for field in form.validators %}
-        {{ field.label(class_="form-label") }}<br>
-        {{ field(class_="form-control") }}<br>
-    {% endfor %}
-    {{ form.in_req.label(class_="form-label") }}<br>
-    {{ form.in_req(class_="form-control") }}<br>
-    {{ form.text_only.label(class_="form-label")}}<br>
-    {{ form.text_only(class_="form-control")}}<br>
-    {{ form.some_char.label(class_="form-label")}}<br>
-    {{ form.some_char(class_="form-control")}}<br>
-    {{ form.length.label(class_="form-label")}}<br>
-    {{ form.length(class_="form-control")}}<br>
-    {{ form.nb_range.label(class_="form-label")}}<br>
-    {{ form.nb_range(class_="form-control")}}<br>
-    {{ form.min_nb.label(class_="form-label") }}<br>
-    {{ form.min_nb(class_="form-control") }}<br>
-    {{ form.max_nb.label(class_="form-label") }}<br>
-    {{ form.max_nb(class_="form-control") }}<br>
-    {{ form.min_char.label(class_="form-label") }}<br>
-    {{ form.min_char(class_="form-control") }}<br>
-    {{ form.max_char.label(class_="form-label") }}<br>
-    {{ form.max_char(class_="form-control") }}<br>
-    {{ form.hm_choices.label(class_="form-label") }}<br>
-    {{ form.hm_choices(class_="form-control") }}<br>
+    {{ form.field_name.label(class_="form-label") }}<br>
+    {{ form.field_name(class_="form-control") }}<br>
+    {{ form.flabel.label(class_="form-label") }}<br>
+    {{ form.flabel(class_="form-control") }}<br>
+    <label id="for_" for="field_type" >Field type</label>
+    <select class="form-control" id="field_type" name="field_type" required="" onchange="show_div()">
+        <option value=""></option>
+        <option value="StringField">Text field</option>
+        <option value="IntegerField">Number field</option>
+        <option value="RadioField">Radio field</option>
+        <option value="SelectField">Select field</option>
+        <option value="DateField">Date field</option>
+        <option value="TimeField">Time field</option>
+        <option value="PasswordField">Password field</option>
+        <option value="HiddenField">Hidden field needed for forms's id</option>
+    </select>
+    <label id="for_" for="in_req" class="form-label">Is input required?</label>
+    <select id="in_req" name="in_req"  class="form-control">
+        <option value=""></option>
+        <option value="InputRequired(),">Yes</option>
+        <option valur="">No</option>
+    </select>
+    <label id="for_text_only" for="text_only" class="form-label hiddens" >Only text allowed?</label>
+    <select id="text_only" name="text_only" class="form-control hiddens">
+        <option value=""></option>
+        <option value="Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid!'),">Yes</option>
+        <option valur="">No</option>
+    </select>
+    <label id="for_some_char" for="some_char" class="form-label hiddens" >Are text, numbers, commas, semi columns & periods the only allowed characters?</label>
+    <select id="some_char" name="some_char" class="form-control hiddens" >
+        <option value=""></option>
+        <option value="Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'),">Yes</option>
+        <option valur="">No</option>
+    </select>
+    <label id="for_length" for="length" class="form-label hiddens" >Is there a specific Chracters range to be typed?</label>
+    <select id="length" name="length" class="form-control hiddens" onchange="set_length()">
+        <option value=""></option>
+        <option value="yes">Yes</option>
+        <option valur="">No</option>
+    </select>
+    <label id="for_nb_range" for="nb_range" class="form-label hiddens" >Number range (not required!)</label>
+    <select id="nb_range" name="nb_range" class="form-control hiddens" onchange="set_nb_range()">
+        <option value=""></option>
+        <option value="yes">Yes</option>
+        <option valur="">No</option>
+    </select>
+
+    
+    {{ form.min_nb.label(class_="form-label nb_rg hiddens") }}<br>
+    {{ form.min_nb(class_="form-control nb_rg hiddens") }}<br>
+    {{ form.max_nb.label(class_="form-label nb_rg hiddens") }}<br>
+    {{ form.max_nb(class_="form-control nb_rg hiddens") }}<br>
+    {{ form.min_char.label(class_="form-label str_len hiddens") }}<br>
+    {{ form.min_char(class_="form-control str_len hiddens") }}<br>
+    {{ form.max_char.label(class_="form-label str_len hiddens") }}<br>
+    {{ form.max_char(class_="form-control str_len hiddens") }}<br>
+    <label for="hm_choices" class="form-label hm hiddens" id="for_hm_choices">How much choices the Select/Radio will contain(don't forget the 'غير محدد' choice)</label>
+    <input type="number" class="form-control hm hiddens" id="hm_choices" name="hm_choices" onchange="generate_choices()"/>
+    <div id="choices_div">
+
+    </div>
     <button class="btn btn-primary" type="submit">Make</button>
     <button style="display:inline-block" class="btn btn-dark" type="reset" >Clear</button>
 </form>
+<script>
+    function show_div() {
+        if (document.getElementById("field_type").value == "StringField") {  
+            document.getElementById("text_only").style.display = "block"
+            document.getElementById("some_char").style.display = "block"
+            document.getElementById("length").style.display = "block"
+            document.getElementById("for_text_only").style.display = "block"
+            document.getElementById("for_some_char").style.display = "block"
+            document.getElementById("for_length").style.display = "block"
+            if (document.getElementById("for_nb_range").style.display = "block" || document.getElementsByClassName("hm").style.display == "block" || document.getElementsByClassName("nb_rg").style.display == "block") {
+            document.getElementById("for_nb_range").style.display = "none"
+            document.getElementById("nb_range").style.display = "none"
+            document.getElementsByClassName("hm").style.display = "none"
+            document.getElementsByClassName("nb_rg").style.display = "none"
+        }
+        } else if (document.getElementById("field_type").value == "IntegerField") {
+            document.getElementById("nb_range").style.display = "block"
+            document.getElementById("for_nb_range").style.display = "block"
+            if (document.getElementById("text_only").style.display == "block" || document.getElementsByClassName("str_len").style.display == "block" || document.getElementsByClassName("hm").style.display == "block") {
+            document.getElementById("text_only").style.display = "none"
+            document.getElementById("some_char").style.display = "none"
+            document.getElementById("length").style.display = "none"
+            document.getElementById("for_text_only").style.display = "none"
+            document.getElementById("for_some_char").style.display = "none"
+            document.getElementById("for_length").style.display = "none"
+            document.getElementsByClassName("str_len").style.value = "none"
+            document.getElementsByClassName("hm").style.display = "none"
+        }
+        } else if (document.getElementById("field_type").value == "SelectField" || document.getElementById("field_type").value == "RadioField") {
+           document.getElementsById("hm_choices").style.diplay = "block"
+           document.getElementsById("for_hm_choices").style.diplay = "block"
+           document.getElementsById("hm_choices").required = true;
+           if (document.getElementById("text_only").style.display == "block" || document.getElementsByClassName("str_len").style.display == "block" ||  document.getElementsByClassName("nb_rg").style.display == "block") {
+            document.getElementById("text_only").style.display = "none"
+            document.getElementById("some_char").style.display = "none"
+            document.getElementById("length").style.display = "none"
+            document.getElementById("for_text_only").style.display = "none"
+            document.getElementById("for_some_char").style.display = "none"
+            document.getElementById("for_length").style.display = "none"
+            document.getElementsByClassName("str_len").style.display = "none"
+            document.getElementsByClassName("nb_rg").style.display = "none" 
+           }
+        } else {
+            document.getElementById("text_only").style.display = "none"
+            document.getElementById("some_char").style.display = "none"
+            document.getElementById("length").style.display = "none"
+            document.getElementById("for_text_only").style.display = "none"
+            document.getElementById("for_some_char").style.display = "none"
+            document.getElementById("for_length").style.display = "none"
+            document.getElementsByClassName("str_len").style.display = "none"
+            document.getElementsByClassName("nb_rg").style.display = "none"
+            document.getElementById("for_nb_range").style.display = "none"
+            document.getElementById("nb_range").style.display = "none"
+            document.getElementsByClassName("hm").style.display = "none"
+            document.getElementsByClassName("nb_rg").style.display = "none" 
+        }
+    };
+    function set_length() {
+        if (document.getElementById("length").value = "yes") {
+            document.getElementsByClassName("str_len").style.display = "block"
+        }
+    };
+    function set_nb_range() {
+        if (document.getElementById("nb_range").value = "yes") {
+            document.getElementsById("nb_range").style.display = "block"
+            document.getElementsById("for_nb_range").style.display = "block"
+        } 
+    };
+    function generate_choices() {
+        var x = document.getElementById("hm_choices");
+        var choices = document.getElementById("choices_div");
+        var new_input = document.createElement('input');
+        new_input.setAttribute('type', 'text');
+        for (let i=0; i < x; i++) {
+            choices.appendChild(new_input)
+        }
+    };
+</script>
 </body>
 </html>

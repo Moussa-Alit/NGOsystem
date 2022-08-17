@@ -108,10 +108,46 @@ class AdhaActivitiesRating(db.Model):
         self.date_edited = date_edited
 
 
-class eyeryeyDb(db.Model):
-    __tablename__ = '555544hh'
+class bxfbxfDb(db.Model):
+    __tablename__ = 'fbxbxbf'
     id = db.Column(db.Integer, primary_key=True)
 
-class eyeryeyDb(db.Model):
-    __tablename__ = 'hdfhfd'
+class fsdfsdfDb(db.Model):
+    __tablename__ = 'fdsfsdf'
+    id = db.Column(db.Integer, primary_key=True)
+
+class fgfngfnDb(db.Model):
+    __tablename__ = 'fgnngfng'
+    id = db.Column(db.Integer, primary_key=True)
+
+class owowowfDb(db.Model):
+    __tablename__ = 'oooooof'
+    id = db.Column(db.Integer, primary_key=True)
+
+class yityjtjDb(db.Model):
+    __tablename__ = 'sascvwrv'
+    id = db.Column(db.Integer, primary_key=True)
+
+class wfqwfqwfDb(db.Model):
+    __tablename__ = 'ththrthr'
+    id = db.Column(db.Integer, primary_key=True)
+
+class ktyjtjtyjDb(db.Model):
+    __tablename__ = 'rtjytjtyjtyj'
+    id = db.Column(db.Integer, primary_key=True)
+
+class dsvdsdvsDb(db.Model):
+    __tablename__ = 'dsvsvsdv'
+    id = db.Column(db.Integer, primary_key=True)
+
+class thrhDb(db.Model):
+    __tablename__ = 'rthrth'
+    id = db.Column(db.Integer, primary_key=True)
+
+class ergrgnthrhDb(db.Model):
+    __tablename__ = 'nhgnrthrth'
+    id = db.Column(db.Integer, primary_key=True)
+
+class ergrgnergergthrhDb(db.Model):
+    __tablename__ = 'nhgnergergrthrth'
     id = db.Column(db.Integer, primary_key=True)

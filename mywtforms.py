@@ -101,32 +101,31 @@ class Validators(FlaskForm):
     max_char = IntegerField()
     hm_choices = IntegerField("If the type is select/radio field;\nHow much are the choices?(Don't forget to count the choice 'غير محدد' or vide!)", [NumberRange(min=3, max=100, message='Choices should be btw 3 and 100')])
 
-
 class MakeForm(FlaskForm):
-    label = StringField('Write a label for the field', [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=200, message='Min length=3, max=200')])
-    field_type = SelectField('Select the type of the field', [InputRequired()], choices=[('', ''), ('StringField', 'Text field'), ('IntegerField', 'Number field'), ('RadioField', 'Radio field'),
-     ('SelectField', 'Select field'), ('DateField', 'Date field'), ('TimeField', 'Time field'), 
-     ('PasswordField', 'Password field'), ('HiddenField', 'Hidden field needed for forms\'s id')])
-    #validators = SelectMultipleField('Select needed validators', choices=[('', ''), ('in_requ', 'Input required'), ('text_only', 'Text only, commas "," periods "." semicolumns and all other characters are not allowed'),
-    # ('some_char', 'Text with some other characters only (commas, periods, semicolumns'), ('nb_range', 'Number range btw min and max(only for nb fields'), ('length', 'Length of text btw min and max')])
-    in_req =  SelectField("Input required?", choices=[('', ''), ('InputRequired()', 'YES'), ('', 'NO')])
-    text_only =  SelectField("Text only?", choices=[('', ''), ('Regexp(r"^[A-Za-z\s\-\']+$", message="Invalid!")', 'YES'), ('', 'NO')])
-    some_char =  SelectField("Text, numbers, commas, semicolumns,peeriods only?", choices=[('', ''), ('yes', 'YES'), ('', 'NO')])
-    length =  SelectField("Special length range for text/password fields?", choices=[('', ''), ('yes', 'YES'), ('', 'NO')])
-    nb_range =  SelectField("Special number range for number field?", choices=[('', ''), ('yes', 'YES'), ('', 'NO')])
-    validators = FieldList(FormField(Validators))
-    min_nb = IntegerField()
-    max_nb = IntegerField()
-    min_char = IntegerField()
-    max_char = IntegerField()
-    hm_choices = IntegerField("If the type is select/radio field;\nHow much are the choices?(Don't forget to count the choice 'غير محدد' or vide!)", [NumberRange(min=3, max=100, message='Choices should be btw 3 and 100')])
+    field_name = StringField('Give this field a short name(no sprcial characters/uppercase/numbers/spaces).', [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=30, message='Min length=3, max=30')])
+    flabel = StringField('Write a label for the field', [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=200, message='Min length=3, max=200')])
+    min_nb = IntegerField('Min nb')
+    max_nb = IntegerField('Max nb')
+    min_char = IntegerField('Min char')
+    max_char = IntegerField('Max char')
+    
 
 class Choices(FlaskForm):
     choice = StringField("Choice", [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=30, message='Min length=3, max=30')])
     value = StringField("Give the choice a value to be inserted at the database",
      [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=30, message='Min length=3, max=30')])
 
-class eyeryey(FlaskForm):
+class yityjtj(FlaskForm):
     a = 1
-class eyeryey(FlaskForm):
+class wfqwfqwf(FlaskForm):
+    a = 1
+class ktyjtjtyj(FlaskForm):
+    a = 1
+class dsvdsdvs(FlaskForm):
+    a = 1
+class thrh(FlaskForm):
+    a = 1
+class ergrgnthrh(FlaskForm):
+    a = 1
+class ergrgnergergthrh(FlaskForm):
     a = 1

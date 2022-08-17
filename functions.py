@@ -57,24 +57,30 @@ def append_form_title(form_title):
         lines = file.readlines()
     with open(get_script_path() + "/templates/navbar.html", "w") as file:
         lines.insert(30, f"""<li class="nav-item">\n    <a class="nav-link">{form_title}</a>\n</li>""")
-        file.write("\n".join(lines))
+        for i in lines:
+            file.write(i)
 
 def append_route(form_class):
     route_func = route_function(form_class)
-    with open("app.py") as file:
-        lines = file.readlines()
-        print(lines)
-        i = -1 #count_indexes
-        for line in lines:
-            i += 1
-            if line == """if __name__ == "__main__"\n:""":
-                with open("app.py", "w") as file:
-                    lines.insert(i, f"""@app.route('/data_entry/{form_class}', methods=['GET', 'POST'])\n@login_required\ndef {route_func}():""")
-                    file.write("\n".join(lines))
-                    break
+    with open("create_form.py", "a") as file:
+        file.write(f"""@app.route('/data_entry/{form_class}', methods=['GET', 'POST'])\n@login_required\ndef {route_func}():\n    cu_id = current_user.id""")
 
 def append_wtform(flaskform):
     with open("mywtforms.py", "a") as cr:
         cr.write(flaskform)
         cr.close()
         return
+
+def check_for_validators(validators):
+    for i in validators:
+        if i:
+            return True
+
+
+def add_comma_if_validator(validators):
+    for validator in validators:
+        if validator:
+            index = validators.index(validator)
+            validator += ","
+            validators[index] = validator
+    return validators

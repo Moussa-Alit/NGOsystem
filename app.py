@@ -4,12 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from cryptography.fernet import Fernet
 from mywtforms import MakeForm, RegisterForm, loginform, AdhaActivities, Main_Records, SelectingFormToEdit, SelectQueringBase, QueryingRecordsTDateTime, Titles
 from dbmodels import Users, AdhaActivitiesRating
 #from flask_migrate import Migrate
-from functions import append_route, append_wtform, append_form_title, append_db_class_title, append_wtf_title, query_to_csv_excel, columns_names, determine_model, finish_datetime
-
+from functions import append_route, append_wtform, append_form_title, append_db_class_title, append_wtf_title, query_to_csv_excel, columns_names, determine_model, finish_datetime, check_for_validators, add_comma_if_validator
+from clear import clear_navbar
 app = Flask(__name__)
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:batata@localhost/database1'
@@ -505,30 +504,37 @@ def new_form_titles():
 @app.route('/data_entry/new_form', methods=['POST', 'GET'])
 @login_required
 def new_form():
-    form = MakeForm()
     cu_id = current_user.id
-    validators = []
     if cu_id in sys_admins:
-        if request.method == 'POST' and form.validate_on_submit:
-            field_type = request.form["field_type"]
-            in_req = request.form["in_req"]
-            validators = request.form["validators"]
-            print(validators)
-            text_only = request.form["text_only"]
-            some_char = request.form["some_char"]
-            length = request.form["length"]
-            nb_range = request.form["nb_range"]
-            min_nb = request.form["min_nb"]
-            max_nb = request.form["max_nb"] 
-            min_char = request.form["min_char"]
-            max_char = request.form["max_char"]
-            hm_choices = request.form["hm_choices"]
-            code = f"""\n    field_type = {field_type}('label', [{in_req}])"""
-            append_wtform(code)
-            if field_type in ["radio", "select"]:
-                return redirect(url_for('nf_choices'))
-            redirect(url_for("new_form"))
-        return render_template('/data_entry/make_form.html', form=form, cu_id=cu_id)
+        form1 = MakeForm()
+        if request.method == 'POST':
+            if form1.validate_on_submit():
+                field_name = request.form["field_name"]
+                flabel = request.form["flabel"]
+                field_type = request.form["field_type"]
+                in_req = request.form["in_req"]
+                text_only = request.form["text_only"]
+                some_char = request.form["some_char"]
+                length = request.form["length"]
+                nb_range = request.form["nb_range"]
+                min_nb = request.form["min_nb"]
+                max_nb = request.form["max_nb"] 
+                min_char = request.form["min_char"]
+                max_char = request.form["max_char"]
+                hm_choices = request.form["hm_choices"]
+                possible_validators = [in_req, text_only, some_char, length, nb_range, min_nb, max_nb, min_char, max_char, hm_choices]
+                if field_type in ["radio", "select"]:
+                    return redirect(url_for('nf_choices'))
+                if check_for_validators(possible_validators):
+                    code = f"""\n    {field_name} = {field_type}('{flabel}', [{possible_validators[0]} {possible_validators[1]}
+                 {possible_validators[2]} {possible_validators[3]} {possible_validators[4]} {possible_validators[5]}
+                 {possible_validators[6]} {possible_validators[7]} {possible_validators[8]} {possible_validators[9]}])"""
+                else:
+                    code = f"""\n    {field_name} = {field_type}('{flabel}')"""
+                append_wtform(code)  
+                redirect(url_for("new_form"))
+            return "Invalid inputs"
+        return render_template('/data_entry/make_form.html', form=form1, cu_id=cu_id)
     flash(f"only for admins {cu_id}")    
     return redirect(url_for('de_welcome'))
 
@@ -571,6 +577,9 @@ def cookies():
     )
     return res
 
+@app.route('/clear')
+def clear():
+    clear_navbar()
+    return "h"
 if __name__ == "__main__":
     app.run(debug=True, ssl_context='adhoc')
-
