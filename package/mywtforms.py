@@ -89,31 +89,15 @@ class Titles(FlaskForm):
     table = StringField('Give an english name without spaces/numbers/characters/uppercase letters to the table that the data will be stored in.',[InputRequired(), Regexp(r'^[a-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
     Length(min=3, max=20, message='The Name length should be between 3 and 20')])
     #db_class is a function
-
-class Validators(FlaskForm):
-    in_req =  SelectField("Input required?", choices=[('', ''), ('InputRequired()', 'YES'), ('', 'NO')])
-    text_only =  SelectField("Text only?", choices=[('', ''), ('Regexp(r"^[A-Za-z\s\-\']+$", message="Invalid!")', 'YES'), ('', 'NO')])
-    some_char =  SelectField("Text, numbers, commas, semicolumns,peeriods only?", choices=[('', ''), ('yes', 'YES'), ('', 'NO')])
-    length =  SelectField("Special length range for text/password fields?", choices=[('', ''), ('yes', 'YES'), ('', 'NO')])
-    min_nb = IntegerField()
-    max_nb = IntegerField()
-    min_char = IntegerField()
-    max_char = IntegerField()
-    hm_choices = IntegerField("If the type is select/radio field;\nHow much are the choices?(Don't forget to count the choice 'غير محدد' or vide!)", [NumberRange(min=3, max=100, message='Choices should be btw 3 and 100')])
+    access_by = SelectField("Who can access this form?", choices=[('', ''), ('only_admins', 'Only Admins'), ('any', 'Anybody')])
 
 class MakeForm(FlaskForm):
     field_name = StringField('Give this field a short name(no sprcial characters/uppercase/numbers/spaces).', [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=30, message='Min length=3, max=30')])
     flabel = StringField('Write a label for the field', [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=200, message='Min length=3, max=200')])
-    min_nb = IntegerField('Min nb')
-    max_nb = IntegerField('Max nb')
-    min_char = IntegerField('Min char')
-    max_char = IntegerField('Max char')
-    
-
-class Choices(FlaskForm):
-    choice = StringField("Choice", [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=30, message='Min length=3, max=30')])
-    value = StringField("Give the choice a value to be inserted at the database",
-     [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=30, message='Min length=3, max=30')])
+    min_nb = StringField('Min nb', [Regexp(r'^\\d+$', message='Only numbers')])
+    max_nb = StringField('Max nb', [Regexp(r'^\\d+$', message='Only numbers')])
+    min_char = StringField('Min char', [Regexp(r'^\\d+$', message='Only numbers')])
+    max_char = StringField('Max char', [Regexp(r'^\\d+$', message='Only numbers')])
 
 class yityjtj(FlaskForm):
     a = 1
@@ -129,3 +113,51 @@ class ergrgnthrh(FlaskForm):
     a = 1
 class ergrgnergergthrh(FlaskForm):
     a = 1
+    rthtrhz = RadioField('srhhrse')
+    sdfasfas = RadioField('asdfasd')
+    ergwerg = RadioField('wegewrgyjj', [InputRequired(), 
+                    
+                   ])
+    sfasf = RadioField('aefafewe', [InputRequired(), 
+                    
+                   ])
+    fbzzb = RadioField('dz zdbnbz', [InputRequired(), 
+                    
+                   ])
+    dhrfhea = RadioField('eahhaerh')
+    hsthsth = RadioField('thhsth')
+    ddssdv = SelectField('gvsvsdv')
+    hdfhdh = RadioField('fdhfhf', [InputRequired(), 
+                    
+                   ])
+    thrthrth = PasswordField('rth#$%')
+    #aaghthj = RadioField('lyilyuiuil', choices=[('jrtyjrytytr', 'yjrtyjyy'), ('jyrjytjyuo', 'yjrtyjydyjjry'), ('xcmdjsdj', 'yodfnhdsgkiu')]
+    #aaghthj = RadioField('lyilyuiuil', choices=[('jrtyjrytytr', 'yjrtyjyy'), ('jyrjytjyuo', 'yjrtyjydyjjry'), ('xcmdjsdj', 'yodfnhdsgkiu')]
+    rkukuruuyk = SelectField('oiutj', choices=[('jyetyj', 'etyjetyj')])
+    kits_nb = RadioField('ما هو عدد الحصص الموزعة', choices=[('ألف', '1000'), ('الف و خمسمية', '1500'), ('ألفان', '2000')])
+    #hhhhhh bl 2olb 2leb l choice wl value
+    ergrgg = RadioField('wrgwrgwrg', [InputRequired(), 
+                    
+                   ], choices=[('sdhsh', 'shshdfh'), ('esgrg', 'hyjtuk')])
+    password = PasswordField('password', [InputRequired(), 
+                    
+                   ])
+    password = PasswordField('password', [InputRequired(), 
+                    
+                   ])
+    radio_f = RadioField('radio just select', choices=[('regaeg', 'agrge'), ('jytjty', 'gerg'), ('rgdrgg', 'et4ete4t'), ('drgrdgdg', 'dgdrgrd')])
+
+    etydrdfh = PasswordField('dhdfhdhdfh', [InputRequired(), 
+                    
+                   ])
+    fghfhthrth = SelectField('rthrthrt', [InputRequired(), 
+                    
+                   ], choices=[('hrthrthjtyj', 'rthrthrt')])
+    casaga = DateField('asgassgas', [InputRequired(), 
+                    
+                   ])
+    casaga = RadioField('asgassgas', [InputRequired(), 
+                    
+                   ], choices=[('ertertert', 'terte')])
+    afsaesfeasf = RadioField('effasfe', choices=[('rhthsrthtrsh', 'tthtsrhtshs')])
+    eafawas = RadioField('fasfasfasf', choices=[('sgsdgsdghmk', 'sggdg'), ('aerrye', 'xffhffgh'), ('fgzfdgdfz', 'aeraggzg')])

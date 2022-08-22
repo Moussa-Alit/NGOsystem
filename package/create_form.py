@@ -31,7 +31,8 @@ def thrhroute():
     cu_id = current_user.id@app.route('/data_entry/ergrgnthrh', methods=['GET', 'POST'])
 @login_required
 def ergrgnthrhroute():
-    cu_id = current_user.id@app.route('/data_entry/ergrgnergergthrh', methods=['GET', 'POST'])
+    cu_id = current_user.id
+@app.route('/data_entry/ergrgnergergthrh', methods=['GET', 'POST'])
 @login_required
 def ergrgnergergthrhroute():
     cu_id = current_user.id

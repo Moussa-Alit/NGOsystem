@@ -1,16 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
+from package import db
 from flask_login import UserMixin
-from flask import Flask
-from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
-
-app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://vmfbelplxyvepj:a2979b6807823c413e08a119955da592e94ab4f38696d568553ef3b11dbac674@ec2-54-87-179-4.compute-1.amazonaws.com:5432/deljs855e01f1t'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 
 
 
@@ -107,47 +97,10 @@ class AdhaActivitiesRating(db.Model):
         self.date_added = date_added
         self.date_edited = date_edited
 
-
-class bxfbxfDb(db.Model):
-    __tablename__ = 'fbxbxbf'
+class TrackFields(db.Model):
+    __tablename__ = 'fieldscount'
     id = db.Column(db.Integer, primary_key=True)
+    track = db.Column(db.String)
 
-class fsdfsdfDb(db.Model):
-    __tablename__ = 'fdsfsdf'
-    id = db.Column(db.Integer, primary_key=True)
-
-class fgfngfnDb(db.Model):
-    __tablename__ = 'fgnngfng'
-    id = db.Column(db.Integer, primary_key=True)
-
-class owowowfDb(db.Model):
-    __tablename__ = 'oooooof'
-    id = db.Column(db.Integer, primary_key=True)
-
-class yityjtjDb(db.Model):
-    __tablename__ = 'sascvwrv'
-    id = db.Column(db.Integer, primary_key=True)
-
-class wfqwfqwfDb(db.Model):
-    __tablename__ = 'ththrthr'
-    id = db.Column(db.Integer, primary_key=True)
-
-class ktyjtjtyjDb(db.Model):
-    __tablename__ = 'rtjytjtyjtyj'
-    id = db.Column(db.Integer, primary_key=True)
-
-class dsvdsdvsDb(db.Model):
-    __tablename__ = 'dsvsvsdv'
-    id = db.Column(db.Integer, primary_key=True)
-
-class thrhDb(db.Model):
-    __tablename__ = 'rthrth'
-    id = db.Column(db.Integer, primary_key=True)
-
-class ergrgnthrhDb(db.Model):
-    __tablename__ = 'nhgnrthrth'
-    id = db.Column(db.Integer, primary_key=True)
-
-class ergrgnergergthrhDb(db.Model):
-    __tablename__ = 'nhgnergergrthrth'
-    id = db.Column(db.Integer, primary_key=True)
+    def __init__(self, track):
+        self.track = track

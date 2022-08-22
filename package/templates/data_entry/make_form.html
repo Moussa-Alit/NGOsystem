@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MakeForm</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+    <style>
+        .hiddens {
+            display: none;
+        }
+        /*.card {
+            text-align: center; to center child elements
+        }*/
+        .form-label {
+
+            max-width: 800px;
+        }
+        .form-control {
+        /*    display: inline-block; lamma badde 2a3mela mettar 23a3mil l div input grp la 7atta tkoun hiyye l m5fiyye wa 2illa bisir4 class l .form-control display inline block 2awla mn .hiddeens*/
+            max-width: 800px;
+        }
+        
+    </style>
+</head>
+<body>
+{% include "upnavbar.html" %}
+{% include "navbar.html" %}
+{% for i in get_flashed_messages() %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>{{ i }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+<div class="container">
+<div class="row justify-content-center">
+    <div class="col col-lg-9 col-md-12">
+        <div class="card">
+<form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.field_name.label(class_="form-label") }}<br>
+    {{ form.field_name(class_="form-control") }}<br>
+    {{ form.flabel.label(class_="form-label") }}<br>
+    {{ form.flabel(class_="form-control") }}<br>
+    <label id="for_" for="field_type" >Field type</label>
+    <select class="form-control" id="field_type" name="field_type" required="" onchange="show_div()">
+        <option value=""></option>
+        <option value="StringField">Text field</option>
+        <option value="IntegerField">Number field</option>
+        <option value="RadioField">Radio field</option>
+        <option value="SelectField">Select field</option>
+        <option value="DateField">Date field</option>
+        <option value="TimeField">Time field</option>
+        <option value="PasswordField">Password field</option>
+        <!--<option value="HiddenField">Hidden field needed for forms's id</option>-->
+    </select><br>
+    <label id="for_" for="in_req" class="form-label">Is input required?</label>
+    <select id="in_req" name="in_req"  class="form-control">
+        <option value=""></option>
+        <option value="InputRequired(),">Yes</option>
+        <option value="">No</option>
+        <br>
+    </select>
+    <label id="for_text_only" for="text_only" class="form-label hiddens" >Only text allowed?</label>
+    <select id="text_only" name="text_only" class="form-control hiddens">
+        <option value=""></option>
+        <option value="Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid!'),">Yes</option>
+        <option value="">No</option>
+        <br>
+    </select>
+    <label id="for_some_char" for="some_char" class="form-label hiddens" >Are text, numbers, commas, semi columns & periods the only allowed characters?</label>
+    <select id="some_char" name="some_char" class="form-control hiddens" >
+        <option value=""></option>
+        <option value="Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'),">Yes</option>
+        <option value="">No</option>
+        <br>
+    </select>
+    <label id="for_length" for="length" class="form-label hiddens" >Is there a specific Chracters range to be typed?</label>
+    <select id="length" name="length" class="form-control hiddens" onchange="set_length()">
+        <option value=""></option>
+        <option value="yes">Yes</option>
+        <option value="">No</option>
+        <br>
+    </select>
+    <label id="for_nb_range" for="nb_range" class="form-label hiddens" >Number range (not required!)</label>
+    <select id="nb_range" name="nb_range" class="form-control hiddens" onchange="set_nb_range()">
+        <option value=""></option>
+        <option value="yes">Yes</option>
+        <option value="">No</option>
+        <br>
+    </select>
+
+    <div class="in-grp hiddens" id="input-group-nb-rg">
+        {{ form.min_nb.label(class_="form-label") }}<br>
+        {{ form.min_nb(class_="form-control") }}<br>
+        {{ form.max_nb.label(class_="form-label") }}<br>
+        {{ form.max_nb(class_="form-control") }}<br>
+    </div><br>
+    <div class="in-grp hiddens" id="input-group-str-len">
+        {{ form.min_char.label(class_="form-label") }}<br>
+        {{ form.min_char(class_="form-control") }}<br>
+        {{ form.max_char.label(class_="form-label") }}<br>
+        {{ form.max_char(class_="form-control") }}<br>
+    </div><br>
+    <div class="in-grp hiddens" id="input-group-hm">
+        <label for="hm_choices" class="form-label">How much choices the Select/Radio will contain(don't forget the 'غير محدد' choice)</label><br>
+        <input type="number" class="form-control" id="hm_choices_id" name="hm_choices" onchange="generate_choices()" /><br>
+    </div>
+    <div id="choices_div">
+    </div><br>
+    <input type="hidden" name="choices" id="hidden_choices" value=""/>
+    <button class="btn btn-primary" type="submit">Make</button>
+    <button style="display:inline-block" class="btn btn-dark" type="reset" >Clear</button>
+    <div class="btn-group" style="display:inline-block">
+        <a href="{{ url_for('form_done') }}" class="btn btn-primary" onclick="confirm_finish()">Finish</a>
+    </div>
+
+</form>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+    function show_div() {
+        if (document.getElementById("field_type").value == "StringField") {  
+            document.getElementById("text_only").style.display = "block"
+            document.getElementById("some_char").style.display = "block"
+            document.getElementById("length").style.display = "block"
+            document.getElementById("for_text_only").style.display = "block"
+            document.getElementById("for_some_char").style.display = "block"
+            document.getElementById("for_length").style.display = "block"
+            if (document.getElementById("for_nb_range").style.display = "block" || document.getElementById("input-group-hm").style.display == "block" || document.getElementById("nb_range").style.display == "block") {
+            document.getElementById("for_nb_range").style.display = "none"
+            document.getElementById("nb_range").style.display = "none"
+            document.getElementById("input-group-hm").style.display = "none"
+            document.getElementById("input-group-nb-rg").style.display = "none"
+        }
+        } else if (document.getElementById("field_type").value == "IntegerField") {
+            document.getElementById("nb_range").style.display = "block"
+            document.getElementById("for_nb_range").style.display = "block"
+            if (document.getElementById("text_only").style.display == "block" || document.getElementById("length").style.display == "block" || document.getElementById("input-group-hm").style.display == "block") {
+            document.getElementById("text_only").style.display = "none"
+            document.getElementById("some_char").style.display = "none"
+            document.getElementById("length").style.display = "none"
+            document.getElementById("for_text_only").style.display = "none"
+            document.getElementById("for_some_char").style.display = "none"
+            document.getElementById("for_length").style.display = "none"
+            document.getElementById("input-group-str-len").style.value = "none"
+            document.getElementById("input-group-hm").style.display = "none"
+        }
+        } else if (document.getElementById("field_type").value == "SelectField" || document.getElementById("field_type").value == "RadioField") {
+            document.getElementById("input-group-hm").style.display = "block"
+            document.getElementById("hm_choices_id").required = true;
+            if (document.getElementById("text_only").style.display == "block" || document.getElementById("length").style.display == "block" ||  document.getElementById("nb_range").style.display == "block") {
+            document.getElementById("text_only").style.display = "none"
+            document.getElementById("some_char").style.display = "none"
+            document.getElementById("length").style.display = "none"
+            document.getElementById("for_text_only").style.display = "none"
+            document.getElementById("for_some_char").style.display = "none"
+            document.getElementById("for_length").style.display = "none"
+            document.getElementById("input-group-str-len").style.display = "none"
+            document.getElementById("input-group-nb-rg").style.display = "none"
+            document.getElementById("for_nb_range").style.display = "none"
+            document.getElementById("nb_range").style.display = "none" 
+           }
+        } else if (document.getElementById("field_type").value == "PasswordField") {
+            document.getElementById("field_type").setAttribute('required', '')
+            document.getElementById("text_only").style.display = "none"
+            document.getElementById("some_char").style.display = "none"
+            document.getElementById("length").style.display = "none"
+            document.getElementById("for_text_only").style.display = "none"
+            document.getElementById("for_some_char").style.display = "none"
+            document.getElementById("for_length").style.display = "none"
+            document.getElementById("input-group-nb-rg").style.display = "none"
+            document.getElementById("input-group-str-len").style.display = "none"
+            document.getElementById("for_nb_range").style.display = "none"
+            document.getElementById("nb_range").style.display = "none"
+            document.getElementById("input-group-hm").style.display = "none"
+        }
+        else {
+            document.getElementById("text_only").style.display = "none"
+            document.getElementById("some_char").style.display = "none"
+            document.getElementById("length").style.display = "none"
+            document.getElementById("for_text_only").style.display = "none"
+            document.getElementById("for_some_char").style.display = "none"
+            document.getElementById("for_length").style.display = "none"
+            document.getElementById("input-group-nb-rg").style.display = "none"
+            document.getElementById("input-group-str-len").style.display = "none"
+            document.getElementById("for_nb_range").style.display = "none"
+            document.getElementById("nb_range").style.display = "none"
+            document.getElementById("input-group-hm").style.display = "none" 
+        }
+    };
+    function set_length() {
+        if (document.getElementById("length").value == "yes") {
+            document.getElementById("input-group-str-len").style.display = "block"
+        }
+    };
+    function set_nb_range() {
+        if (document.getElementById("nb_range").value == "yes") {
+            document.getElementById("input-group-nb-rg").style.display = "block"
+        } 
+    };
+    function generate_choices() {
+        //document.getElementById("par").innerHTML("hellos")
+        if (document.getElementById("choice1")) {
+            const parent_div = document.getElementById("choices_div");
+            while (parent_div.firstChild) {
+                parent.removeChild(parent.lastChild);
+            }
+        }
+        alert("Don't make the form before seting the choices and values!!!!")
+        var x = document.getElementById("hm_choices_id").value;
+        var choices = document.getElementById("choices_div");
+        var btn = document.createElement('button');
+            btn.setAttribute('type', 'button');
+            btn.setAttribute('onclick', 'make_array()');
+            btn.setAttribute('class', 'btn btn-info')
+            btn.innerHTML = '   SET   ';
+        for (let i=0; i < x; i++) {
+            var choice_label = document.createElement('label');
+            choice_label.innerHTML = `Choice ${i+1}`;
+            choice_label.setAttribute('class', 'form-label');
+            var choice = document.createElement('input');
+            choice.setAttribute('type', 'text');
+            choice.setAttribute('name', `choice ${i+1}`);
+            choice.setAttribute('id', `choice${i+1}`);
+            choice.setAttribute('class', 'form-control');
+            choice.setAttribute('required', '');
+            var value_label = document.createElement('label');
+            value_label.setAttribute('class', 'form-label');
+            value_label.innerHTML = `Value ${i+1}`;
+            var ch_value = document.createElement('input');
+            ch_value.setAttribute('type', 'text');
+            ch_value.setAttribute('name', `ch_value${i+1}`);
+            ch_value.setAttribute('id', `ch_value${i+1}`);
+            ch_value.setAttribute('class', 'form-control');
+            ch_value.setAttribute('required', '');
+            
+            choices.appendChild(choice_label);
+            choices.appendChild(choice);
+            choices.appendChild(value_label);
+            choices.appendChild(ch_value);
+            
+            
+        }
+        choices.appendChild(btn)
+    };
+    function make_array() {
+        var choices_dict = {};
+        var parent = document.getElementById("choices_div");
+        var ch_val_list = parent.children;
+        for (let i=0; i < ch_val_list.length; i++) {
+            if (i % 4 == 1) {
+                let c = i + 2;
+                var choice = ch_val_list[i].value;
+                var value = ch_val_list[c].value;
+                choices_dict[choice] = value;
+            } else {
+                continue;
+            } 
+        }
+        if (Object.keys(choices_dict).length> 0) {
+            alert("Choices setted successfully!")
+        }
+        else {
+            alert("an error occured try again!")
+        }
+        //console.log(choices_dict);
+        let choices = JSON.stringify(choices_dict);
+        var hidden_choices = document.getElementById("hidden_choices");
+        hidden_choices.value = choices;
+    };
+    function confirm_finish() {
+        confirm("You will not be able to add more fields!!!\n Are you sure that you have finished making this form?")
+    }
+</script>
+</body>
+</html>
