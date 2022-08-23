@@ -8,8 +8,8 @@ from flask_login import login_user, login_required, current_user, logout_user
 
 
 #important lists
-sys_admins = [1, 2]
-users_headings = ['id', 'name', 'surname', 'username', 'email', 'password_hash', 'date_added', 'date_edited']
+sys_admins = [1, 3]
+users_headings = ['id', 'name', 'surname', 'username', 'email', 'password_hash', 'date_added', 'date_edited'] #colummns_names() should replace these
 aar_headings = ['id', 'starting_date_time', 'finishing_date_time', 'gps_location', 'governorate',
  'location', 'its_name', 'p_code', 'nb_of_families', 'activity_type', 'if_other_type', 'donor', 'team_leader',
   'targeted_nb_in_camp', 'distributed_items', 'nb_of_itmes_to_be_distributed_in_this_act', 'exists_of_written_scheduled','voucher_distributed',
@@ -443,12 +443,10 @@ def querying():
                 order = request.form['order']
                 query_cmd = f"select * from {table} where date_added between '{first_date} {first_time}' and '{last_date} {last_time}' order by id {order} limit {how_much}"
                 query = db.engine.execute(query_cmd)
-                #query_to_excel(aar_headings, query)
                 query_to_csv_excel(query_cmd)
                 file = 'query.xlsx'
                 file2 = 'query.csv'
                 file_handle = open(file, 'r')
-                #redirect(url_for('welcome'))
                 return send_file(file, as_attachment=True)#, redirect(url_for('querying'))
                 #return redirect(url_for('querying'))
             return render_template('/gs/querying.html', type=type, form=form) 
@@ -496,8 +494,7 @@ def new_form():
             flabel = request.form["flabel"]
             field_type = request.form["field_type"]
             in_req = request.form["in_req"]
-            text_only = request.form["text_only"]
-            some_char = request.form["some_char"]
+            regex = request.form["regex"]
             length = request.form["length"]
             nb_range = request.form["nb_range"]
             min_nb = request.form["min_nb"]
@@ -505,14 +502,15 @@ def new_form():
             min_char = request.form["min_char"]
             max_char = request.form["max_char"]
             choices = request.form["choices"]
-            possible_validators = [in_req, text_only, some_char, length, nb_range, min_nb, max_nb, min_char, max_char]
-            code = customize_wtf_fld_code(possible_validators, field_type, field_name, flabel, in_req, text_only,
-                            some_char, length, min_char, max_char, nb_range, min_nb, max_nb, choices)
+            possible_validators = [in_req, regex, length, nb_range, min_nb, max_nb, min_char, max_char]
+            code = customize_wtf_fld_code(possible_validators, field_type, field_name, flabel, in_req, regex,
+                            length, min_char, max_char, nb_range, min_nb, max_nb, choices)
             append_wtform(code)
             append_column(field_name, field_type)
             add_init_arg(field_name)
             append_init(field_type, field_name)
             set_psswd_func(field_type, field_name)
+            track_fields(field_name)
             flash("The field has been addded")  
             return redirect(url_for("new_form"))
         return render_template('/data_entry/make_form.html', form=form1, cu_id=cu_id)
@@ -524,6 +522,8 @@ def new_form():
 @login_required
 def form_done():
     continue_dbmodel()
+    count_fields()
+    #clear_track()
     return "Done"
 
 
@@ -559,5 +559,3 @@ def cookies():
     secure=True
     )
     return res
-
-

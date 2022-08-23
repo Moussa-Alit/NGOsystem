@@ -63,20 +63,20 @@
         <option value="">No</option>
         <br>
     </select>
-    <label id="for_text_only" for="text_only" class="form-label hiddens" >Only text allowed?</label>
-    <select id="text_only" name="text_only" class="form-control hiddens">
+    <label id="for_regex" for="regex" class="form-label hiddens" >Only text allowed?</label>
+    <select id="regex" name="regex" class="form-control hiddens">
         <option value=""></option>
-        <option value="Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid!'),">Yes</option>
-        <option value="">No</option>
+        <option value="Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid!'),">Text only</option>
+        <option value="Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'),">Text, numbers, commas, semi columns & periods only.</option>
         <br>
     </select>
-    <label id="for_some_char" for="some_char" class="form-label hiddens" >Are text, numbers, commas, semi columns & periods the only allowed characters?</label>
+   <!--<label id="for_some_char" for="some_char" class="form-label hiddens" >Are text, numbers, commas, semi columns & periods the only allowed characters?</label>
     <select id="some_char" name="some_char" class="form-control hiddens" >
         <option value=""></option>
         <option value="Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'),">Yes</option>
         <option value="">No</option>
         <br>
-    </select>
+    </select>-->
     <label id="for_length" for="length" class="form-label hiddens" >Is there a specific Chracters range to be typed?</label>
     <select id="length" name="length" class="form-control hiddens" onchange="set_length()">
         <option value=""></option>
@@ -126,11 +126,11 @@
 <script>
     function show_div() {
         if (document.getElementById("field_type").value == "StringField") {  
-            document.getElementById("text_only").style.display = "block"
-            document.getElementById("some_char").style.display = "block"
+            document.getElementById("regex").style.display = "block"
+            //document.getElementById("some_char").style.display = "block"
             document.getElementById("length").style.display = "block"
-            document.getElementById("for_text_only").style.display = "block"
-            document.getElementById("for_some_char").style.display = "block"
+            document.getElementById("for_regex").style.display = "block"
+            //document.getElementById("for_some_char").style.display = "block"
             document.getElementById("for_length").style.display = "block"
             if (document.getElementById("for_nb_range").style.display = "block" || document.getElementById("input-group-hm").style.display == "block" || document.getElementById("nb_range").style.display == "block") {
             document.getElementById("for_nb_range").style.display = "none"
@@ -141,12 +141,12 @@
         } else if (document.getElementById("field_type").value == "IntegerField") {
             document.getElementById("nb_range").style.display = "block"
             document.getElementById("for_nb_range").style.display = "block"
-            if (document.getElementById("text_only").style.display == "block" || document.getElementById("length").style.display == "block" || document.getElementById("input-group-hm").style.display == "block") {
-            document.getElementById("text_only").style.display = "none"
-            document.getElementById("some_char").style.display = "none"
+            if (document.getElementById("regex").style.display == "block" || document.getElementById("length").style.display == "block" || document.getElementById("input-group-hm").style.display == "block") {
+            document.getElementById("regex").style.display = "none"
+            ////document.getElementById("some_char").style.display = "none"
             document.getElementById("length").style.display = "none"
-            document.getElementById("for_text_only").style.display = "none"
-            document.getElementById("for_some_char").style.display = "none"
+            document.getElementById("for_regex").style.display = "none"
+            ////document.getElementById("for_some_char").style.display = "none"
             document.getElementById("for_length").style.display = "none"
             document.getElementById("input-group-str-len").style.value = "none"
             document.getElementById("input-group-hm").style.display = "none"
@@ -154,12 +154,12 @@
         } else if (document.getElementById("field_type").value == "SelectField" || document.getElementById("field_type").value == "RadioField") {
             document.getElementById("input-group-hm").style.display = "block"
             document.getElementById("hm_choices_id").required = true;
-            if (document.getElementById("text_only").style.display == "block" || document.getElementById("length").style.display == "block" ||  document.getElementById("nb_range").style.display == "block") {
-            document.getElementById("text_only").style.display = "none"
-            document.getElementById("some_char").style.display = "none"
+            if (document.getElementById("regex").style.display == "block" || document.getElementById("length").style.display == "block" ||  document.getElementById("nb_range").style.display == "block") {
+            document.getElementById("regex").style.display = "none"
+            //document.getElementById("some_char").style.display = "none"
             document.getElementById("length").style.display = "none"
-            document.getElementById("for_text_only").style.display = "none"
-            document.getElementById("for_some_char").style.display = "none"
+            document.getElementById("for_regex").style.display = "none"
+            ////document.getElementById("for_some_char").style.display = "none"
             document.getElementById("for_length").style.display = "none"
             document.getElementById("input-group-str-len").style.display = "none"
             document.getElementById("input-group-nb-rg").style.display = "none"
@@ -168,11 +168,11 @@
            }
         } else if (document.getElementById("field_type").value == "PasswordField") {
             document.getElementById("field_type").setAttribute('required', '')
-            document.getElementById("text_only").style.display = "none"
-            document.getElementById("some_char").style.display = "none"
+            document.getElementById("regex").style.display = "none"
+            ////document.getElementById("some_char").style.display = "none"
             document.getElementById("length").style.display = "none"
-            document.getElementById("for_text_only").style.display = "none"
-            document.getElementById("for_some_char").style.display = "none"
+            document.getElementById("for_regex").style.display = "none"
+            ////document.getElementById("for_some_char").style.display = "none"
             document.getElementById("for_length").style.display = "none"
             document.getElementById("input-group-nb-rg").style.display = "none"
             document.getElementById("input-group-str-len").style.display = "none"
@@ -181,11 +181,11 @@
             document.getElementById("input-group-hm").style.display = "none"
         }
         else {
-            document.getElementById("text_only").style.display = "none"
-            document.getElementById("some_char").style.display = "none"
+            document.getElementById("regex").style.display = "none"
+            //document.getElementById("some_char").style.display = "none"
             document.getElementById("length").style.display = "none"
-            document.getElementById("for_text_only").style.display = "none"
-            document.getElementById("for_some_char").style.display = "none"
+            document.getElementById("for_regex").style.display = "none"
+            //document.getElementById("for_some_char").style.display = "none"
             document.getElementById("for_length").style.display = "none"
             document.getElementById("input-group-nb-rg").style.display = "none"
             document.getElementById("input-group-str-len").style.display = "none"

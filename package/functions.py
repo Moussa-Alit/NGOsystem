@@ -1,4 +1,5 @@
 from datetime import datetime
+from webbrowser import get
 import pandas as pd
 from package.dbmodels import Users, AdhaActivitiesRating, TrackFields
 import os
@@ -12,7 +13,7 @@ def finish_datetime():
     finish_datetime = datetime.now()
     return finish_datetime
 
-def get_script_path(): #this will return the path till /"flask tests" without /functions.py
+def get_script_path(): #this will return the path till the parent directory of functions.py bwich is "/package" without /functions.py
     return os.path.dirname(os.path.abspath(__file__))
 
 def determine_model(table_name): #lezim 2a3mil dict l model variable bi3ayyit lal value taba3 l key l metlo
@@ -50,7 +51,7 @@ def add_comma_if_validator(validators): #not used no need
 
 #nav item func
 
-def append_form_nav(form_title):
+def append_form_nav(form_title): #we cant use logic with jinja cause of format mode
     with open(get_script_path() + "/templates/navbar.html", "r") as file:
         lines = file.readlines()
     with open(get_script_path() + "/templates/navbar.html", "w") as file:
@@ -61,10 +62,9 @@ def append_form_nav(form_title):
 #wtf funcs
 
 def append_wtf_title(form_class):
-    with open("mywtforms.py", "a") as file:
+    with open(get_script_path() + "/mywtforms.py", "a") as file:
         file.write(f"""\nclass {form_class}(FlaskForm):\n    a = 1""")
         file.close()
-        return
 
 def check_for_validators(validators): #not that usefull
     for i in validators:
@@ -84,8 +84,8 @@ def mk_choices_code(choices):
             choices_code += chv_tuples
     return choices_code
 
-def customize_wtf_fld_code(possible_validators, field_type, field_name, field_label, in_req, text_only,
-                            some_char, length, min_char, max_char, nb_range, min_nb, max_nb, choices): #should be the arg of append_wtform
+def customize_wtf_fld_code(possible_validators, field_type, field_name, field_label, in_req, regex,
+                             length, min_char, max_char, nb_range, min_nb, max_nb, choices): #should be the arg of append_wtform
     if choices:
                 choices_dict = json.loads(choices)
     if check_for_validators(possible_validators):
@@ -94,7 +94,7 @@ def customize_wtf_fld_code(possible_validators, field_type, field_name, field_la
                 length = f"Length(min={min_char}, max={max_char}, message='The length here should be betweeen {min_char} and {max_char}'),"
             else:
                 length=""
-            code = f"\n    {field_name} = {field_type}('{field_label}', [{in_req} {text_only} {some_char} {length}])"
+            code = f"\n    {field_name} = {field_type}('{field_label}', [{in_req} {regex} {length}])"
         elif field_type == "IntegerField":
             if nb_range:
                 nb_range = f"NumberRange(min={min_nb}, max={max_nb}, message='The number here should be between {min_nb} and {max_nb}')"
@@ -126,10 +126,9 @@ def customize_wtf_fld_code(possible_validators, field_type, field_name, field_la
     return code
 
 def append_wtform(field_code): # field_code arg ma3rouf b code bl func l 2abla
-    with open("mywtforms.py", "a") as cr:
+    with open(get_script_path() + "/mywtforms.py", "a") as cr:
         cr.write(field_code)
         cr.close()
-        return
 
 # write dbmodels funcs
 
@@ -139,13 +138,12 @@ def db_model(form_class):
 
 def append_db_class_title(form_class, table):
     db_class = db_model(form_class)
-    with open("dbmodels.py", "a") as file:
+    with open(get_script_path() + "/dbmodels.py", "a") as file:
         file.write(f"""\n\nclass {db_class}(db.Model):\n    __tablename__ = '{table}'\n    id = db.Column(db.Integer, primary_key=True)""")
         file.close()
-        return
 
 def datatype(field_type):
-    str_data = ["StringField", "RadioField", "SelectField"]
+    str_data = ["StringField", "RadioField", "SelectField", "PasswordField"]
     datetime_data = ["DateField", "TimeField"]
     if field_type in str_data:
         datatype = "String"
@@ -160,25 +158,25 @@ def datatype(field_type):
 def append_column(field_name, field_type):
     data_type = datatype(field_type)
     column = f"""\n    {field_name} = db.Column(db.{data_type})"""
-    with open("dbmodels.py", 'a') as file:
+    with open(get_script_path() + "/dbmodels.py", 'a') as file:
         file.write(column)
 
 def add_init_arg(field_name):  
-    with open("init_arg.txt") as file:
+    with open(get_script_path() + "/init_arg.txt") as file:
         lines = file.readlines()
         lines[1] += f", {field_name}"
-    with open("init_arg.txt", "w") as file:
+    with open(get_script_path() + "/init_arg.txt", "w") as file:
         for i in lines:
             file.write(i)
 
 def append_init_psswd(field_name):
     element = f"\n        self.{field_name} = generate_password_hash({field_name})"
-    with open("init_db.txt", "a") as file:
+    with open(get_script_path() + "/init_db.txt", "a") as file:
         file.write(element)
 
 def append_init_except_psswd(field_name): #hawn fte7 append mode
     element = f"\n        self.{field_name} = {field_name}"    
-    with open("init_db.txt", "a") as file:
+    with open(get_script_path() + "/init_db.txt", "a") as file:
         file.write(element)
 
 def append_init(field_type, field_name):
@@ -189,24 +187,19 @@ def append_init(field_type, field_name):
 
 def set_psswd_func(field_type, field_name): #it may cause bugs if 2 or more password fields is setted
     if field_type == "PasswordField":
-        with open("password_funcs.txt", "a") as file:
+        with open(get_script_path() + "/password_funcs.txt", "a") as file:
             file.write(f"""\n    @property\n    def password():\n        raise AttributeError('password is not a readable attribute!')\n    def verify_password(self, psswd):\n        return check__password_hash(self.{field_name}, psswd)""")
-    else:
-        return
 
 def continue_dbmodel():
     #2awwal shi bte5od password_funcs if exists w bta3mellon append 3al init_db.txt ba3dayn bte5odon kollon w 3al dbmodels.py
-    with open("password_funcs.txt") as file:
+    with open(get_script_path() + "/password_funcs.txt") as file:
         lines = file.readlines()
     if lines:
-        with open("password_funcs.txt") as file:
+        with open(get_script_path() + "/password_funcs.txt") as file:
             psswd_funcs_lines = file.readlines()
-        #with open("init_db.txt", "a") as file: #replaced below
-         #   for i in psswd_funcs_lines:
-          #      file.write(i)
-        with open("init_db.txt") as file:
+        with open(get_script_path() + "/init_db.txt") as file:
             init_lines = file.readlines()
-        with open("init_arg.txt") as file: #configuring def__init__ before appending to it by adding ):
+        with open(get_script_path() + "/init_arg.txt") as file: #configuring def__init__ before appending to it by adding ):
             arg_lines = file.readlines()
             arg_lines.append("):")
             all_lines = arg_lines
@@ -214,37 +207,29 @@ def continue_dbmodel():
                 all_lines.append(i)
             for i in psswd_funcs_lines:
                 all_lines.append(i)
-        #with open("init_arg.txt",  "a") as file: #replaced above
-         #   for i in init_lines:
-         #       file.write(i)
-        #with open("init_arg.txt") as file:
-        #    all_lines = file.readlines()
-        with open("dbmodels.py", "a") as file:
+        with open(get_script_path() + "/dbmodels.py", "a") as file:
             for i in all_lines:
                 file.write(i)
-        with open("password_funcs.txt", "w") as file:
+        with open(get_script_path() + "/password_funcs.txt", "w") as file:
             file.write("")
-        with open("init_db.txt", "w") as file:
+        with open(get_script_path() + "/init_db.txt", "w") as file:
             file.write("") 
-        with open("init_arg.txt", "w") as file:
+        with open(get_script_path() + "/init_arg.txt", "w") as file:
             file.write("\n    def __init__(self")     
     else:
-        with open("init_db.txt") as file:
+        with open(get_script_path() + "/init_db.txt") as file:
             init_lines = file.readlines()
-        #with open("init_arg", "a") as file:
-        #    for i in init_lines:
-        #        file.write(i)
-        with open("init_arg.txt") as file:
+        with open(get_script_path() + "/init_arg.txt") as file:
             all_lines = file.readlines()
             all_lines.append("):")
             for i in init_lines:
                 all_lines.append(i)
-        with open("dbmodels.py", "a") as file:
+        with open(get_script_path() + "/dbmodels.py", "a") as file:
             for i in all_lines:
                 file.write(i)
-        with open("init_db.txt", "w") as file:
+        with open(get_script_path() + "/init_db.txt", "w") as file:
             file.write("")
-        with open("init_arg.txt", "w") as file:
+        with open(get_script_path() + "/init_arg.txt", "w") as file:
             file.write("\n    def __init__(self")
 
 
@@ -257,13 +242,17 @@ def route_function(form_class):
 
 def append_route(form_class):
     route_func = route_function(form_class)
-    with open("create_form.py", "a") as file:
+    with open(get_script_path() + "/routes.py", "a") as file:
         file.write(f"""\n@app.route('/data_entry/{form_class}', methods=['GET', 'POST'])\n@login_required\ndef {route_func}():\n    cu_id = current_user.id\n    form = {form_class}""")
 
 def organize_access(access_by):
     if access_by == 'only_admins':
-        with open("create_form.py", "a") as file:
-            file.write("\n    if cu_id in sys_admins:")
+        with open(get_script_path() + "/routes.py", "a") as file:
+            file.write("""\n    if cu_id in sys_admins:\n        if request.method == "POST":\n            if form.validate_on_submit():\n                a = 1""")
+    else:
+        with open(get_script_path() + "/routes.py", "a") as file:
+            file.write("""\n    if request.method == "POST":\n        if form.validate_on_submit():\n            a = 1""")
+    return access_by
 
 def get_data(): #hay bteshti8il 3al done #the importance of this func was when testing the iteration iver immutablemultidict
     data = request.form
@@ -271,20 +260,39 @@ def get_data(): #hay bteshti8il 3al done #the importance of this func was when t
 
 def write_request(data):
     for i in data:
-        with open("create_form.py", "a") as file:
+        with open(get_script_path() + "/routes.py", "a") as file:
             file.write(f"\n")
 
-def track_fields():
-    record = TrackFields("A")
+def track_fields(field_name):
+    record = TrackFields(f"{field_name}")
     db.session.add(record)
     db.session.commit() 
 
 def count_fields():
     count = TrackFields.query.count()
-    print(count)
     return count       
+
+def query_track():
+    query_cmd = "select track from fieldscount"
+    query = db.engine.execute(query_cmd)
+    return query
+
+def write_requests(access_by):
+    fields_count = count_fields()
+    if access_by == "only_admins":
+        with open(get_script_path() + "/routes.py", "a") as file:
+            for field in query:
+                request_code = f"""\n              {field} = request.form["{field}"]"""
+                file.write(request_code)
+    else:
+        with open(get_script_path() + "/routes.py", "a") as file:
+            for field in fields_count:
+                request_code = f"""\n          {field} = request.form["{field}"]"""
+                file.write(request_code)
+            
 
 def clear_track():
     records = TrackFields.query.all()
-    db.session.delete(records)
-    db.session.commit()
+    for record in records:
+        db.session.delete(record)
+        db.session.commit()

@@ -1,7 +1,7 @@
 from flask import Flask, after_this_request, render_template, redirect, send_file, url_for, request, flash, make_response, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from flask_migrate import Migrate
+#from flask_migrate import Migrate #bas la2an python command btja77ish lamma tshoufa
 
 
 app = Flask(__name__)
@@ -13,11 +13,11 @@ app.config['SECRET_KEY'] = 'FW3434ff545h4RFE55$#f$t%yhtFF'
 
 
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+#migrate = Migrate(app, db)  #bas la2an python command btja77ish lamma tshoufa
 #Flask_login Stuff
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-from package import routes, dbmodels, functions
+from package import routes # bn3ouz l import lal routesla2an bidounoun lm server bibattil yet3arraf 3a 2ayya path #, dbmodels, functions
