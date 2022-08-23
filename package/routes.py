@@ -8,7 +8,7 @@ from flask_login import login_user, login_required, current_user, logout_user
 
 
 #important lists
-sys_admins = [3, 6]
+sys_admins = [1, 2]
 users_headings = ['id', 'name', 'surname', 'username', 'email', 'password_hash', 'date_added', 'date_edited']
 aar_headings = ['id', 'starting_date_time', 'finishing_date_time', 'gps_location', 'governorate',
  'location', 'its_name', 'p_code', 'nb_of_families', 'activity_type', 'if_other_type', 'donor', 'team_leader',
@@ -41,28 +41,28 @@ def login():
     return render_template('login.html', form=form)
 
 @app.route('/admin/register', methods=['POST', 'GET'])
-#@login_required
+@login_required
 def register():
-    #id = current_user.id
-    #if id in sys_admins:
-    form = RegisterForm()
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            name = request.form["name"]
-            surname = request.form["surname"]
-            username = request.form["username"]
-            email = request.form["email"]
-            password = request.form["password"]
-            date_added = finish_datetime()
-            record = Users(name, surname, username, email, password, date_added, date_edited=None)
-            db.session.add(record)
-            db.session.commit()
-            flash("The new user has been added successfully")
-            return redirect(url_for('register'))
+    id = current_user.id
+    if id in sys_admins:
+        form = RegisterForm()
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                name = request.form["name"]
+                surname = request.form["surname"]
+                username = request.form["username"]
+                email = request.form["email"]
+                password = request.form["password"]
+                date_added = finish_datetime()
+                record = Users(name, surname, username, email, password, date_added, date_edited=None)
+                db.session.add(record)
+                db.session.commit()
+                flash("The new user has been added successfully")
+                return redirect(url_for('register'))
+            else:
+                return render_template("register.html", form=form, cu_id=id)
         else:
-            return render_template("register.html", form=form, cu_id=id)
-    else:
-        return render_template("/data_entry/register.html", form=form, cu_id=id, admins=sys_admins)
+            return render_template("/data_entry/register.html", form=form, cu_id=id, admins=sys_admins)
     #message = "An error occured try to logout then login again"
     return redirect(url_for("welcome"))
 
