@@ -522,7 +522,7 @@ def new_form():
                 max_char = field[10]
                 choices = field[11]
                 possible_validators = [in_req, regex, length, nb_range, min_nb, max_nb, min_char, max_char]
-                prpr_templ_flds(fields, form_title, form_class)
+                prpr_templ_flds(field_name, form_title, form_class)
                 try:
                     track_fields(field_name) #ra7 n5alli bas kormel 2oset l duplication
                 except IntegrityError:
