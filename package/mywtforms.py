@@ -92,6 +92,15 @@ class Titles(FlaskForm):
     access_by = SelectField("Who can access this form?", choices=[('', ''), ('only_admins', 'Only Admins'), ('any', 'Anybody')])
 
 class MakeForm(FlaskForm):
+    form_title = StringField("Give a title for the form (can be in arabic)", [InputRequired(), 
+    Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
+    Length(min=3, max=20, message='The Title length should be between 3 and 20') ])
+    form_class = StringField('Give the form an english name without spaces(CamelCase is preffered)',[InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
+    Length(min=3, max=20, message='The Name length should be between 3 and 20')])
+    table = StringField('Give an english name without spaces/numbers/characters/uppercase letters to the table that the data will be stored in.',[InputRequired(), Regexp(r'^[a-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
+    Length(min=3, max=20, message='The Name length should be between 3 and 20')])
+    #db_class is a function
+    access_by = SelectField("Who can access this form?", choices=[('', ''), ('only_admins', 'Only Admins'), ('any', 'Anybody')])
     field_name = StringField('Give this field a short name(no sprcial characters/uppercase/numbers/spaces).', [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=30, message='Min length=3, max=30')])
     flabel = StringField('Write a label for the field', [InputRequired(), Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'), Length(min=3, max=200, message='Min length=3, max=200')])
     min_nb = StringField('Min nb', [Regexp(r'^\\d+$', message='Only numbers')])

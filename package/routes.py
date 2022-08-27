@@ -1,10 +1,12 @@
 
+from pymysql import IntegrityError
 from package import app, login_manager
 from flask import after_this_request, render_template, redirect, send_file, url_for, request, flash, make_response, session
 from package.dbmodels import *
 from package.mywtforms import *
 from package.functions import *
 from flask_login import login_user, login_required, current_user, logout_user
+from flask_mail import Message
 
 
 #important lists
@@ -468,11 +470,13 @@ def new_form_titles():
                 form_class = request.form["form_class"]
                 table = request.form["table"]
                 access_by = request.form["access_by"]
-                append_form_nav(form_title)
-                append_wtf_title(form_class)
-                append_db_class_title(form_class, table)
-                append_route(form_class)
-                organize_access(access_by)
+                session['form_ttl'] = form_title
+                #create_template(form_title, form_class)
+                #append_form_nav(form_title, form_class)
+                #append_wtf_title(form_class)
+                #append_db_class_title(form_class, table)
+                #append_route(form_class)
+                #organize_access(access_by)
                 flash("Titles writed successfully")
                 return redirect(url_for('new_form'))
             flash("not valide")
@@ -490,7 +494,51 @@ def new_form():
         form1 = MakeForm()
         if request.method == 'POST':
             #if form1.validate_on_submit(): l meshkle bl regexp...
-            field_name = request.form["field_name"]
+            form_data = request.form['form_data']
+            data_dict = json.loads(form_data)
+            ttls = data_dict['titles']
+            form_title = ttls[0]
+            form_class = ttls[1]
+            table = ttls[2]
+            access_by = ttls[3]
+            #create_template(form_title, form_class)
+            append_form_nav(form_title, form_class)
+            append_wtf_title(form_class)
+            append_db_class_title(form_class, table)
+            append_route(form_class)
+            organize_access(access_by)
+            fields = data_dict['fields']
+            for field in fields: #the field is the list inside the list
+                field_name = field[0]
+                flabel = field[1]
+                field_type = field[2]
+                in_req = field[3]
+                regex = field[4]
+                length = field[5]
+                nb_range = field[6]
+                min_nb = field[7]
+                max_nb = field[8] 
+                min_char = field[9]
+                max_char = field[10]
+                choices = field[11]
+                possible_validators = [in_req, regex, length, nb_range, min_nb, max_nb, min_char, max_char]
+                prpr_templ_flds(fields, form_title, form_class)
+                try:
+                    track_fields(field_name) #ra7 n5alli bas kormel 2oset l duplication
+                except IntegrityError:
+                    flash("You can't give 2 fields the same name! It should be unique!")
+                    return redirect(url_for("new_form"))
+                except:
+                    flash("You can't give 2 fields the same name! It should be unique!")
+                    return redirect(url_for("new_form"))
+                code = customize_wtf_fld_code(possible_validators, field_type, field_name, flabel, in_req, regex,
+                                length, min_char, max_char, nb_range, min_nb, max_nb, choices)
+                append_wtform(code)
+                append_column(field_name, field_type)
+                add_init_arg(field_name)
+                append_init(field_type, field_name)
+                set_psswd_func(field_type, field_name)
+            """field_name = request.form["field_name"]
             flabel = request.form["flabel"]
             field_type = request.form["field_type"]
             in_req = request.form["in_req"]
@@ -501,17 +549,29 @@ def new_form():
             max_nb = request.form["max_nb"] 
             min_char = request.form["min_char"]
             max_char = request.form["max_char"]
-            choices = request.form["choices"]
-            possible_validators = [in_req, regex, length, nb_range, min_nb, max_nb, min_char, max_char]
+            choices = request.form["choices"]"""
+            """possible_validators = [in_req, regex, length, nb_range, min_nb, max_nb, min_char, max_char]
+            try:
+                track_fields(field_name)
+            except IntegrityError:
+                flash("You can't give 2 fields the same name! It should be unique!")
+                return redirect(url_for("new_form"))
             code = customize_wtf_fld_code(possible_validators, field_type, field_name, flabel, in_req, regex,
                             length, min_char, max_char, nb_range, min_nb, max_nb, choices)
             append_wtform(code)
             append_column(field_name, field_type)
             add_init_arg(field_name)
             append_init(field_type, field_name)
-            set_psswd_func(field_type, field_name)
-            track_fields(field_name)
-            flash("The field has been addded")  
+            set_psswd_func(field_type, field_name)"""
+            #done funcs
+            continue_dbmodel()
+            write_requests(access_by)
+            clear_track()
+            write_return(access_by, form_title)
+            notify_dev(form_title)
+            rm_sended_templ(form_title)
+            clear_sended_files()
+            flash("The form has been addded successfully, it will take about 24h as max to be activated!")  
             return redirect(url_for("new_form"))
         return render_template('/data_entry/make_form.html', form=form1, cu_id=cu_id)
     flash(f"only for admins {cu_id} user")    
@@ -521,9 +581,12 @@ def new_form():
 @app.route('/data_entry/new_form/done', methods=['POST', 'GET'])
 @login_required
 def form_done():
-    continue_dbmodel()
-    count_fields()
+    #continue_dbmodel()
+    #count_fields()
     #clear_track()
+    write_return(access_by, form_title)
+    form_title = session['form_ttl']
+    notify_dev(form_title)
     return "Done"
 
 

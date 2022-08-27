@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/make_form_script.js') }}" ></script>
     <style>
         .hiddens {
             display: none;
@@ -22,7 +23,14 @@
         /*    display: inline-block; lamma badde 2a3mela mettar 23a3mil l div input grp la 7atta tkoun hiyye l m5fiyye wa 2illa bisir4 class l .form-control display inline block 2awla mn .hiddeens*/
             max-width: 800px;
         }
-        
+        #titles_div {
+            display: block;
+            /*z-index: 0;*/
+        }
+        #fields_div {
+            display: none;
+            /*z-index: -2;*/
+        }
     </style>
 </head>
 <body>
@@ -38,8 +46,29 @@
 <div class="row justify-content-center">
     <div class="col col-lg-9 col-md-12">
         <div class="card">
-<form method="POST">
-    {{ form.hidden_tag() }}
+            
+<div id="titles_div">
+    <!--removed hidden tag-->
+                    {{ form.form_title.label(class_="form-label") }}<br>
+                    {{ form.form_title(class_="form-control") }}<br>
+                    {{ form.form_class.label(class_="form-label") }}<br>
+                    {{ form.form_class(class_="form-control") }}<br>
+                    {{ form.table.label(class_="form-label") }}<br>
+                    {{ form.table(class_="form-control") }}<br>
+                    {{ form.access_by.label(class_="form-label") }}<br>
+                    {{ form.access_by(class_="form-control") }}<br>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" type="button" onclick="get_pass()">
+                            Write titles
+                        </button>
+                        <button style="display:inline-block" class="btn btn-dark" type="reset">
+                            clear
+                        </button>
+                    </div><!--footer of titles-->
+</div>
+<div id="fields_div">
+<!--<form method="POST">-->
+    <!--removed hidden tag-->
     {{ form.field_name.label(class_="form-label") }}<br>
     {{ form.field_name(class_="form-control") }}<br>
     {{ form.flabel.label(class_="form-label") }}<br>
@@ -83,7 +112,7 @@
         <option value="yes">Yes</option>
         <option value="">No</option>
         <br>
-    </select>
+    </select><form method="POST"></form>
     <label id="for_nb_range" for="nb_range" class="form-label hiddens" >Number range (not required!)</label>
     <select id="nb_range" name="nb_range" class="form-control hiddens" onchange="set_nb_range()">
         <option value=""></option>
@@ -110,173 +139,24 @@
     </div>
     <div id="choices_div">
     </div><br>
-    <input type="hidden" name="choices" id="hidden_choices" value=""/>
-    <button class="btn btn-primary" type="submit">Make</button>
+    <!--<input type="hidden" name="choices" id="hidden_choices" value=""/>-->
+    <form method="POST">
+        <input type="hidden" id="form_data" name="form_data" value=""/>
+    
+    <button class="btn btn-primary" type="button" onclick="push_field()" >Make Field</button>
     <button style="display:inline-block" class="btn btn-dark" type="reset" >Clear</button>
-    <div class="btn-group" style="display:inline-block">
+    <!--<div class="btn-group" style="display:inline-block">
         <a href="{{ url_for('form_done') }}" class="btn btn-primary" onclick="confirm_finish()">Finish</a>
-    </div>
+    </div> needed in old way-->
+    <button style="display:inline-block" class="btn btn-primary" type="submit" onclick="confirm_finish()">Finish</button>
+</form><!--hawn bas kormel l button-->
 
-</form>
+
+</div><!--for fields div-->
 </div>
 </div>
 </div>
 </div>
 
-<script>
-    function show_div() {
-        if (document.getElementById("field_type").value == "StringField") {  
-            document.getElementById("regex").style.display = "block"
-            //document.getElementById("some_char").style.display = "block"
-            document.getElementById("length").style.display = "block"
-            document.getElementById("for_regex").style.display = "block"
-            //document.getElementById("for_some_char").style.display = "block"
-            document.getElementById("for_length").style.display = "block"
-            if (document.getElementById("for_nb_range").style.display = "block" || document.getElementById("input-group-hm").style.display == "block" || document.getElementById("nb_range").style.display == "block") {
-            document.getElementById("for_nb_range").style.display = "none"
-            document.getElementById("nb_range").style.display = "none"
-            document.getElementById("input-group-hm").style.display = "none"
-            document.getElementById("input-group-nb-rg").style.display = "none"
-        }
-        } else if (document.getElementById("field_type").value == "IntegerField") {
-            document.getElementById("nb_range").style.display = "block"
-            document.getElementById("for_nb_range").style.display = "block"
-            if (document.getElementById("regex").style.display == "block" || document.getElementById("length").style.display == "block" || document.getElementById("input-group-hm").style.display == "block") {
-            document.getElementById("regex").style.display = "none"
-            ////document.getElementById("some_char").style.display = "none"
-            document.getElementById("length").style.display = "none"
-            document.getElementById("for_regex").style.display = "none"
-            ////document.getElementById("for_some_char").style.display = "none"
-            document.getElementById("for_length").style.display = "none"
-            document.getElementById("input-group-str-len").style.value = "none"
-            document.getElementById("input-group-hm").style.display = "none"
-        }
-        } else if (document.getElementById("field_type").value == "SelectField" || document.getElementById("field_type").value == "RadioField") {
-            document.getElementById("input-group-hm").style.display = "block"
-            document.getElementById("hm_choices_id").required = true;
-            if (document.getElementById("regex").style.display == "block" || document.getElementById("length").style.display == "block" ||  document.getElementById("nb_range").style.display == "block") {
-            document.getElementById("regex").style.display = "none"
-            //document.getElementById("some_char").style.display = "none"
-            document.getElementById("length").style.display = "none"
-            document.getElementById("for_regex").style.display = "none"
-            ////document.getElementById("for_some_char").style.display = "none"
-            document.getElementById("for_length").style.display = "none"
-            document.getElementById("input-group-str-len").style.display = "none"
-            document.getElementById("input-group-nb-rg").style.display = "none"
-            document.getElementById("for_nb_range").style.display = "none"
-            document.getElementById("nb_range").style.display = "none" 
-           }
-        } else if (document.getElementById("field_type").value == "PasswordField") {
-            document.getElementById("field_type").setAttribute('required', '')
-            document.getElementById("regex").style.display = "none"
-            ////document.getElementById("some_char").style.display = "none"
-            document.getElementById("length").style.display = "none"
-            document.getElementById("for_regex").style.display = "none"
-            ////document.getElementById("for_some_char").style.display = "none"
-            document.getElementById("for_length").style.display = "none"
-            document.getElementById("input-group-nb-rg").style.display = "none"
-            document.getElementById("input-group-str-len").style.display = "none"
-            document.getElementById("for_nb_range").style.display = "none"
-            document.getElementById("nb_range").style.display = "none"
-            document.getElementById("input-group-hm").style.display = "none"
-        }
-        else {
-            document.getElementById("regex").style.display = "none"
-            //document.getElementById("some_char").style.display = "none"
-            document.getElementById("length").style.display = "none"
-            document.getElementById("for_regex").style.display = "none"
-            //document.getElementById("for_some_char").style.display = "none"
-            document.getElementById("for_length").style.display = "none"
-            document.getElementById("input-group-nb-rg").style.display = "none"
-            document.getElementById("input-group-str-len").style.display = "none"
-            document.getElementById("for_nb_range").style.display = "none"
-            document.getElementById("nb_range").style.display = "none"
-            document.getElementById("input-group-hm").style.display = "none" 
-        }
-    };
-    function set_length() {
-        if (document.getElementById("length").value == "yes") {
-            document.getElementById("input-group-str-len").style.display = "block"
-        }
-    };
-    function set_nb_range() {
-        if (document.getElementById("nb_range").value == "yes") {
-            document.getElementById("input-group-nb-rg").style.display = "block"
-        } 
-    };
-    function generate_choices() {
-        //document.getElementById("par").innerHTML("hellos")
-        if (document.getElementById("choice1")) {
-            const parent_div = document.getElementById("choices_div");
-            while (parent_div.firstChild) {
-                parent.removeChild(parent.lastChild);
-            }
-        }
-        alert("Don't make the form before seting the choices and values!!!!")
-        var x = document.getElementById("hm_choices_id").value;
-        var choices = document.getElementById("choices_div");
-        var btn = document.createElement('button');
-            btn.setAttribute('type', 'button');
-            btn.setAttribute('onclick', 'make_array()');
-            btn.setAttribute('class', 'btn btn-info')
-            btn.innerHTML = '   SET   ';
-        for (let i=0; i < x; i++) {
-            var choice_label = document.createElement('label');
-            choice_label.innerHTML = `Choice ${i+1}`;
-            choice_label.setAttribute('class', 'form-label');
-            var choice = document.createElement('input');
-            choice.setAttribute('type', 'text');
-            choice.setAttribute('name', `choice ${i+1}`);
-            choice.setAttribute('id', `choice${i+1}`);
-            choice.setAttribute('class', 'form-control');
-            choice.setAttribute('required', '');
-            var value_label = document.createElement('label');
-            value_label.setAttribute('class', 'form-label');
-            value_label.innerHTML = `Value ${i+1}`;
-            var ch_value = document.createElement('input');
-            ch_value.setAttribute('type', 'text');
-            ch_value.setAttribute('name', `ch_value${i+1}`);
-            ch_value.setAttribute('id', `ch_value${i+1}`);
-            ch_value.setAttribute('class', 'form-control');
-            ch_value.setAttribute('required', '');
-            
-            choices.appendChild(choice_label);
-            choices.appendChild(choice);
-            choices.appendChild(value_label);
-            choices.appendChild(ch_value);
-            
-            
-        }
-        choices.appendChild(btn)
-    };
-    function make_array() {
-        var choices_dict = {};
-        var parent = document.getElementById("choices_div");
-        var ch_val_list = parent.children;
-        for (let i=0; i < ch_val_list.length; i++) {
-            if (i % 4 == 1) {
-                let c = i + 2;
-                var choice = ch_val_list[i].value;
-                var value = ch_val_list[c].value;
-                choices_dict[choice] = value;
-            } else {
-                continue;
-            } 
-        }
-        if (Object.keys(choices_dict).length> 0) {
-            alert("Choices setted successfully!")
-        }
-        else {
-            alert("an error occured try again!")
-        }
-        //console.log(choices_dict);
-        let choices = JSON.stringify(choices_dict);
-        var hidden_choices = document.getElementById("hidden_choices");
-        hidden_choices.value = choices;
-    };
-    function confirm_finish() {
-        confirm("You will not be able to add more fields!!!\n Are you sure that you have finished making this form?")
-    }
-</script>
 </body>
 </html>

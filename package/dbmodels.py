@@ -1,3 +1,4 @@
+from enum import unique
 from package import db
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -100,7 +101,10 @@ class AdhaActivitiesRating(db.Model):
 class TrackFields(db.Model):
     __tablename__ = 'fieldscount'
     id = db.Column(db.Integer, primary_key=True)
-    track = db.Column(db.String)
+    track = db.Column(db.String, unique=True)
 
     def __init__(self, track):
         self.track = track
+
+    def __reper__(self): #jerrabt kol shi byo5tor 3al bel bala ta3me
+        return self.track

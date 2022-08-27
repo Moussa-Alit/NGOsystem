@@ -1,12 +1,12 @@
 from datetime import datetime
-from webbrowser import get
+import re
 import pandas as pd
 from package.dbmodels import Users, AdhaActivitiesRating, TrackFields
 import os
 import json
-from package import db #lamma ba3nil imprt mnl package ya3ne import mnl __init__.py
-from package import request #look at this
-
+from package import db, app, mail #lamma ba3nil imprt mnl package ya3ne import mnl __init__.py
+from package import request, session #look at this, ma henne saro mawjoudin bl init 3mellon import bsatr we7id
+from flask_mail import Message
 uri = 'postgresql://vmfbelplxyvepj:a2979b6807823c413e08a119955da592e94ab4f38696d568553ef3b11dbac674@ec2-54-87-179-4.compute-1.amazonaws.com:5432/deljs855e01f1t'
 
 def finish_datetime():
@@ -43,27 +43,63 @@ def add_comma_if_validator(validators): #not used no need
             validators[index] = validator
     return validators
 
-
-
-
-
-
-
 #nav item func
 
-def append_form_nav(form_title): #we cant use logic with jinja cause of format mode
+def append_form_nav(form_title, form_class): #we cant use logic with jinja cause of format mode
     with open(get_script_path() + "/templates/navbar.html", "r") as file:
         lines = file.readlines()
-    with open(get_script_path() + "/templates/navbar.html", "w") as file:
-        lines.insert(30, f"""<li class="nav-item">\n    <a class="nav-link">{form_title}</a>\n</li>""")
+    with open(get_script_path() + "/new_navbar.html", "w") as file:
+        lines.insert(30, f"""<li class="nav-item">\n    <a class="nav-link" href="/data_entry/{form_class}" >{form_title}</a>\n</li>""")
         for i in lines:
             file.write(i)
+
+#make teplate funcs
+
+def create_template(form_title, form_class): #no longer needed
+    with open(get_script_path() + f'/{form_title}template.html', 'w') as file:
+        file.write(f"""{{%extends "base.html"%}}\n{{% block title %}}{form_class}{{% endblock %}}\n{{% block content %}}\n\n\n{{% endblock %}}""")
+
+def prpr_templ_flds(field_name, form_title, form_class): #iza rje3na lal shakl ml 2adim badna n7ot fields badal field
+    templ_lines = [ '{%extends "base.html"%}', f"\n{{% block title %}}{form_class}{{% endblock %}}", "\n{% block content %}", "\n", "\n", "\n{% endblock %}" ]
+    #for field in fields:
+    #    field_name = field[0]
+    #    flds_list = []
+    #    wtf_fld_l_el = ["{{ ", "", " }}"] #hayde l 7araket 7atta ma tpannik l format #el: elements list
+    #    wtf_fld_el = ["{{ ", "", " }}"]
+    #    wtf_fld_l_el[1] = f'form.{field_name}.label(class_="form-label")'
+    #    wtf_fld_el[1] = f'form.{field_name}(class_="form-control")'
+    #    wtf_fld_l = wtf_fld_l_el[0] + wtf_fld_l_el[1] + wtf_fld_l_el[2] #wtf_fld_label
+    #    wtf_fld = wtf_fld_el[0] + wtf_fld_el[1] + wtf_fld_el[2]
+    #    templ_lines.insert(4, wtf_fld_l)
+    #    templ_lines.insert(4, wtf_fld)"""
+        #flds_list.append(wtf_fld_l)
+        #flds_list.append(wtf_fld)
+    #hayk l flds list bikoun fiha strings bl dawr label byerja3 control la kol fld bl fields lli 3emelon l user
+    #field_name = field[0]
+    wtf_fld_l_el = ["{{ ", "", " }}"] #hayde l 7araket 7atta ma tpannik l format #el: elements list
+    wtf_fld_el = ["{{ ", "", " }}"]
+    wtf_fld_l_el[1] = f'form.{field_name}.label(class_="form-label")'
+    wtf_fld_el[1] = f'form.{field_name}(class_="form-control")'
+    wtf_fld_l = wtf_fld_l_el[0] + wtf_fld_l_el[1] + wtf_fld_l_el[2] #wtf_fld_label
+    wtf_fld = wtf_fld_el[0] + wtf_fld_el[1] + wtf_fld_el[2]
+    templ_lines.insert(4, wtf_fld_l)
+    templ_lines.insert(4, wtf_fld)
+    print(templ_lines)     
+    with open(get_script_path() + f'/{form_title}template.html', 'w') as file:
+        for line in templ_lines:
+            file.write(line)
+
+def rm_sended_templ(form_title):
+    os.remove(get_script_path() + f'/{form_title}template.html')
+    os.remove(get_script_path() + '/new_navbar.html')
+    print("templates removed")
+
 
 #wtf funcs
 
 def append_wtf_title(form_class):
-    with open(get_script_path() + "/mywtforms.py", "a") as file:
-        file.write(f"""\nclass {form_class}(FlaskForm):\n    a = 1""")
+    with open(get_script_path() + "/newformclass.txt", "a") as file:
+        file.write(f"""\n\nclass {form_class}(FlaskForm):""")
         file.close()
 
 def check_for_validators(validators): #not that usefull
@@ -86,8 +122,8 @@ def mk_choices_code(choices):
 
 def customize_wtf_fld_code(possible_validators, field_type, field_name, field_label, in_req, regex,
                              length, min_char, max_char, nb_range, min_nb, max_nb, choices): #should be the arg of append_wtform
-    if choices:
-                choices_dict = json.loads(choices)
+    #if choices:
+     #           choices_dict = json.loads(choices)
     if check_for_validators(possible_validators):
         if field_type == "StringField":
             if length:
@@ -110,12 +146,12 @@ def customize_wtf_fld_code(possible_validators, field_type, field_name, field_la
             code = f"\n    {field_name} = {field_type}('{field_label}', [{in_req} Regexp(r'^(?:(?:([01]?\d|2[0-3]):)?([0-5]?\d):)?([0-5]?\d)$', message='The time format should be HH:MM:SS')])"
         #la tnsa default date
         elif field_type == "SelectField" or field_type == "RadioField":
-            choices_code = mk_choices_code(choices_dict)
+            choices_code = mk_choices_code(choices)#_dict)
             code = f"""\n    {field_name} = {field_type}('{field_label}', [{in_req}], choices=[{choices_code}])"""
         else:
             return "An error occured!"
     elif  choices and not check_for_validators(possible_validators):
-        choices_code = mk_choices_code(choices_dict)
+        choices_code = mk_choices_code(choices)#_dict)
         code = f"""\n    {field_name} = {field_type}('{field_label}', choices=[{choices_code}])"""
     elif field_type == "DateField" and not check_for_validators(possible_validators): #3melt hay 7atta iza l user ma 7at in_req wa2ta l func ma ra7 ta3mil datefield bala hay la2an l regex tab3etha msh mawjoude bl validators
         code = f"\n    {field_name} = {field_type}('{field_label}', [Regexp(r'/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/', message='The date format should be YYYY-MM-DD')])"
@@ -126,7 +162,7 @@ def customize_wtf_fld_code(possible_validators, field_type, field_name, field_la
     return code
 
 def append_wtform(field_code): # field_code arg ma3rouf b code bl func l 2abla
-    with open(get_script_path() + "/mywtforms.py", "a") as cr:
+    with open(get_script_path() + "/newformclass.txt", "a") as cr:
         cr.write(field_code)
         cr.close()
 
@@ -138,7 +174,7 @@ def db_model(form_class):
 
 def append_db_class_title(form_class, table):
     db_class = db_model(form_class)
-    with open(get_script_path() + "/dbmodels.py", "a") as file:
+    with open(get_script_path() + "/dbmodels.txt", "a") as file:
         file.write(f"""\n\nclass {db_class}(db.Model):\n    __tablename__ = '{table}'\n    id = db.Column(db.Integer, primary_key=True)""")
         file.close()
 
@@ -158,7 +194,7 @@ def datatype(field_type):
 def append_column(field_name, field_type):
     data_type = datatype(field_type)
     column = f"""\n    {field_name} = db.Column(db.{data_type})"""
-    with open(get_script_path() + "/dbmodels.py", 'a') as file:
+    with open(get_script_path() + "/dbmodels.txt", 'a') as file:
         file.write(column)
 
 def add_init_arg(field_name):  
@@ -207,7 +243,7 @@ def continue_dbmodel():
                 all_lines.append(i)
             for i in psswd_funcs_lines:
                 all_lines.append(i)
-        with open(get_script_path() + "/dbmodels.py", "a") as file:
+        with open(get_script_path() + "/dbmodels.txt", "a") as file:
             for i in all_lines:
                 file.write(i)
         with open(get_script_path() + "/password_funcs.txt", "w") as file:
@@ -224,7 +260,7 @@ def continue_dbmodel():
             all_lines.append("):")
             for i in init_lines:
                 all_lines.append(i)
-        with open(get_script_path() + "/dbmodels.py", "a") as file:
+        with open(get_script_path() + "/dbmodels.txt", "a") as file:
             for i in all_lines:
                 file.write(i)
         with open(get_script_path() + "/init_db.txt", "w") as file:
@@ -242,57 +278,81 @@ def route_function(form_class):
 
 def append_route(form_class):
     route_func = route_function(form_class)
-    with open(get_script_path() + "/routes.py", "a") as file:
+    with open(get_script_path() + "/routes.txt", "a") as file:
         file.write(f"""\n@app.route('/data_entry/{form_class}', methods=['GET', 'POST'])\n@login_required\ndef {route_func}():\n    cu_id = current_user.id\n    form = {form_class}""")
 
 def organize_access(access_by):
     if access_by == 'only_admins':
-        with open(get_script_path() + "/routes.py", "a") as file:
-            file.write("""\n    if cu_id in sys_admins:\n        if request.method == "POST":\n            if form.validate_on_submit():\n                a = 1""")
+        with open(get_script_path() + "/routes.txt", "a") as file:
+            file.write("""\n    if cu_id in sys_admins:\n        if request.method == "POST":\n            if form.validate_on_submit():""")
     else:
-        with open(get_script_path() + "/routes.py", "a") as file:
-            file.write("""\n    if request.method == "POST":\n        if form.validate_on_submit():\n            a = 1""")
+        with open(get_script_path() + "/routes.txt", "a") as file:
+            file.write("""\n    if request.method == "POST":\n        if form.validate_on_submit():""")
     return access_by
-
-def get_data(): #hay bteshti8il 3al done #the importance of this func was when testing the iteration iver immutablemultidict
-    data = request.form
-    return data
-
-def write_request(data):
-    for i in data:
-        with open(get_script_path() + "/routes.py", "a") as file:
-            file.write(f"\n")
 
 def track_fields(field_name):
     record = TrackFields(f"{field_name}")
     db.session.add(record)
     db.session.commit() 
 
-def count_fields():
+def count_fields(): #not needed
     count = TrackFields.query.count()
     return count       
 
 def query_track():
     query_cmd = "select track from fieldscount"
     query = db.engine.execute(query_cmd)
+    #query = TrackFields.query.all()
     return query
-
-def write_requests(access_by):
-    fields_count = count_fields()
-    if access_by == "only_admins":
-        with open(get_script_path() + "/routes.py", "a") as file:
-            for field in query:
-                request_code = f"""\n              {field} = request.form["{field}"]"""
-                file.write(request_code)
-    else:
-        with open(get_script_path() + "/routes.py", "a") as file:
-            for field in fields_count:
-                request_code = f"""\n          {field} = request.form["{field}"]"""
-                file.write(request_code)
-            
 
 def clear_track():
     records = TrackFields.query.all()
     for record in records:
         db.session.delete(record)
         db.session.commit()
+
+def write_requests(access_by): #ken fina na3mil function kol marra ta3mil append 3l routes.txt bas hay 2a7san bfard marra b execute wwe7de b open we7de bta3mil kol shi
+    query = query_track()
+    if access_by == "only_admins":
+        with open(get_script_path() + "/routes.txt", "a") as file:
+            for field in query:
+                request_code = f"""\n              {field[0]} = request.form["{field[0]}"]"""
+                file.write(request_code)
+    else:
+        with open(get_script_path() + "/routes.txt", "a") as file:
+            for field in query:
+                request_code = f"""\n          {field[0]} = request.form["{field[0]}"]"""
+                file.write(request_code)
+            
+def write_return(access_by, form_title):
+    if access_by == 'only_admins':
+        with open(get_script_path() + "/routes.txt", "a") as file:
+            returns = f"""\n    flash("Only for admins!")\n    return redirect(url_for("de_welcome"))\n        return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id)\n            flash("One or Some inputs are not valid, fix!")\n            return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id))"""
+    else:
+        with open(get_script_path() + "/routes.txt", "a") as file:
+            returns = f"""\n    return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id)\n        flash("One or Some inputs are not valid, fix!")\n        return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id))"""
+#not completed
+
+def notify_dev(form_title):
+    template = f'{form_title}template.html'
+    msg = Message(subject='New form added', recipients=["moussaalit@outlook.com"])#, attachments=['routes.txt', 'newformclass.txt', 'dbmodels.txt', template]) #fine 7ot bl list add ma badde recipient,,, bas hawn 2ana meni3 2ajtar mn 1 recepient bl config hhhh
+    #msg.body = 'A new form has been created, Your turn!!!'
+    #msg.html = '<p>A new form has been created,<span style="color:red"> Your turn!!!</span></p>'
+    list = ['routes.txt', 'newformclass.txt', 'dbmodels.txt', template, "new_navbar.html"]
+    c = 0
+    for i in list:
+        c += 1
+        if c == 5:
+            with app.open_resource(f"{get_script_path()}/{i}") as file:
+                msg.attach(i, 'text/plain', file.read())
+            mail.send(msg) #didn't undertanded laysh ma ride tkoun l mail.send barra l loop, wl laysh attachments= ma shta8lat
+            
+        else:
+            with app.open_resource(f"{get_script_path()}/{i}") as file:
+                msg.attach(i, 'text/plain', file.read()) #hayk la 7atta yjammi3 attaches
+
+def clear_sended_files():
+    with open(get_script_path() + "/routes.txt", "w") as file, open(get_script_path() + "/newformclass.txt", "w") as file1, open(get_script_path() + "/dbmodels.txt", "w") as file2: 
+        file.write("")
+        file1.write("")
+        file2.write("")
