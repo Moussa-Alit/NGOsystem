@@ -60,30 +60,17 @@ def create_template(form_title, form_class): #no longer needed
         file.write(f"""{{%extends "base.html"%}}\n{{% block title %}}{form_class}{{% endblock %}}\n{{% block content %}}\n\n\n{{% endblock %}}""")
 
 def prpr_templ_flds(field_name, form_title, form_class): #iza rje3na lal shakl ml 2adim badna n7ot fields badal field
-    templ_lines = [ '{%extends "base.html"%}', f"\n{{% block title %}}{form_class}{{% endblock %}}", "\n{% block content %}", "\n", "\n", "\n{% endblock %}" ]
-    #for field in fields:
-    #    field_name = field[0]
-    #    flds_list = []
-    #    wtf_fld_l_el = ["{{ ", "", " }}"] #hayde l 7araket 7atta ma tpannik l format #el: elements list
-    #    wtf_fld_el = ["{{ ", "", " }}"]
-    #    wtf_fld_l_el[1] = f'form.{field_name}.label(class_="form-label")'
-    #    wtf_fld_el[1] = f'form.{field_name}(class_="form-control")'
-    #    wtf_fld_l = wtf_fld_l_el[0] + wtf_fld_l_el[1] + wtf_fld_l_el[2] #wtf_fld_label
-    #    wtf_fld = wtf_fld_el[0] + wtf_fld_el[1] + wtf_fld_el[2]
-    #    templ_lines.insert(4, wtf_fld_l)
-    #    templ_lines.insert(4, wtf_fld)"""
-        #flds_list.append(wtf_fld_l)
-        #flds_list.append(wtf_fld)
-    #hayk l flds list bikoun fiha strings bl dawr label byerja3 control la kol fld bl fields lli 3emelon l user
-    #field_name = field[0]
+    #templ_lines = [ '{%extends "base.html"%}', f"\n{{% block title %}}{form_class}{{% endblock %}}", "\n{% block content %}", "\n", "\n", "\n{% endblock %}" ] #HAY FKRA 7MARA LA2ENNO 3AKOUL  LOOP[ ra7 bya3mil overwrite lal field l jdid so birou7 l 2ablo]
+    with open(get_script_path() + f'/{form_title}template.html') as file:
+        templ_lines = file.readlines()
     wtf_fld_l_el = ["{{ ", "", " }}"] #hayde l 7araket 7atta ma tpannik l format #el: elements list
     wtf_fld_el = ["{{ ", "", " }}"]
     wtf_fld_l_el[1] = f'form.{field_name}.label(class_="form-label")'
     wtf_fld_el[1] = f'form.{field_name}(class_="form-control")'
     wtf_fld_l = wtf_fld_l_el[0] + wtf_fld_l_el[1] + wtf_fld_l_el[2] #wtf_fld_label
     wtf_fld = wtf_fld_el[0] + wtf_fld_el[1] + wtf_fld_el[2]
+    templ_lines.insert(4, wtf_fld) #field 2abl l label la2an insert bt7ot ma7al l item w btodfosh l item 3a index 2akbar la ta7t ka lines
     templ_lines.insert(4, wtf_fld_l)
-    templ_lines.insert(4, wtf_fld)
     print(templ_lines)     
     with open(get_script_path() + f'/{form_title}template.html', 'w') as file:
         for line in templ_lines:
@@ -327,10 +314,10 @@ def write_requests(access_by): #ken fina na3mil function kol marra ta3mil append
 def write_return(access_by, form_title):
     if access_by == 'only_admins':
         with open(get_script_path() + "/routes.txt", "a") as file:
-            returns = f"""\n    flash("Only for admins!")\n    return redirect(url_for("de_welcome"))\n        return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id)\n            flash("One or Some inputs are not valid, fix!")\n            return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id))"""
+            file.write(f"""\n    flash("Only for admins!")\n    return redirect(url_for("de_welcome"))\n        return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id)\n            flash("One or Some inputs are not valid, fix!")\n            return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id))""")
     else:
         with open(get_script_path() + "/routes.txt", "a") as file:
-            returns = f"""\n    return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id)\n        flash("One or Some inputs are not valid, fix!")\n        return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id))"""
+            file.write(f"""\n    return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id)\n        flash("One or Some inputs are not valid, fix!")\n        return render_template("/data_entry/{form_title}template.html", form=form, cu_id=cu_id))""")
 #not completed
 
 def notify_dev(form_title):
