@@ -501,7 +501,7 @@ def new_form():
             form_class = ttls[1]
             table = ttls[2]
             access_by = ttls[3]
-            #create_template(form_title, form_class)
+            create_template(form_title, form_class)
             append_form_nav(form_title, form_class)
             append_wtf_title(form_class)
             append_db_class_title(form_class, table)
@@ -538,31 +538,6 @@ def new_form():
                 add_init_arg(field_name)
                 append_init(field_type, field_name)
                 set_psswd_func(field_type, field_name)
-            """field_name = request.form["field_name"]
-            flabel = request.form["flabel"]
-            field_type = request.form["field_type"]
-            in_req = request.form["in_req"]
-            regex = request.form["regex"]
-            length = request.form["length"]
-            nb_range = request.form["nb_range"]
-            min_nb = request.form["min_nb"]
-            max_nb = request.form["max_nb"] 
-            min_char = request.form["min_char"]
-            max_char = request.form["max_char"]
-            choices = request.form["choices"]"""
-            """possible_validators = [in_req, regex, length, nb_range, min_nb, max_nb, min_char, max_char]
-            try:
-                track_fields(field_name)
-            except IntegrityError:
-                flash("You can't give 2 fields the same name! It should be unique!")
-                return redirect(url_for("new_form"))
-            code = customize_wtf_fld_code(possible_validators, field_type, field_name, flabel, in_req, regex,
-                            length, min_char, max_char, nb_range, min_nb, max_nb, choices)
-            append_wtform(code)
-            append_column(field_name, field_type)
-            add_init_arg(field_name)
-            append_init(field_type, field_name)
-            set_psswd_func(field_type, field_name)"""
             #done funcs
             continue_dbmodel()
             write_requests(access_by)
