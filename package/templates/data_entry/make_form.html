@@ -4,10 +4,11 @@
     <title>MakeForm</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="#"><!--btrawwi7 error l favicon.ico lbala ta3me-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='js/make_form_script.js') }}" ></script>
+    <script src="{{ url_for('static', filename='js/make_form_script1.js') }}" ></script>
     <style>
         .hiddens {
             display: none;
@@ -92,35 +93,35 @@
         <option value="">No</option>
         <br>
     </select>
-    <label id="for_regex" for="regex" class="form-label hiddens" >Only text allowed?</label>
-    <select id="regex" name="regex" class="form-control hiddens">
-        <option value=""></option>
-        <option value="Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid!'),">Text only</option>
-        <option value="Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'),">Text, numbers, commas, semi columns & periods only.</option>
-        <br>
-    </select>
-   <!--<label id="for_some_char" for="some_char" class="form-label hiddens" >Are text, numbers, commas, semi columns & periods the only allowed characters?</label>
-    <select id="some_char" name="some_char" class="form-control hiddens" >
-        <option value=""></option>
-        <option value="Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'),">Yes</option>
-        <option value="">No</option>
-        <br>
-    </select>-->
-    <label id="for_length" for="length" class="form-label hiddens" >Is there a specific Chracters range to be typed?</label>
-    <select id="length" name="length" class="form-control hiddens" onchange="set_length()">
-        <option value=""></option>
-        <option value="yes">Yes</option>
-        <option value="">No</option>
-        <br>
-    </select><form method="POST"></form>
-    <label id="for_nb_range" for="nb_range" class="form-label hiddens" >Number range (not required!)</label>
-    <select id="nb_range" name="nb_range" class="form-control hiddens" onchange="set_nb_range()">
-        <option value=""></option>
-        <option value="yes">Yes</option>
-        <option value="">No</option>
-        <br>
-    </select>
-
+    <div class="hiddens" id="str_vali">
+    <div class="in-grp" id="is_regex">   
+        <label id="for_regex" for="regex" class="form-label" >Only text allowed?</label>
+        <select id="regex" name="regex" class="form-control">
+            <option value=""></option>
+            <option value="Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid!'),">Text only</option>
+            <option value="Regexp(r'^[\.a-zA-Z0-9,;.? ]*$', message='Only text, nb, ,;.?'),">Text, numbers, commas, semi columns & periods only.</option>
+            <br>
+        </select>
+    </div> 
+    <!--<div class="in-grp" id="is_str_len">-->
+        <label id="for_length" for="length" class="form-label" >Is there a specific Chracters range to be typed?</label>
+        <select id="length" name="length" class="form-control" onchange="set_length()">
+            <option value=""></option>
+            <option value="yes">Yes</option>
+            <option value="">No</option>
+            <br>
+        </select>
+    <!--</div>-->
+    </div>
+    <div class="in-grp hiddens" id="is_nb_rg">
+        <label id="for_nb_range" for="nb_range" class="form-label hiddens" >Number range (not required!)</label>
+        <select id="nb_range" name="nb_range" class="form-control hiddens" onchange="set_nb_range()">
+            <option value=""></option>
+            <option value="yes">Yes</option>
+            <option value="">No</option>
+            <br>
+        </select>
+    </div>
     <div class="in-grp hiddens" id="input-group-nb-rg">
         {{ form.min_nb.label(class_="form-label") }}<br>
         {{ form.min_nb(class_="form-control") }}<br>
@@ -140,7 +141,8 @@
     <div id="choices_div">
     </div><br>
     <!--<input type="hidden" name="choices" id="hidden_choices" value=""/>-->
-    <form method="POST">
+   <form method="POST">
+        <!--{#{{ form.hidden_tag() }}#}-->
         <input type="hidden" id="form_data" name="form_data" value=""/>
     
     <button class="btn btn-primary" type="button" onclick="push_field()" >Make Field</button>
@@ -148,8 +150,8 @@
     <!--<div class="btn-group" style="display:inline-block">
         <a href="{{ url_for('form_done') }}" class="btn btn-primary" onclick="confirm_finish()">Finish</a>
     </div> needed in old way-->
-    <button style="display:inline-block" class="btn btn-primary" type="submit" onclick="confirm_finish()">Finish</button>
-</form><!--hawn bas kormel l button-->
+    <button style="display:inline-block" class="btn btn-primary" type="submit" onclick="confirm_send()">Finish</button>
+    </form><!--hawn bas kormel l button-->
 
 
 </div><!--for fields div-->

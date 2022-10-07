@@ -7,18 +7,13 @@ function get_pass() {
     let access_by = document.getElementById("access_by").value;
     ttls_arr = [form_title, form_class, table, access_by];
     document.getElementById("titles_div").style.display = "none";
-    //document.getElementById("titles_div").style.zIndex = -1;
     document.getElementById("fields_div").style.display = "block";
-    //document.getElementById("fields_div").style.zIndex = 0;
     console.log(ttls_arr)
 };
 
 function show_div() {
-    if (document.getElementById("field_type").value == "StringField") {  
-        document.getElementById("regex").style.display = "block"
-        document.getElementById("length").style.display = "block"
-        document.getElementById("for_regex").style.display = "block"
-        document.getElementById("for_length").style.display = "block"
+    if (document.getElementById("field_type").value == "StringField") { 
+        document.getElementById("str_vali").style.display = "block" 
         if (document.getElementById("for_nb_range").style.display = "block" || document.getElementById("input-group-hm").style.display == "block" || document.getElementById("nb_range").style.display == "block") {
         document.getElementById("for_nb_range").style.display = "none"
         document.getElementById("nb_range").style.display = "none"
@@ -28,46 +23,31 @@ function show_div() {
     } else if (document.getElementById("field_type").value == "IntegerField") {
         document.getElementById("nb_range").style.display = "block"
         document.getElementById("for_nb_range").style.display = "block"
-        if (document.getElementById("regex").style.display == "block" || document.getElementById("length").style.display == "block" || document.getElementById("input-group-hm").style.display == "block") {
-        document.getElementById("regex").style.display = "none"
-        document.getElementById("length").style.display = "none"
-        document.getElementById("for_regex").style.display = "none"
-        document.getElementById("for_length").style.display = "none"
-        document.getElementById("input-group-str-len").style.value = "none"
-        document.getElementById("input-group-hm").style.display = "none"
+        if (document.getElementById("str_vali").style.display = "block" || document.getElementById("input-group-hm").style.display == "block") {
+            document.getElementById("str_vali").style.display = "none"
+            document.getElementById("input-group-hm").style.display = "none"
     }
     } else if (document.getElementById("field_type").value == "SelectField" || document.getElementById("field_type").value == "RadioField") {
         document.getElementById("input-group-hm").style.display = "block"
         document.getElementById("hm_choices_id").required = true;
-        if (document.getElementById("regex").style.display == "block" || document.getElementById("length").style.display == "block" ||  document.getElementById("nb_range").style.display == "block") {
-        document.getElementById("regex").style.display = "none"
-        document.getElementById("length").style.display = "none"
-        document.getElementById("for_regex").style.display = "none"
-        document.getElementById("for_length").style.display = "none"
-        document.getElementById("input-group-str-len").style.display = "none"
-        document.getElementById("input-group-nb-rg").style.display = "none"
-        document.getElementById("for_nb_range").style.display = "none"
-        document.getElementById("nb_range").style.display = "none" 
+        if (document.getElementById("str_vali").style.display = "block" ||  document.getElementById("nb_range").style.display == "block") {
+            document.getElementById("str_vali").style.display = "none"
+            document.getElementById("input-group-nb-rg").style.display = "none"
+            document.getElementById("for_nb_range").style.display = "none"
+            document.getElementById("nb_range").style.display = "none" 
        }
     } else if (document.getElementById("field_type").value == "PasswordField") {
-        document.getElementById("field_type").setAttribute('required', '')
-        document.getElementById("regex").style.display = "none"
-        document.getElementById("length").style.display = "none"
-        document.getElementById("for_regex").style.display = "none"
-        document.getElementById("for_length").style.display = "none"
+        document.getElementById("in_req").setAttribute('required', '')
+        document.getElementById("str_vali").style.display = "none"
         document.getElementById("input-group-nb-rg").style.display = "none"
-        document.getElementById("input-group-str-len").style.display = "none"
         document.getElementById("for_nb_range").style.display = "none"
         document.getElementById("nb_range").style.display = "none"
         document.getElementById("input-group-hm").style.display = "none"
     }
     else {
-        document.getElementById("regex").style.display = "none"
-        document.getElementById("length").style.display = "none"
-        document.getElementById("for_regex").style.display = "none"
-        document.getElementById("for_length").style.display = "none"
-        document.getElementById("input-group-nb-rg").style.display = "none"
+        document.getElementById("str_vali").style.display = "none"        
         document.getElementById("input-group-str-len").style.display = "none"
+        document.getElementById("input-group-nb-rg").style.display = "none"
         document.getElementById("for_nb_range").style.display = "none"
         document.getElementById("nb_range").style.display = "none"
         document.getElementById("input-group-hm").style.display = "none" 
@@ -191,6 +171,11 @@ function make_dict() {
 var flds_arr = [];
 
 function push_field() {
+    document.getElementById("input-group-nb-rg").style.display = "none";
+    document.getElementById("input-group-str-len").style.display = "none";
+    document.getElementById("input-group-hm").style.display = "none";
+    document.getElementById("is_nb_rg").style.display = "none";
+    document.getElementById("str_vali").style.display = "none";
     let field_name = document.getElementById("field_name").value;
     let flabel = document.getElementById("flabel").value;
     let field_type = document.getElementById("field_type").value;
@@ -219,12 +204,40 @@ function push_field() {
     document.getElementById("max_char").value = ""
 };
 
-function confirm_finish() {
-    let form_objct = {"titles": ttls_arr, "fields": flds_arr};
-    confirm("You will not be able to add more fields!!!\n Are you sure that you have finished making this form?")
+function confirm_send() {
+    const form_objct = {"titles": ttls_arr, "fields": flds_arr};
+    confirm("You will not be able to add more fields!!!\n Are you sure that you have finished making this form?")   
     let data = JSON.stringify(form_objct);
-    var form_data_tag = document.getElementById("form_data");
-    form_data_tag.value = data;
+    document.getElementById("form_data").value = data;
+    /*fetch('/data_entry/new_form', {
+        method:'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+        },
+        body: JSON.stringify(form_objct)
+
+    }).then( res => res.json())
+      .then(data => console.log(data))
+      .catch(error => console.log(error));*/
+    /*var form_data_tag = document.getElementById("form_data");
+    form_data_tag.value = data;**/
+    // Creating a XHR object
+    /*let xhr = new XMLHttpRequest();
+    let url = '{{ url_for("new_form") }}';
+
+    // open a connection
+    xhr.open("POST", url, true);
+
+    xhr.setRequestHeader("Content-Type", 'application/json; charset=utf-8');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            alert("w 2ayr")
+        }
+    let form_objct = {"titles": ttls_arr, "fields": flds_arr};
+    let data = JSON.stringify(form_objct);
+
+    xhr.send(data);
+    }*/
 };
 
 function removechilds() {

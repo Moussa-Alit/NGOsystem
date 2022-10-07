@@ -8,16 +8,15 @@ from package.functions import *
 from flask_login import login_user, login_required, current_user, logout_user
 from flask_mail import Message
 
-
 #important lists
 sys_admins = [1, 3]
-users_headings = ['id', 'name', 'surname', 'username', 'email', 'password_hash', 'date_added', 'date_edited'] #colummns_names() should replace these
+"""users_headings = ['id', 'name', 'surname', 'username', 'email', 'password_hash', 'date_added', 'date_edited'] #colummns_names() should replace these
 aar_headings = ['id', 'starting_date_time', 'finishing_date_time', 'gps_location', 'governorate',
  'location', 'its_name', 'p_code', 'nb_of_families', 'activity_type', 'if_other_type', 'donor', 'team_leader',
   'targeted_nb_in_camp', 'distributed_items', 'nb_of_itmes_to_be_distributed_in_this_act', 'exists_of_written_scheduled','voucher_distributed',
    'beneficiaries_list_ready_used', 'protect_policies_respect_rate', 'controllcing_workplacce_rate', 'commitment_to_Covid_precautions',
     'existing_of_requirements', 'if_shortcoming_in_requirements', 'randomly_checked_item_rate', 'staff_performance', 'general_notes',
- 'added_by', 'date_added', 'date_edited']
+ 'added_by', 'date_added', 'date_edited']"""
 
 # routes
 @login_manager.user_loader
@@ -103,8 +102,7 @@ def A_A_R():
     if request.method == 'POST':
         if form1.validate_on_submit:
         #gps_location_should_be_taken_auto
-            starting_date = request.form["starting_date"]
-            #starting_date = "2020-11-22" 
+            starting_date = request.form["starting_date"] 
             #starting_time = request.form["starting_time"]
             starting_time = "11:11:11.321333"
             starting_datetime = starting_date + " " + starting_time
@@ -163,90 +161,14 @@ def A_A_R():
             return render_template("/data_entry/adhaactrating.html", form=form1, cu_id=cu_id, message=message)
     return render_template("/data_entry/adhaactrating.html", status4="active", form=form1, cu_id=cu_id, admins=sys_admins)
 
-@app.route('/data_entry/main_records', methods=['POST', 'GET'])
-@login_required
-def main_records():
-    form = Main_Records()
-    cu_id = current_user.id
-    if request.method == 'POST':
-        name = request.form["name"]
-        mobile_nb = request.form["mobile_number"]
-        phone_nb = request.form["phone_nb"]
-        city = request.form["city"]
-        address = request.form["address"]
-        family_master_relation = request.form["family_master_relation"] #silat lli 3am ne5od menno l ma3loumet b rab l 2osra
-        family_father_exists = request.form["family_father_exists"]
-        family_mother_exists = request.form["family_mother_exists"]
-        family_count = request.form["family_count"]
-        family_adults_count = request.form["family_adults_count"]
-        family_children_count = request.form["family_children_count"]
-        family_kids_girls_count = request.form["family_kids_girls_count"]
-        family_married_kids_count = request.form["family_married_kids_count"]
-        # = request.form[""] #t5ab3out l up down
-        wrorking_member = request.form["field_1611230997"] #who is working actually from the family members
-        more_info = request.form["field_1611235066"] #more info about working member
-        members_btw_0_4 = request.form["field_1612518121"]
-        members_btw_5_8 = request.form["field_1612518141"]
-        members_btw_9_13 = request.form["field_1612518165"]
-        members_btw_14_18 = request.form["field_1612518219"]
-        members_btw_19_25 = request.form["field_1612518623"]
-        members_btw_26_50 = request.form["field_1612518638"]
-        members_btw_51_64 = request.form["field_1612518659"]
-        members_above_64 = request.form["field_1612518673"]
-        nationality = request.form["field_1617714362"] 
-        #new tab about حالة عقد الزواج
-        #we can include them in a separete table
-        marriage_contract_status = request.form["marriage_contract_status"]
-        marriage_contract_level = request.form["marriage_contract_level"]
-        contract_unregistered_causes = request.form["contruct_unregistered_causes"]
-        children_registered = request.form["children_registered"]
-        child_reg_place = request.form["child_reg_place"]
-        challanges_no_contract = request.form["challanges_no_contract"]
-        helps_source = request.form["helps_source"]
-        helps_duration = request.form["helps_duration"]
-        urda_using = request.form["urda_using"]
-        urda_using_enough = request.form["urda_using_enough"]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        #= request.form[""]
-        print(name, phone_nb)
-        return redirect(url_for("main_records"))
-    return render_template("mainrecords.html", form=form, cu_id=cu_id, admins=sys_admins)
-
 @app.route('/data_entry/update', methods=['POST', 'GET'])
 @login_required
 def select_form_type():
     cu_id = current_user.id
     form = SelectingFormToEdit()
     if request.method == 'POST':
-        #if form.validate_on_submit():
         selected_form = request.form['form']
-        if cu_id in sys_admins and (selected_form == 'register'):#selected_form == 'Register' and cu_id == 3:
+        if cu_id in sys_admins and (selected_form == 'register'):
             session['table'] = 'Users'
             #session['queried_records'] = table.query.order_by(table.id.desc()).limit(3)
             session['wich_form'] = 'Register'
@@ -323,13 +245,12 @@ def select_form(): #tab3an badna n7awwil na3mil functions la nhawwin l sho8l
 def edit_a_a_r():
     form = AdhaActivities()
     cu_id = current_user.id #kormel l navbar
-    #model = determine_model(table_name)
     passed = session['passed']
     record_id = session.get('record_to_edit_id')
     record = AdhaActivitiesRating.query.filter(AdhaActivitiesRating.id==record_id).first()
     if request.method == 'POST' and form.validate_on_submit:
         starting_date = request.form["starting_date"]
-            #starting_date = "2020-11-22" 
+        #starting_date = "2020-11-22" 
         starting_time = request.form["starting_time"]
         #starting_time = "11:11:11.321333"
         record.starting_datetime = starting_date + " " + starting_time
@@ -352,17 +273,12 @@ def edit_a_a_r():
         record.voucher_distributed = request.form['voucher_distributed']
         record.beneficiaries_list_ready_used = request.form['beneficiaries_list_ready_used']
         record.protect_policies_respect_rate = request.form['pprr']
-            #protect_policies_respect_rate = 7
         record.controlling_workplacce_rate = request.form["controlling_workplacce_rate"]
         record.commitment_to_covid_precautions = request.form["commitment_to_covid_precautions"]
-            #controlling_workplacce_rate = 10
-            #commitment_to_covid_precautions = 4
         record.existing_of_requirements = request.form['existing_of_requirements'] #tawejoud l ma3added wl mostalzamet llojistiyye
         record.if_shortcoming_in_requirements = request.form['if_shortcoming_in_requirements'] #iza fi nawa2es bl mostalzamet
         record.randomly_checked_item_rate = request.form["randomly_checked_item_rate"]
-            #randomly_checked_item_rate = 8
         record.staff_performance = request.form["staff_performance"]
-            #staff_performance = 7
         record.general_notes = request.form['general_notes']
         record.added_by = record.added_by
         record.date_added = record.date_added
@@ -482,7 +398,6 @@ def new_form_titles():
             flash("not valide")
             return render_template('/data_entry/add_titles.html', form=form ,cu_id=cu_id)
         return render_template('/data_entry/add_titles.html', form=form ,cu_id=cu_id)
-
     flash("Only for admins")
     return redirect(url_for("de_welcome"))
 
@@ -493,7 +408,6 @@ def new_form():
     if cu_id in sys_admins:
         form1 = MakeForm()
         if request.method == 'POST':
-            #if form1.validate_on_submit(): l meshkle bl regexp...
             form_data = request.form['form_data']
             data_dict = json.loads(form_data)
             ttls = data_dict['titles']
@@ -558,20 +472,10 @@ def new_form():
 def form_done():
     #continue_dbmodel()
     #count_fields()
-    #clear_track()
     write_return(access_by, form_title)
     form_title = session['form_ttl']
     notify_dev(form_title)
     return "Done"
-
-
-@app.route('/t')
-@login_required
-def testing():
-    #form = Datetime()
-
-    return render_template("testing.html")
-
 
 @app.route('/logout', methods=['POST', 'GET'])
 @login_required
@@ -584,16 +488,18 @@ def logout():
 @login_required
 def cookies():
     cu_id = current_user.id
-    role = ""
     if cu_id in sys_admins:
-        role = "admin"
-    else:
-        role = "normaluser"
-    res = make_response("Cookies", 200)
-    res.set_cookie(str(id), value=role,
-    max_age=36000,
-    expires=None,
-    path=request.path,
-    secure=True
-    )
-    return res
+        role = ""
+        if cu_id in sys_admins:
+            role = "admin"
+        else:
+            role = "normaluser"
+        res = make_response("Cookies", 200)
+        res.set_cookie(str(id), value=role,
+        max_age=36000,
+        expires=None,
+        path=request.path,
+        secure=True
+        )
+        return res
+    return "only for admins!"

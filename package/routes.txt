@@ -1,0 +1,15 @@
+
+@app.route('/data_entry/yhchcn', methods=['GET', 'POST'])
+@login_required
+def yhchcnroute():
+    cu_id = current_user.id
+    form = yhchcn
+    if cu_id in sys_admins:
+        if request.method == "POST":
+            if form.validate_on_submit():
+              argg = request.form["argg"]
+    flash("Only for admins!")
+    return redirect(url_for("de_welcome"))
+        return render_template("/data_entry/uykhmhbmtemplate.html", form=form, cu_id=cu_id)
+            flash("One or Some inputs are not valid, fix!")
+            return render_template("/data_entry/uykhmhbmtemplate.html", form=form, cu_id=cu_id))

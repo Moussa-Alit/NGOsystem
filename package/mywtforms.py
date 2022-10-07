@@ -80,17 +80,6 @@ class QueryingRecordsTDateTime(FlaskForm):
     how_much = IntegerField('How much', [InputRequired(), NumberRange(min=1, max=25000, message="The overall target should be between 1 and 25000")])
     order = SelectField('Order (Acsending is preffered)', [InputRequired()], choices=[('', ''), ('asc', 'Ascendind'), ('desc', 'Descending')])
 
-class Titles(FlaskForm):
-    form_title = StringField("Give a title for the form (can be in arabic)", [InputRequired(), 
-    Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
-    Length(min=3, max=20, message='The Title length should be between 3 and 20') ])
-    form_class = StringField('Give the form an english name without spaces(CamelCase is preffered)',[InputRequired(), Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
-    Length(min=3, max=20, message='The Name length should be between 3 and 20')])
-    table = StringField('Give an english name without spaces/numbers/characters/uppercase letters to the table that the data will be stored in.',[InputRequired(), Regexp(r'^[a-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
-    Length(min=3, max=20, message='The Name length should be between 3 and 20')])
-    #db_class is a function
-    access_by = SelectField("Who can access this form?", choices=[('', ''), ('only_admins', 'Only Admins'), ('any', 'Anybody')])
-
 class MakeForm(FlaskForm):
     form_title = StringField("Give a title for the form (can be in arabic)", [InputRequired(), 
     Regexp(r'^[A-Za-z\s\-\']+$', message='Invalid Title, it should be special character free(#$%^&*,;:...)!'),
