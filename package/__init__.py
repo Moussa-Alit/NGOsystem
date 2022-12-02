@@ -7,8 +7,8 @@ from flask_mail import Mail, Message
 
 app = Flask(__name__)
 #csrf = CSRFProtect(app)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:batata@localhost/database1'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://vmfbelplxyvepj:a2979b6807823c413e08a119955da592e94ab4f38696d568553ef3b11dbac674@ec2-54-87-179-4.compute-1.amazonaws.com:5432/deljs855e01f1t'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:batata@localhost/database1'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SECRET_KEY'] = 'FW3434ff545h4RFE55$#f$t%yhtFF'
 app.config['TESTING'] = False
@@ -18,7 +18,7 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 #app.config['MAIL_DEBUG'] = True
 app.config['MAIL_USERNAME'] = 'moussaalit@outlook.com'
-app.config['MAIL_PASSWORD'] = 'm0v55@@1!t'
+app.config['MAIL_PASSWORD'] = ''
 app.config['MAIL_DEFAULT_SENDER'] = 'moussaalit@outlook.com'
 app.config['MAIL_MAX_EMAILS'] = 1
 #app.config['MAIL_SUPPRESS_SEND'] = False #TRUE LAW BAS 3AM 2A3MIL TESTS MWA22ATE HAYK SHI
